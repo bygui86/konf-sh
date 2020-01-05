@@ -1,15 +1,34 @@
 
-# kubeconfigurator
+# konf
 Kubernetes Configurator
 
-`kubeconfigurator` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
+`konf` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
 
 ---
 
 ## Run
+
+### from source
 ```shell
 go run main.go
 ```
+
+### from bin
+```shell
+konf ...
+```
+
+---
+
+## Commands
+
+- [ ] split
+- [ ] list
+- [ ] set
+    - [ ] global
+    - [ ] local
+- [ ] help
+- [ ] completion
 
 ---
 
@@ -17,16 +36,20 @@ go run main.go
 
 ### Flags
 
+`TBD`
+
 | Flag | Available values | Default |
 | --- | --- | --- |
 | kubeconfig | - | $HOME/.kube/config |
 
 ### Environment variables
 
+`TBD`
+
 | Key | Available values | Default |
 | --- | --- | --- |
-| LOG_ENCODING | console, json| console |
-| LOG_LEVEL | debug, info, warn, error, fatal | info |
+| LOG_ENCODING | console, json | console |
+| LOG_LEVEL | debug, info, warn, error, dpanic, panic, fatal | info |
 | KUBECONFIG | - | (empty) |
 
 ---

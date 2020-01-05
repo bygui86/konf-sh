@@ -53,10 +53,6 @@ func buildEncoderConfig(level zapcore.Level) zapcore.EncoderConfig{
 	} else {
 		return zapcore.EncoderConfig{
 			MessageKey: "message",
-			TimeKey:    "time",
-			EncodeTime: zapcore.ISO8601TimeEncoder,
-			LevelKey:    "level",
-			EncodeLevel: zapcore.CapitalLevelEncoder,
 		}
 	}
 }

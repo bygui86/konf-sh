@@ -6,6 +6,7 @@ require (
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/urfave/cli v1.22.2
 	go.uber.org/atomic v1.5.1 // indirect
 	go.uber.org/multierr v1.4.0 // indirect
 	go.uber.org/zap v1.13.0
@@ -18,7 +19,6 @@ require (
 	golang.org/x/tools v0.0.0-20200103221440-774c71fcf114 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect
-	k8s.io/apimachinery v0.17.0
 	k8s.io/client-go v0.17.0
 	k8s.io/utils v0.0.0-20191218082557-f07c713de883 // indirect
 )

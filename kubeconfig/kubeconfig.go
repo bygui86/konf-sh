@@ -13,59 +13,59 @@ func Get(kubeConfigFilePath string) *clientcmdapi.Config {
 	return clientcmd.GetConfigFromFileOrDie(kubeConfigFilePath)
 }
 
-func Split(srcConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
-	tgConfigs := make(map[string]*clientcmdapi.Config, len(srcConfig.Contexts))
-	for ctxKey, ctxValue := range srcConfig.Contexts {
+func Split(kubeConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
+	singleConfigs := make(map[string]*clientcmdapi.Config, len(kubeConfig.Contexts))
+	for ctxKey, ctxValue := range kubeConfig.Contexts {
 		contexts := make(map[string]*clientcmdapi.Context, 1)
 		contexts[ctxKey] = ctxValue
 		clusters := make(map[string]*clientcmdapi.Cluster, 1)
-		clusters[ctxValue.Cluster] = srcConfig.Clusters[ctxValue.Cluster]
+		clusters[ctxValue.Cluster] = kubeConfig.Clusters[ctxValue.Cluster]
 		authInfos := make(map[string]*clientcmdapi.AuthInfo, 1)
-		authInfos[ctxValue.AuthInfo] = srcConfig.AuthInfos[ctxValue.AuthInfo]
-		tgConfigs[ctxKey] = &clientcmdapi.Config{
-			APIVersion: srcConfig.APIVersion,
-			Kind: srcConfig.Kind,
+		authInfos[ctxValue.AuthInfo] = kubeConfig.AuthInfos[ctxValue.AuthInfo]
+		singleConfigs[ctxKey] = &clientcmdapi.Config{
+			APIVersion:     kubeConfig.APIVersion,
+			Kind:           kubeConfig.Kind,
 			CurrentContext: ctxKey,
-			Contexts: contexts,
-			Clusters: clusters,
-			AuthInfos: authInfos,
+			Contexts:       contexts,
+			Clusters:       clusters,
+			AuthInfos:      authInfos,
 		}
 	}
-	return tgConfigs
+	return singleConfigs
 }
 
-func Save(configs map[string]*clientcmdapi.Config, configsPath string) (string, error) {
-	logger.SugaredLogger.Debugf("Check configs folder '%s'", configsPath)
-	checkErr := CheckKubeConfigsFolder(configsPath)
+func Save(singleConfigs map[string]*clientcmdapi.Config, singleConfigsPath string) error {
+	logger.SugaredLogger.Debugf("🐛 Check single configs folder '%s'", singleConfigsPath)
+	checkErr := CheckKubeConfigsFolder(singleConfigsPath)
 	if checkErr != nil {
-		return "", checkErr
+		return checkErr
 	}
 
-	for cfgKey, cfg := range configs {
-		logger.SugaredLogger.Debugf("Validate config '%s'", cfgKey)
+	for cfgKey, cfg := range singleConfigs {
+		logger.SugaredLogger.Debugf("🐛 Validate config '%s'", cfgKey)
 		valErr := validate(cfg)
 		if valErr != nil {
-			return "", valErr
+			return valErr
 		}
 
-		logger.SugaredLogger.Debugf("Write config to file '%s'", cfgKey)
-		writeErr := write(cfg, filepath.Join(configsPath, cfgKey))
+		logger.SugaredLogger.Debugf("🐛 Write config to file '%s'", cfgKey)
+		writeErr := write(cfg, filepath.Join(singleConfigsPath, cfgKey))
 		if writeErr != nil {
-			return "", writeErr
+			return writeErr
 		}
 	}
 
-	return configsPath, nil
+	return nil
 }
 
-func validate(config *clientcmdapi.Config) error {
-	validateErr := clientcmd.Validate(*config)
-	if clientcmd.IsConfigurationInvalid(validateErr) {
-		return validateErr
+func validate(kubeConfig *clientcmdapi.Config) error {
+	err := clientcmd.Validate(*kubeConfig)
+	if clientcmd.IsConfigurationInvalid(err) {
+		return err
 	}
 	return nil
 }
 
-func write(config *clientcmdapi.Config, filepath string) error {
-	return clientcmd.WriteToFile(*config, filepath)
+func write(kubeConfig *clientcmdapi.Config, filepath string) error {
+	return clientcmd.WriteToFile(*kubeConfig, filepath)
 }

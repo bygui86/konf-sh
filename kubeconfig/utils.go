@@ -30,7 +30,8 @@ func SetKubeConfigEnvVar(kubeConfigsPath string) error {
 	return envvar.Set(kubeConfigEnvVar, kubeConfigsPath)
 }
 
-func GetKubeConfig(home string) (string,error) {
+// TODO replace flag checking with cli flag on split command
+func GetKubeConfigFilePath(home string) (string,error) {
 	return flags.GetString(
 		kubeConfigFlagKey,
 		filepath.Join(home, kubeConfigFolderDefault, kubeConfigFilenameDefault),
