@@ -27,6 +27,7 @@ go run main.go
 | --- | --- | --- |
 | LOG_ENCODING | console, json| console |
 | LOG_LEVEL | debug, info, warn, error, fatal | info |
+| KUBECONFIG | - | (empty) |
 
 ---
 

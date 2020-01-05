@@ -1,9 +1,8 @@
 package utils
 
 import (
+	"bygui86/kubeconfigurator/config/envvar"
 	"os/user"
-
-	"bygui86/kubeconfigurator/envvar"
 )
 
 const (

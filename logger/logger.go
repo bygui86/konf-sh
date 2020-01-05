@@ -1,10 +1,9 @@
 package logger
 
 import (
+	"bygui86/kubeconfigurator/config/envvar"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-
-	"bygui86/kubeconfigurator/envvar"
 )
 
 const (
@@ -16,6 +15,7 @@ const (
 )
 
 var Logger *zap.Logger
+var SugaredLogger *zap.SugaredLogger
 
 func init() {
 	encoding := envvar.GetString(logEncodingEnvVar, logEncodingDefault)
@@ -36,31 +36,25 @@ func buildLogger(encoding string, level zapcore.Level) {
 		ErrorOutputPaths: []string{"stderr"},
 		EncoderConfig:    buildEncoderConfig(level),
 	}.Build()
+	SugaredLogger = Logger.Sugar()
 }
 
 func buildEncoderConfig(level zapcore.Level) zapcore.EncoderConfig{
 	if level == zapcore.DebugLevel {
 		return zapcore.EncoderConfig{
 			MessageKey: "message",
-
 			TimeKey:    "time",
-			//EncodeTime: zapcore.ISO8601TimeEncoder,
-			EncodeTime: zapcore.RFC3339TimeEncoder,
-
+			EncodeTime: zapcore.ISO8601TimeEncoder,
 			LevelKey:    "level",
 			EncodeLevel: zapcore.CapitalLevelEncoder,
-
 			CallerKey:    "caller",
 			EncodeCaller: zapcore.ShortCallerEncoder,
 		}
 	} else {
 		return zapcore.EncoderConfig{
 			MessageKey: "message",
-
 			TimeKey:    "time",
-			//EncodeTime: zapcore.ISO8601TimeEncoder,
-			EncodeTime: zapcore.RFC3339TimeEncoder,
-
+			EncodeTime: zapcore.ISO8601TimeEncoder,
 			LevelKey:    "level",
 			EncodeLevel: zapcore.CapitalLevelEncoder,
 		}
