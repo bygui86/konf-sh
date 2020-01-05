@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"go.uber.org/zap"
 	"os"
 	"path/filepath"
 
+	"bygui86/kubeconfigurator/logger"
 	"bygui86/kubeconfigurator/utils"
 
 	clientcmd "k8s.io/client-go/tools/clientcmd"
@@ -22,33 +23,39 @@ const (
 )
 
 func main() {
-	fmt.Println("🏠 Get HOME")
+	logger.Logger.Info("🏠 Get HOME")
 	home, homeErr := utils.GetHomeDir()
 	if homeErr != nil {
-		fmt.Println("❌ ERROR: " + homeErr.Error())
+		logger.Logger.Error("❌ error getting HOME environment variable",
+			zap.String("error", homeErr.Error()))
 		os.Exit(1)
 	}
 
-	fmt.Println("📚 Get Kubernetes configuration file")
+	logger.Logger.Info("📚 Get Kubernetes configuration file")
 	srcPath := filepath.Join(home, kubeConfigFolderDefault, kubeConfigFilenameDefault)
 	kubeConfigFilePath, getErr := getKubeConfigFlagValue(kubeConfigFlagKey, srcPath)
 	if getErr != nil {
-		fmt.Println("❌ ERROR: " + getErr.Error())
+		logger.Logger.Error("❌ error getting Kubernetes configuration file",
+			zap.String("source path", srcPath),
+			zap.String("error", getErr.Error()))
 		os.Exit(1)
 	}
 	srcConfig := getKubeConfig(kubeConfigFilePath)
 
-	fmt.Println("✂️ Split Kubernetes configuration file")
+	logger.Logger.Info("✂️ Split Kubernetes configuration file")
 	tgConfigs := splitKubeConfig(srcConfig)
 
-	fmt.Println("💾 Save single Kubernetes configuration files")
+	logger.Logger.Info("💾 Save single Kubernetes configuration files")
 	tgPath := filepath.Join(home, kubeConfigOutputFolderName)
 	configsPath, saveErr := saveKubeConfigs(tgConfigs, tgPath)
 	if saveErr != nil {
-		fmt.Println("❌ ERROR: " + saveErr.Error())
+		logger.Logger.Error("❌ error saving Kubernetes configuration files",
+			zap.String("target path", tgPath),
+			zap.String("error", saveErr.Error()))
 		os.Exit(1)
 	}
-	fmt.Printf("✅ Completed, files stored in '%s'\n", configsPath)
+	logger.Logger.Info("✅ Completed",
+		zap.String("configs path", configsPath))
 }
 
 func getKubeConfigFlagValue(flagKey, flagDefault string) (string,error){
@@ -81,19 +88,22 @@ func splitKubeConfig(srcConfig *clientcmdapi.Config) map[string]*clientcmdapi.Co
 }
 
 func saveKubeConfigs(configs map[string]*clientcmdapi.Config, configsPath string) (string, error) {
-	fmt.Printf("Check '%s' configs folder\n", configsPath)
+	logger.Logger.Debug("Check configs folder",
+		zap.String("configs path", configsPath))
 	checkErr := utils.CheckKubeConfigsFolder(configsPath)
 	if checkErr != nil {
 		return "", checkErr
 	}
 
 	for cfgKey, cfg := range configs {
-		fmt.Printf("Validate config '%s'\n", cfgKey)
+		logger.Logger.Debug("Validate config",
+			zap.String("config key", cfgKey))
 		valErr := validateKubeConfig(cfg)
 		if valErr != nil {
 			return "", valErr
 		}
-		fmt.Printf("Write config '%s' to file\n", cfgKey)
+		logger.Logger.Debug("Write config to file",
+			zap.String("config key", cfgKey))
 		writeErr := writeKubeConfig(cfg, filepath.Join(configsPath, cfgKey))
 		if writeErr != nil {
 			return "", writeErr

@@ -4,8 +4,39 @@ Kubernetes Configurator
 
 `kubeconfigurator` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
 
+---
+
+## Run
+```shell
+go run main.go
+```
+
+---
+
+## Configurations
+
+### Flags
+
+| Flag | Available values | Default |
+| --- | --- | --- |
+| kubeconfig | - | $HOME/.kube/config |
+
+### Environment variables
+
+| Key | Available values | Default |
+| --- | --- | --- |
+| LOG_ENCODING | console, json| console |
+| LOG_LEVEL | debug, info, warn, error, fatal | info |
+
+---
 
 ## Links
+
+## Golang
+- https://github.com/golang/go/wiki/Modules
+### Logger
+- https://github.com/uber-go/zap
+- https://github.com/sandipb/zap-examples
 
 ## Kubernetes
 - https://github.com/kubernetes/kubernetes/blob/master/staging/README.md
