@@ -2,9 +2,12 @@ package completion
 
 import (
 	"github.com/urfave/cli"
+	
+	"bygui86/konf/logger"
 )
 
 func BuildCommand() *cli.Command {
+	logger.Logger.Debug("🐛 Create completion command")
 	return &cli.Command{
 		Name:  "completion",
 		Usage: "Generate shell auto-completion script",

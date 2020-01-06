@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"bygui86/kubeconfigurator/commons"
-	"bygui86/kubeconfigurator/logger"
-	"bygui86/kubeconfigurator/utils"
+	"bygui86/konf/commons"
+	"bygui86/konf/logger"
+	"bygui86/konf/utils"
 
 	"github.com/urfave/cli"
 )

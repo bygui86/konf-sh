@@ -4,10 +4,10 @@ import (
 	"os"
 	"sort"
 
-	"bygui86/kubeconfigurator/commands/completion"
-	"bygui86/kubeconfigurator/commands/list"
-	"bygui86/kubeconfigurator/commands/split"
-	"bygui86/kubeconfigurator/logger"
+	"bygui86/konf/commands/completion"
+	"bygui86/konf/commands/list"
+	"bygui86/konf/commands/split"
+	"bygui86/konf/logger"
 
 	"github.com/urfave/cli"
 )

@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/user"
 
-	"bygui86/kubeconfigurator/config/envvar"
-	"bygui86/kubeconfigurator/logger"
+	"bygui86/konf/config/envvar"
+	"bygui86/konf/logger"
 )
 
 const (

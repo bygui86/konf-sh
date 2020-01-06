@@ -12,7 +12,6 @@ const (
 	// Environment variables
 	CustomKubeConfigPathEnvVar = "KONF_KUBE_CONFIG_PATH"
 	SingleConfigsPathEnvVar    = "KONF_SINGLE_KUBE_CONFIGS_PATH"
-	CompletionShellEnvVar      = "KONF_COMPLETION_SHELL"
 	KubeConfigEnvVar           = "KUBECONFIG"
 
 	// Defaults

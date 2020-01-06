@@ -1,4 +1,4 @@
-module bygui86/kubeconfigurator
+module bygui86/konf
 
 go 1.13
 

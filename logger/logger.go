@@ -1,11 +1,10 @@
 package logger
 
 import (
+	"fmt"
 	"os"
 
-	"bygui86/kubeconfigurator/config/envvar"
-
-	"fmt"
+	"bygui86/konf/config/envvar"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
