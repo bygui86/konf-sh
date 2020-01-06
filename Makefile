@@ -31,19 +31,28 @@ list :		## List a set of sample Kubernetes configurations files
 	@export GO111MODULE=auto && \
 	konf list --single-configs ./examples/configs
 
-view-local : build split		## View local Kubernetes context (current shell)
+# view : build split		## View local and global Kubernetes contexts
+view :		## View local and global Kubernetes contexts
 	@echo "Work in progress!"
 	@echo ""
 
-view-global : build split		## View global Kubernetes context
+# view-local : build split		## View local Kubernetes context (current shell)
+view-local :		## View local Kubernetes context (current shell)
 	@echo "Work in progress!"
 	@echo ""
 
-set-local : build split		## Set local Kubernetes context (current shell)
+# view-global : build split		## View global Kubernetes context
+view-global :		## View global Kubernetes context
 	@echo "Work in progress!"
 	@echo ""
 
-set-global : build split		## Set global Kubernetes context
+# set-local : build split		## Set local Kubernetes context (current shell)
+set-local :		## Set local Kubernetes context (current shell)
+	@echo "Work in progress!"
+	@echo ""
+
+# set-global : build split		## Set global Kubernetes context
+set-global :		## Set global Kubernetes context
 	@echo "Work in progress!"
 	@echo ""
 

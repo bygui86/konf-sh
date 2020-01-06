@@ -10,21 +10,53 @@ Kubernetes Configurator
 ```shell
 git clone git@github.com:bygui86/konf.git
 cd konf
-go build -o konf .
+make build
 ```
 
 ---
 
 ## Run
-
-### from source
 ```shell
-go run main.go
+# from source
+make debug
+
+# from bin
+make run
 ```
 
-### from bin
+### Split a sample Kubernetes configuration file
 ```shell
-konf
+make split
+```
+
+### List a set of sample Kubernetes configurations files
+```shell
+make list
+```
+
+### View local and global Kubernetes contexts
+```shell
+make view
+```
+
+### View local Kubernetes context (current shell)
+```shell
+make view-local
+```
+
+### View global Kubernetes context
+```shell
+make view-global
+```
+
+### Set local Kubernetes context (current shell)
+```shell
+make set-local
+```
+
+### Set global Kubernetes context
+```shell
+make set-global
 ```
 
 ---
@@ -34,6 +66,7 @@ konf
 - [x] split
 - [x] list
 - [ ] view
+    - [ ] all
     - [ ] local
     - [ ] global
 - [ ] set

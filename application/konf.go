@@ -6,7 +6,9 @@ import (
 
 	"bygui86/konf/commands/completion"
 	"bygui86/konf/commands/list"
+	"bygui86/konf/commands/set"
 	"bygui86/konf/commands/split"
+	"bygui86/konf/commands/view"
 	"bygui86/konf/logger"
 
 	"github.com/urfave/cli"
@@ -59,6 +61,8 @@ func addCommands(app *cli.App) {
 	app.Commands = []cli.Command{
 		*split.BuildCommand(),
 		*list.BuildCommand(),
+		*view.BuildCommand(),
+		*set.BuildCommand(),
 		*completion.BuildCommand(),
 	}
 }
