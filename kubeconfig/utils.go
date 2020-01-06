@@ -1,50 +1,24 @@
 package kubeconfig
 
 import (
-	"os"
 	"path/filepath"
 
+	"bygui86/kubeconfigurator/commons"
 	"bygui86/kubeconfigurator/config/envvar"
-	"bygui86/kubeconfigurator/config/flags"
-)
-
-const (
-	// ENV-VAR
-	kubeConfigEnvVar = "KUBECONFIG"
-	kubeConfigDefault = ""
-
-	// FLAGS
-	kubeConfigFlagKey = "kubeconfig"
-	kubeConfigFolderDefault = ".kube"
-	kubeConfigFilenameDefault = "config"
-
-	// OTHERS
-	kubeConfigOutputFolderPerm = 0755
 )
 
 func GetKubeConfigEnvVar() string {
-	return envvar.GetString(kubeConfigEnvVar, kubeConfigDefault)
+	return envvar.GetString(commons.KubeConfigEnvVar, commons.KubeConfigEnvVarDefault)
 }
 
-func SetKubeConfigEnvVar(kubeConfigsPath string) error {
-	return envvar.Set(kubeConfigEnvVar, kubeConfigsPath)
+func SetKubeConfigEnvVar(kubeConfigNewValue string) error {
+	return envvar.Set(commons.KubeConfigEnvVar, kubeConfigNewValue)
 }
 
-// TODO replace flag checking with cli flag on split command
-func GetKubeConfigFilePath(home string) (string,error) {
-	return flags.GetString(
-		kubeConfigFlagKey,
-		filepath.Join(home, kubeConfigFolderDefault, kubeConfigFilenameDefault),
-		"(optional) absolute path to the kubeconfig file")
+func GetCustomKubeConfigPathDefault(home string) string {
+	return filepath.Join(home, commons.CustomKubeConfigPathDefault)
 }
 
-func CheckKubeConfigsFolder(path string) error {
-	_, statErr := os.Stat(path)
-	if statErr != nil {
-		if os.IsNotExist(statErr) {
-			return os.Mkdir(path, kubeConfigOutputFolderPerm)
-		}
-		return statErr
-	}
-	return nil
+func GetSingleConfigsPathDefault(home string) string {
+	return filepath.Join(home, commons.SingleConfigsPathDefault)
 }

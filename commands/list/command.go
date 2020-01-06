@@ -1,4 +1,4 @@
-package split
+package list
 
 import (
 	"bygui86/kubeconfigurator/commons"
@@ -9,19 +9,12 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	home := utils.GetHomeDirOrExit("split")
+	home := utils.GetHomeDirOrExit("list")
 	return &cli.Command{
-		Name:   "split",
-		Usage:  "Split kube-config into multiple single Kubernetes configurations based on the context",
-		Action: split,
+		Name:   "list",
+		Usage:  "List all single Kubernetes configurations",
+		Action: list,
 		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-				Usage:    commons.CustomKubeConfigFlagDescription,
-				EnvVar:   commons.CustomKubeConfigPathEnvVar,
-				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
-				Required: false,
-			},
 			cli.StringFlag{
 				Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
 				Usage:    commons.SingleConfigsFlagDescription,

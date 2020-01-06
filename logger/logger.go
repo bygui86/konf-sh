@@ -1,17 +1,23 @@
 package logger
 
 import (
+	"os"
+
 	"bygui86/kubeconfigurator/config/envvar"
+
+	"fmt"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
+// TODO move to konf.go flags?
 const (
-	logEncodingEnvVar = "LOG_ENCODING"
-	logLevelEnvVar = "LOG_LEVEL"
+	logEncodingEnvVar = "KONF_LOG_ENCODING"
+	logLevelEnvVar    = "KONF_LOG_LEVEL"
 
 	logEncodingDefault = "console"
-	logLevelDefault = "info"
+	logLevelDefault    = "info"
 )
 
 var Logger *zap.Logger
@@ -23,7 +29,8 @@ func init() {
 	level := zapcore.InfoLevel
 	err := level.Set(levelString)
 	if err != nil {
-		panic(err)
+		fmt.Printf("❌ Error initializing zap logger: %s\n", err.Error())
+		os.Exit(1)
 	}
 	buildLogger(encoding, level)
 }
@@ -39,14 +46,14 @@ func buildLogger(encoding string, level zapcore.Level) {
 	SugaredLogger = Logger.Sugar()
 }
 
-func buildEncoderConfig(level zapcore.Level) zapcore.EncoderConfig{
+func buildEncoderConfig(level zapcore.Level) zapcore.EncoderConfig {
 	if level == zapcore.DebugLevel {
 		return zapcore.EncoderConfig{
-			MessageKey: "message",
-			TimeKey:    "time",
-			EncodeTime: zapcore.ISO8601TimeEncoder,
-			LevelKey:    "level",
-			EncodeLevel: zapcore.CapitalLevelEncoder,
+			MessageKey:   "message",
+			TimeKey:      "time",
+			EncodeTime:   zapcore.ISO8601TimeEncoder,
+			LevelKey:     "level",
+			EncodeLevel:  zapcore.CapitalLevelEncoder,
 			CallerKey:    "caller",
 			EncodeCaller: zapcore.ShortCallerEncoder,
 		}

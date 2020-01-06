@@ -1,19 +1,19 @@
 package kubeconfig
 
 import (
-	"path/filepath"
-
-	"bygui86/kubeconfigurator/logger"
-
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
+
+	"bygui86/kubeconfigurator/logger"
 )
 
-func Get(kubeConfigFilePath string) *clientcmdapi.Config {
+func Load(kubeConfigFilePath string) *clientcmdapi.Config {
+	logger.SugaredLogger.Debugf("🐛 Load Kubernetes configuration from file '%s'", kubeConfigFilePath)
 	return clientcmd.GetConfigFromFileOrDie(kubeConfigFilePath)
 }
 
 func Split(kubeConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
+	logger.Logger.Debug("🐛 Split Kubernetes configuration")
 	singleConfigs := make(map[string]*clientcmdapi.Config, len(kubeConfig.Contexts))
 	for ctxKey, ctxValue := range kubeConfig.Contexts {
 		contexts := make(map[string]*clientcmdapi.Context, 1)
@@ -34,31 +34,8 @@ func Split(kubeConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
 	return singleConfigs
 }
 
-func Save(singleConfigs map[string]*clientcmdapi.Config, singleConfigsPath string) error {
-	logger.SugaredLogger.Debugf("🐛 Check single configs folder '%s'", singleConfigsPath)
-	checkErr := CheckKubeConfigsFolder(singleConfigsPath)
-	if checkErr != nil {
-		return checkErr
-	}
-
-	for cfgKey, cfg := range singleConfigs {
-		logger.SugaredLogger.Debugf("🐛 Validate config '%s'", cfgKey)
-		valErr := validate(cfg)
-		if valErr != nil {
-			return valErr
-		}
-
-		logger.SugaredLogger.Debugf("🐛 Write config to file '%s'", cfgKey)
-		writeErr := write(cfg, filepath.Join(singleConfigsPath, cfgKey))
-		if writeErr != nil {
-			return writeErr
-		}
-	}
-
-	return nil
-}
-
-func validate(kubeConfig *clientcmdapi.Config) error {
+func Validate(kubeConfig *clientcmdapi.Config) error {
+	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", kubeConfig.CurrentContext)
 	err := clientcmd.Validate(*kubeConfig)
 	if clientcmd.IsConfigurationInvalid(err) {
 		return err
@@ -66,6 +43,7 @@ func validate(kubeConfig *clientcmdapi.Config) error {
 	return nil
 }
 
-func write(kubeConfig *clientcmdapi.Config, filepath string) error {
+func Write(kubeConfig *clientcmdapi.Config, filepath string) error {
+	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file '%s'", kubeConfig.CurrentContext, filepath)
 	return clientcmd.WriteToFile(*kubeConfig, filepath)
 }

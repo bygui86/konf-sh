@@ -1,10 +1,13 @@
 package application
 
 import (
-	"bygui86/kubeconfigurator/commands/split"
-	"bygui86/kubeconfigurator/logger"
 	"os"
 	"sort"
+
+	"bygui86/kubeconfigurator/commands/completion"
+	"bygui86/kubeconfigurator/commands/list"
+	"bygui86/kubeconfigurator/commands/split"
+	"bygui86/kubeconfigurator/logger"
 
 	"github.com/urfave/cli"
 )
@@ -18,8 +21,8 @@ func Create() *KubeConfiguratorApp {
 	addGlobalConfig(app)
 	//addGlobalFlags(app)
 	//addBefore(app)
-	addBashCompletion(app)
 	addCommands(app)
+
 	lastConfig(app)
 	return &KubeConfiguratorApp{
 		app: app,
@@ -30,8 +33,11 @@ func addGlobalConfig(app *cli.App) {
 	app.Name = "konf"
 	app.Usage = "Kubernetes Configurator for an easy daily job"
 	app.Version = "0.0.1"
+	app.UseShortOptionHandling = true
+	app.EnableBashCompletion = true
 }
 
+// TODO add logging flags?
 //func addGlobalFlags(app *cli.App) {
 //	app.Flags = []cli.Flag{
 //		cli.StringFlag{
@@ -42,20 +48,18 @@ func addGlobalConfig(app *cli.App) {
 //	}
 //}
 
+// TODO add logger init?
 //func addBefore(app *cli.App) {
 //	app.Before = func(ctx *cli.Context) error {
 //		return nil
 //	}
 //}
 
-func addBashCompletion(app *cli.App) {
-	app.EnableBashCompletion = true
-}
-
 func addCommands(app *cli.App) {
 	app.Commands = []cli.Command{
 		*split.BuildCommand(),
-		//*completion.BuildCommand(),
+		*list.BuildCommand(),
+		*completion.BuildCommand(),
 	}
 }
 
@@ -70,5 +74,6 @@ func (k *KubeConfiguratorApp) Start() {
 	err := k.app.Run(os.Args)
 	if err != nil {
 		logger.SugaredLogger.Errorf("❌ Error starting application: %s", err.Error())
+		os.Exit(2)
 	}
 }
