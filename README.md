@@ -65,10 +65,10 @@ make set-global
 
 - [x] split
 - [x] list
-- [ ] view
-    - [ ] all
-    - [ ] local
-    - [ ] global
+- [x] view
+    - [x] all
+    - [x] local
+    - [x] global
 - [ ] set
     - [ ] local
     - [ ] global

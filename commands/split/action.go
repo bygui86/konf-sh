@@ -12,13 +12,13 @@ import (
 	"github.com/urfave/cli"
 )
 
-// TODO implement flags/env-vars usage
 func split(ctx *cli.Context) error {
 	logger.Logger.Info("")
+	logger.Logger.Debug("🐛 Executing SPLIT command")
+	logger.Logger.Debug("")
 
-	logger.Logger.Info("📖 Load Kubernetes configuration")
 	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
-	logger.SugaredLogger.Debugf("🐛 Kubernetes configuration file path: %s", kubeConfigFilePath)
+	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 

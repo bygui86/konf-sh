@@ -14,6 +14,8 @@ import (
 
 func list(ctx *cli.Context) error {
 	logger.Logger.Info("")
+	logger.Logger.Debug("🐛 Executing LIST command")
+	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
 	singleConfigsPath := ctx.String(commons.SingleConfigsFlagName)
