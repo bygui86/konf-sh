@@ -57,4 +57,5 @@ Thumbs.db
 ########### Project specific
 # vendor/*
 # !vendor/.gitkeep
-kubeconfigurator
+konf
+examples/configs/*

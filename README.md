@@ -6,6 +6,15 @@ Kubernetes Configurator
 
 ---
 
+## Build
+```shell
+git clone git@github.com:bygui86/konf.git
+cd konf
+go build -o konf .
+```
+
+---
+
 ## Run
 
 ### from source
@@ -15,20 +24,24 @@ go run main.go
 
 ### from bin
 ```shell
-konf ...
+konf
 ```
 
 ---
 
 ## Commands
 
-- [ ] split
-- [ ] list
-- [ ] set
-    - [ ] global
+- [x] split
+- [x] list
+- [ ] view
     - [ ] local
-- [ ] help
-- [ ] completion
+    - [ ] global
+- [ ] set
+    - [ ] local
+    - [ ] global
+- [x] completion
+- [x] help
+- [x] version
 
 ---
 
@@ -36,21 +49,73 @@ konf ...
 
 ### Flags
 
-`TBD`
-
-| Flag | Available values | Default |
-| --- | --- | --- |
-| kubeconfig | - | $HOME/.kube/config |
+| Flag | Command list | Available values | Default | Corresponding env-var | Description |
+| --- | --- | --- | --- | --- | --- |
+| --log-encoding | (global) | console, json | console | KONF_LOG_ENCODING | Set logger encoding |
+| --log-level | (global) | debug, info, warn, error, dpanic, panic, fatal | info | KONF_LOG_LEVEL | Set logger level |
+| --kube-config | split | - | $HOME/.kube/config | KONF_KUBE_CONFIG_PATH | Specify a custom Kubernetes configuration file path |
+| --single-configs | split, list | - | $HOME/.kube/configs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
 
 ### Environment variables
 
-`TBD`
+| Key | Command list | Available values | Default | Corresponding flag | Description |
+| --- | --- | --- | --- | --- | --- |
+| KONF_LOG_ENCODING | (global) | console, json | console | --log-encoding | Set logger encoding |
+| KONF_LOG_LEVEL | (global) | debug, info, warn, error, dpanic, panic, fatal | info | --log-level | Set logger level |
+| KONF_KUBE_CONFIG_PATH | split | - | $HOME/.kube/config | --kube-config | Specify a custom Kubernetes configuration file path |
+| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list | - | $HOME/.kube/configs/ | --single-configs | Specify the single Kubernetes configurations files path |
 
-| Key | Available values | Default |
+---
+
+## Error codes
+
+| Code | Command | Description |
 | --- | --- | --- |
-| LOG_ENCODING | console, json | console |
-| LOG_LEVEL | debug, info, warn, error, dpanic, panic, fatal | info |
-| KUBECONFIG | - | (empty) |
+| 1 | (global) | Error initializing zap logger |
+| 2 | (global) | Error starting application |
+| 3 | (global) | Error creating specific application command |
+| 11 | split | Error checking existence of Kubernetes configurations files path |
+| 12 | split | Error validating single Kubernetes configuration |
+| 13 | split | Error writing single Kubernetes configuration to file |
+| 21 | list | Error listing single Kubernetes configurations |
+| 3x | view | TBD |
+| 4x | set | TBD |
+
+---
+
+## Auto-completion
+
+### BASH
+
+Source the `commands/completion/bash_autocomplete` file in your `.bashrc` or `.bash_profile` file. 
+
+```shell
+go build -o konf .
+source <(konf completion bash)
+konf
+# now play with tab
+```
+
+### ZSH
+
+Source the `commands/completion/zsh_autocomplete` file in your `.zshrc` file, while setting the `PROG` variable to the name of your program.
+
+```shell
+go build -o konf .
+PROG=konf source <(konf completion zsh)
+konf
+# now play with tab
+```
+
+---
+
+## TODO list
+
+- [ ] implement commands
+- [ ] documentation
+- [x] makefile
+- [ ] testing
+- [ ] `TBD` container (see `hadolint` as example)
 
 ---
 
