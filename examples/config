@@ -19,7 +19,7 @@ contexts:
     namespace: example
     user: jack
   name: context_b
-current-context: cluster_a
+current-context: context_a
 kind: Config
 preferences: {}
 users:
