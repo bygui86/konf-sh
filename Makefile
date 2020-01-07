@@ -31,8 +31,7 @@ set-local : build		## Set local Kubernetes context (current shell)
 	@echo ""
 
 set-global : build		## Set global Kubernetes context
-	@echo "Work in progress!"
-	@echo ""
+	konf set global context_b --kube-config ./examples/config
 
 view : build		## View local and global Kubernetes contexts
 	konf view --kube-config ./examples/config

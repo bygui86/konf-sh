@@ -115,15 +115,13 @@ make view-global
 | 2 | (global) | Error starting application |
 | 3 | (global) | Error creating specific application command |
 | 11 | split | Error checking existence of Kubernetes configurations files path |
-| 12 | split | Error validating single Kubernetes configuration |
-| 13 | split | Error writing single Kubernetes configuration to file |
+| 12 | split, set global | Error validating single Kubernetes configuration |
+| 13 | split, set global | Error writing single Kubernetes configuration to file |
 | 21 | list | Error listing single Kubernetes configurations |
 | 31 | set local | Error checking existence of Kubernetes configurations files path |
-| 32 | set local | Error getting Kubernetes context: context argument not specified |
+| 32 | set local, set global | Error getting Kubernetes context: context argument not specified |
 | 33 | set local | Error checking existence of Kubernetes context |
-| 34 | set local | Error setting local Kubernetes context (env-var KUBECONFIG) |
-
-`MISSING set global command error codes`
+| 34 | set global | Error checking existence of context in Kubernetes configuration |
 
 ---
 
@@ -155,12 +153,12 @@ konf
 
 ## TODO list
 
-- [ ] implement commands
+- [x] implement commands
 - [x] implement properly logging flags
 - [x] documentation
 - [x] makefile
-- [ ] testing
 - [ ] container (see `hadolint` as example)
+- [ ] testing
 
 ---
 
