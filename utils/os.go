@@ -41,11 +41,11 @@ func CheckIfFileExist(filepath string) error {
 	return nil
 }
 
-func GetHomeDirOrExit(command string) string {
+func GetHomeDirOrExit(methodCaller string) string {
 	logger.Logger.Debug("🐛 Get HOME path")
 	home, homeErr := GetHomeDir()
 	if homeErr != nil {
-		logger.SugaredLogger.Errorf("❌ Error creating '%s' command - Error getting HOME environment variable: %s", command, homeErr.Error())
+		logger.SugaredLogger.Errorf("❌ Error creating '%s' methodCaller - Error getting HOME environment variable: '%s'", methodCaller, homeErr.Error())
 		os.Exit(3)
 	}
 	logger.SugaredLogger.Debugf("🐛 HOME path: '%s'", home)

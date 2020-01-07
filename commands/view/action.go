@@ -4,6 +4,7 @@ import (
 	"bygui86/konf/commons"
 	"bygui86/konf/kubeconfig"
 	"bygui86/konf/logger"
+	"bygui86/konf/utils"
 
 	"github.com/urfave/cli"
 )
@@ -28,7 +29,7 @@ func viewLocal(ctx *cli.Context) error {
 	if kubeConfig != "" {
 		logger.SugaredLogger.Infof("💻 Local Kubernetes context: '%s'", kubeConfig)
 	} else {
-		logger.SugaredLogger.Infof("💻 No local Kubernetes context set")
+		logger.SugaredLogger.Infof("💻 No local Kubernetes context set or default to '%s/%s'", utils.GetHomeDirOrExit("view-local"), commons.CustomKubeConfigPathDefault)
 	}
 
 	logger.Logger.Info("")
@@ -40,6 +41,7 @@ func viewGlobal(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing VIEW-GLOBAL command")
 	logger.Logger.Debug("")
 
+	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
 	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
