@@ -4,13 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"bygui86/konf/config/envvar"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-// TODO move to konf.go flags?
 const (
 	logEncodingEnvVar = "KONF_LOG_ENCODING"
 	logLevelEnvVar    = "KONF_LOG_LEVEL"
@@ -23,15 +20,21 @@ var Logger *zap.Logger
 var SugaredLogger *zap.SugaredLogger
 
 func init() {
-	encoding := envvar.GetString(logEncodingEnvVar, logEncodingDefault)
-	levelString := envvar.GetString(logLevelEnvVar, logLevelDefault)
-	level := zapcore.InfoLevel
-	err := level.Set(levelString)
+	encoding := os.Getenv(logEncodingEnvVar)
+	if encoding == "" {
+		encoding = logEncodingDefault
+	}
+	level := os.Getenv(logLevelEnvVar)
+	if encoding == "" {
+		encoding = logLevelDefault
+	}
+	zapLevel := zapcore.InfoLevel
+	err := zapLevel.Set(level)
 	if err != nil {
 		fmt.Printf("❌ Error initializing zap logger: %s\n", err.Error())
 		os.Exit(1)
 	}
-	buildLogger(encoding, level)
+	buildLogger(encoding, zapLevel)
 }
 
 func buildLogger(encoding string, level zapcore.Level) {

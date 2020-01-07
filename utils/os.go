@@ -1,10 +1,10 @@
 package utils
 
 import (
+	"errors"
 	"os"
 	"os/user"
 
-	"bygui86/konf/config/envvar"
 	"bygui86/konf/logger"
 )
 
@@ -15,7 +15,7 @@ const (
 )
 
 func CheckIfFolderExist(path string, createIfNot bool) error {
-	_, err := os.Stat(path)
+	info, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
 			if createIfNot {
@@ -23,6 +23,20 @@ func CheckIfFolderExist(path string, createIfNot bool) error {
 			}
 		}
 		return err
+	}
+	if !info.IsDir() {
+		return errors.New("specified path refers to a file, not a folder")
+	}
+	return nil
+}
+
+func CheckIfFileExist(filepath string) error {
+	info, err := os.Stat(filepath)
+	if err != nil {
+		return err
+	}
+	if info.IsDir() {
+		return errors.New("specified path refers to a folder, not a file")
 	}
 	return nil
 }
@@ -43,7 +57,7 @@ func GetHomeDir() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return envvar.GetString(homeEnvVar, userHome), nil
+	return GetString(homeEnvVar, userHome), nil
 }
 
 func getCurrentUserHomeDir() (string, error) {
