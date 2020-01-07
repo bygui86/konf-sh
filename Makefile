@@ -4,7 +4,7 @@
 
 
 # CONFIG
-.PHONY: build debug help list print-variables run set-global set-local split view-global view-local
+.PHONY: build debug help list print-variables run set-global set-local split view view-global view-local
 .DEFAULT_GOAL := help
 
 
@@ -14,46 +14,33 @@ build :		## Build
 	go build -o konf .
 
 run : build		## Run
-	@export GO111MODULE=auto && \
 	konf
 
 debug :		## Debug running directly from source code
-	@export GO111MODULE=auto && \
 	go run main.go
 
-# split : build		## Split a sample Kubernetes configuration file
-split :		## Split a sample Kubernetes configuration file
-	@export GO111MODULE=auto && \
+split : build		## Split a sample Kubernetes configuration file
 	konf split --kube-config ./examples/config --single-configs ./examples/configs
 
-# list : build split		## List a set of sample Kubernetes configurations files
-list :		## List a set of sample Kubernetes configurations files
-	@export GO111MODULE=auto && \
+list : build		## List a set of sample Kubernetes configurations files
 	konf list --single-configs ./examples/configs
 
-# set-local : build split		## Set local Kubernetes context (current shell)
-set-local :		## Set local Kubernetes context (current shell)
-	@export GO111MODULE=auto && \
-	konf set local context_b --single-configs ./examples/configs
+set-local : build		## Set local Kubernetes context (current shell)
+	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
+	@echo "Please manually execute 'eval $(konf set local context_b --single-configs ./examples/configs)'"
+	@echo ""
 
-# set-global : build split		## Set global Kubernetes context
-set-global :		## Set global Kubernetes context
+set-global : build		## Set global Kubernetes context
 	@echo "Work in progress!"
 	@echo ""
 
-# view : build split set-local set-global		## View local and global Kubernetes contexts
-view :		## View local and global Kubernetes contexts
-	@export GO111MODULE=auto && \
+view : build		## View local and global Kubernetes contexts
 	konf view --kube-config ./examples/config
 
-# view-local : build split set-local		## View local Kubernetes context (current shell)
-view-local :		## View local Kubernetes context (current shell)
-	@export GO111MODULE=auto && \
+view-local : build		## View local Kubernetes context (current shell)
 	konf view local
 
-# view-global : build split set-global		## View global Kubernetes context
-view-global :		## View global Kubernetes context
-	@export GO111MODULE=auto && \
+view-global : build		## View global Kubernetes context
 	konf view global --kube-config ./examples/config
 
 help :		## Help
