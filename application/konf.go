@@ -36,7 +36,7 @@ func Create() *KubeConfiguratorApp {
 }
 
 func setGlobalConfig(app *cli.App) {
-	// logger.Logger.Debug("🐛 Setting global configurations")
+	logger.Logger.Debug("🐛 Setting global configurations")
 	app.Name = appName
 	app.Usage = appUsage
 	app.Version = appVersion
@@ -45,7 +45,7 @@ func setGlobalConfig(app *cli.App) {
 }
 
 func addCommands(app *cli.App) {
-	// logger.Logger.Debug("🐛 Adding commands")
+	logger.Logger.Debug("🐛 Adding commands")
 	app.Commands = []cli.Command{
 		*split.BuildCommand(),
 		*list.BuildCommand(),
@@ -56,7 +56,7 @@ func addCommands(app *cli.App) {
 }
 
 func setLastConfig(app *cli.App) {
-	// logger.Logger.Debug("🐛 Setting last configurations")
+	logger.Logger.Debug("🐛 Setting last configurations")
 	// sort flags in help section
 	sort.Sort(cli.FlagsByName(app.Flags))
 	// sort commands in help section
@@ -64,7 +64,7 @@ func setLastConfig(app *cli.App) {
 }
 
 func (k *KubeConfiguratorApp) Start() {
-	// logger.Logger.Debug("🐛 Starting application")
+	logger.Logger.Debug("🐛 Starting application")
 	err := k.app.Run(os.Args)
 	if err != nil {
 		logger.SugaredLogger.Errorf("❌ Error starting application: %s", err.Error())
