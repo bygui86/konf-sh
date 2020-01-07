@@ -17,6 +17,7 @@ func split(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing SPLIT command")
 	logger.Logger.Debug("")
 
+	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
 	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
@@ -58,7 +59,7 @@ func split(ctx *cli.Context) error {
 		}
 	}
 
-	logger.SugaredLogger.Infof("✅ Completed! Single configs files saved in '%s'", singleConfigsPath)
+	logger.SugaredLogger.Infof("✅ Completed! Single Kubernetes configurations files saved in '%s'", singleConfigsPath)
 	logger.Logger.Info("")
 	return nil
 }

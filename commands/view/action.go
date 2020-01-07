@@ -14,6 +14,7 @@ func view(ctx *cli.Context) error {
 
 	viewLocal(ctx)
 	viewGlobal(ctx)
+
 	return nil
 }
 
@@ -22,11 +23,12 @@ func viewLocal(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing VIEW-LOCAL command")
 	logger.Logger.Debug("")
 
+	logger.SugaredLogger.Debugf("🐛 Get '%s' environment variable", commons.KubeConfigEnvVar)
 	kubeConfig := kubeconfig.GetKubeConfigEnvVar()
 	if kubeConfig != "" {
-		logger.SugaredLogger.Infof("💻 Local Kuberntes context: '%s'", kubeConfig)
+		logger.SugaredLogger.Infof("💻 Local Kubernetes context: '%s'", kubeConfig)
 	} else {
-		logger.SugaredLogger.Infof("💻 No local Kuberntes context set")
+		logger.SugaredLogger.Infof("💻 No local Kubernetes context set")
 	}
 
 	logger.Logger.Info("")
@@ -43,7 +45,7 @@ func viewGlobal(ctx *cli.Context) error {
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 
-	logger.SugaredLogger.Infof("🌍 Global Kuberntes context: '%s'", kubeConfig.CurrentContext)
+	logger.SugaredLogger.Infof("🌍 Global Kubernetes context: '%s'", kubeConfig.CurrentContext)
 
 	logger.Logger.Info("")
 	return nil
