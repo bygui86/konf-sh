@@ -1,10 +1,12 @@
 package kubeconfig
 
 import (
-	"k8s.io/client-go/tools/clientcmd"
-	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
+	"errors"
 
 	"bygui86/konf/logger"
+
+	"k8s.io/client-go/tools/clientcmd"
+	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )
 
 func Load(kubeConfigFilePath string) *clientcmdapi.Config {
@@ -46,4 +48,15 @@ func Validate(kubeConfig *clientcmdapi.Config) error {
 func Write(kubeConfig *clientcmdapi.Config, filepath string) error {
 	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file '%s'", kubeConfig.CurrentContext, filepath)
 	return clientcmd.WriteToFile(*kubeConfig, filepath)
+}
+
+func CheckIfContextExist(kubeConfig *clientcmdapi.Config, context string) error {
+	logger.SugaredLogger.Debugf("🐛 Check context '%s' existence in Kubernetes configuration '%s'", context, kubeConfig.CurrentContext)
+	ctxValue := kubeConfig.Contexts[context]
+	if ctxValue == nil {
+		logger.SugaredLogger.Debugf("🐛 Context '%s' not found", context)
+		return errors.New("context not found")
+	}
+	logger.SugaredLogger.Debugf("🐛 Context '%s' is valid", context)
+	return nil
 }

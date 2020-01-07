@@ -42,13 +42,6 @@ func BuildCommand() *cli.Command {
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 						Required: false,
 					},
-					cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
-						Usage:    commons.SingleConfigsFlagDescription,
-						EnvVar:   commons.SingleConfigsPathEnvVar,
-						Value:    kubeconfig.GetSingleConfigsPathDefault(home),
-						Required: false,
-					},
 				},
 			},
 		},
