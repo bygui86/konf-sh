@@ -7,18 +7,8 @@ import (
 	"bygui86/konf/utils"
 )
 
-const (
-	kubeConfigEnvVar = "KUBECONFIG"
-
-	kubeConfigEnvVarDefault = ""
-)
-
 func GetKubeConfigEnvVar() string {
-	return utils.GetString(kubeConfigEnvVar, kubeConfigEnvVarDefault)
-}
-
-func SetKubeConfigEnvVar(kubeConfigNewValue string) error {
-	return utils.Set(kubeConfigEnvVar, kubeConfigNewValue)
+	return utils.GetString(commons.KubeConfigEnvVar, commons.KubeConfigEnvVarDefault)
 }
 
 func GetCustomKubeConfigPathDefault(home string) string {
