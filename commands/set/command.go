@@ -20,6 +20,15 @@ func BuildCommand() *cli.Command {
 				Name:   "local",
 				Usage:  "Set local Kubernetes context (current shell)",
 				Action: setLocal,
+				Flags: []cli.Flag{
+					cli.StringFlag{
+						Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
+						Usage:    commons.SingleConfigsFlagDescription,
+						EnvVar:   commons.SingleConfigsPathEnvVar,
+						Value:    kubeconfig.GetSingleConfigsPathDefault(home),
+						Required: false,
+					},
+				},
 			},
 			{
 				Name:   "global",
@@ -31,6 +40,13 @@ func BuildCommand() *cli.Command {
 						Usage:    commons.CustomKubeConfigFlagDescription,
 						EnvVar:   commons.CustomKubeConfigPathEnvVar,
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
+						Required: false,
+					},
+					cli.StringFlag{
+						Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
+						Usage:    commons.SingleConfigsFlagDescription,
+						EnvVar:   commons.SingleConfigsPathEnvVar,
+						Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 						Required: false,
 					},
 				},
