@@ -34,6 +34,16 @@ make split
 make list
 ```
 
+### Set local Kubernetes context (current shell)
+```shell
+make set-local
+```
+
+### Set global Kubernetes context
+```shell
+make set-global
+```
+
 ### View local and global Kubernetes contexts
 ```shell
 make view
@@ -49,29 +59,19 @@ make view-local
 make view-global
 ```
 
-### Set local Kubernetes context (current shell)
-```shell
-make set-local
-```
-
-### Set global Kubernetes context
-```shell
-make set-global
-```
-
 ---
 
 ## Commands
 
 - [x] split
 - [x] list
+- [ ] set
+    - [ ] local
+    - [ ] global
 - [x] view
     - [x] all
     - [x] local
     - [x] global
-- [ ] set
-    - [ ] local
-    - [ ] global
 - [x] completion
 - [x] help
 - [x] version
@@ -80,21 +80,19 @@ make set-global
 
 ## Configurations
 
-### Flags
+### Flags `TO BE UPDATED`
 
 | Flag | Command list | Available values | Default | Corresponding env-var | Description |
 | --- | --- | --- | --- | --- | --- |
-| --log-encoding | (global) | console, json | console | KONF_LOG_ENCODING | Set logger encoding |
-| --log-level | (global) | debug, info, warn, error, dpanic, panic, fatal | info | KONF_LOG_LEVEL | Set logger level |
 | --kube-config | split | - | $HOME/.kube/config | KONF_KUBE_CONFIG_PATH | Specify a custom Kubernetes configuration file path |
 | --single-configs | split, list | - | $HOME/.kube/configs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
 
-### Environment variables
+### Environment variables `TO BE UPDATED`
 
 | Key | Command list | Available values | Default | Corresponding flag | Description |
 | --- | --- | --- | --- | --- | --- |
-| KONF_LOG_ENCODING | (global) | console, json | console | --log-encoding | Set logger encoding |
-| KONF_LOG_LEVEL | (global) | debug, info, warn, error, dpanic, panic, fatal | info | --log-level | Set logger level |
+| KONF_LOG_ENCODING | (global) | console, json | console | - | Set logger encoding |
+| KONF_LOG_LEVEL | (global) | debug, info, warn, error, fatal | info | - | Set logger level |
 | KONF_KUBE_CONFIG_PATH | split | - | $HOME/.kube/config | --kube-config | Specify a custom Kubernetes configuration file path |
 | KONF_SINGLE_KUBE_CONFIGS_PATH | split, list | - | $HOME/.kube/configs/ | --single-configs | Specify the single Kubernetes configurations files path |
 
@@ -111,8 +109,10 @@ make set-global
 | 12 | split | Error validating single Kubernetes configuration |
 | 13 | split | Error writing single Kubernetes configuration to file |
 | 21 | list | Error listing single Kubernetes configurations |
-| 3x | view | TBD |
-| 4x | set | TBD |
+| 31 | set local | Error checking existence of Kubernetes configurations files path |
+| 32 | set local | Error getting Kubernetes context: context argument not specified |
+| 33 | set local | Error checking existence of Kubernetes context |
+| 34 | set local | Error setting local Kubernetes context (env-var KUBECONFIG) |
 
 ---
 
@@ -145,6 +145,7 @@ konf
 ## TODO list
 
 - [ ] implement commands
+- [ ] implement properly logging flags
 - [ ] documentation
 - [x] makefile
 - [ ] testing
