@@ -157,7 +157,6 @@ konf
 - [x] implement properly logging flags
 - [x] documentation
 - [x] makefile
-- [ ] container (see `hadolint` as example)
 - [ ] testing
 
 ---
