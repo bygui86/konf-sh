@@ -23,6 +23,14 @@ func split(ctx *cli.Context) error {
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 
+	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration from '%s'", kubeConfigFilePath)
+	valErr := kubeconfig.Validate(kubeConfig)
+	if valErr != nil {
+		return cli.NewExitError(
+			fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, valErr.Error()),
+			12)
+	}
+
 	logger.Logger.Info("✂️  Split Kubernetes configuration")
 	singleConfigs := kubeconfig.Split(kubeConfig)
 
@@ -42,19 +50,19 @@ func split(ctx *cli.Context) error {
 	// TODO implement a mechanism to avoid complete fail if just 1 out of N configurations is not valid
 	for cfgKey, cfg := range singleConfigs {
 		logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", cfgKey)
-		valErr := kubeconfig.Validate(cfg)
-		if valErr != nil {
+		cfgValErr := kubeconfig.Validate(cfg)
+		if cfgValErr != nil {
 			return cli.NewExitError(
-				fmt.Sprintf("❌ Error validating single Kubernetes configuration '%s': %s", cfgKey, valErr.Error()),
+				fmt.Sprintf("❌ Error validating single Kubernetes configuration '%s': %s", cfgKey, cfgValErr.Error()),
 				12)
 		}
 
 		cfgFilePath := filepath.Join(singleConfigsPath, cfgKey)
 		logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file '%s'", cfgKey, cfgFilePath)
-		writeErr := kubeconfig.Write(cfg, cfgFilePath)
-		if writeErr != nil {
+		cfgWriteErr := kubeconfig.Write(cfg, cfgFilePath)
+		if cfgWriteErr != nil {
 			return cli.NewExitError(
-				fmt.Sprintf("❌ Error writing single Kubernetes configuration '%s' to file: %s", cfgKey, writeErr.Error()),
+				fmt.Sprintf("❌ Error writing single Kubernetes configuration '%s' to file: %s", cfgKey, cfgWriteErr.Error()),
 				13)
 		}
 	}
