@@ -158,6 +158,8 @@ konf
 - [x] documentation
 - [x] makefile
 - [ ] testing
+- [ ] ci/cd
+- [ ] release mechanism
 
 ---
 
