@@ -77,7 +77,7 @@ make view-global
 
 `konf view global` shows only the global Kubernetes context
 
-`konf completion <bash|zsh>` outputs the auto-completion script for the selected. See [auto-completion](##-auto-completion) section below.
+`konf completion <bash|zsh>` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
 
 `konf help` shows the helper
 
@@ -129,22 +129,33 @@ make view-global
 
 ### BASH
 
-Source the `commands/completion/bash_autocomplete` file in your `.bashrc` or `.bash_profile` file. 
+#### Method 1
+
+Source the script file `commands/completion/bash_autocomplete` in your `.bashrc` or `.bash_profile` file.
+
+#### Method 2
+
+Execute following commands
 
 ```shell
-go build -o konf .
-source <(konf completion bash)
+echo 'source <(konf completion bash)' >> $HOME/.bashrc
+. ./bashrc
 konf
 # now play with tab
 ```
 
 ### ZSH
 
-Source the `commands/completion/zsh_autocomplete` file in your `.zshrc` file, while setting the `PROG` variable to the name of your program.
+#### Method 1
+
+Take the script file `commands/completion/zsh_autocomplete`, replace `PROG` with `konf, source it `in your `.zshrc` file.
+
+#### Method 2
+
+Execute following commands
 
 ```shell
-go build -o konf .
-PROG=konf source <(konf completion zsh)
+PROG=konf echo 'source <(konf completion zsh)' >> $HOME/.zshrc
 konf
 # now play with tab
 ```
