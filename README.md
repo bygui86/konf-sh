@@ -187,6 +187,7 @@ konf
 - [x] shell auto-completion
 - [ ] reset (reset local to defualt ~/.kube/config)
 - [ ] clean kube-config (remove specified context from ~/.kube/config)
+- [ ] rename context
 
 ---
 
