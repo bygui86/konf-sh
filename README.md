@@ -67,9 +67,9 @@ make view-global
 
 `konf list` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
 
-`eval $(konf set local <context>)` sets the local (current shell) Kubernetes context to the specified one (take per default from `~/.kube/configs/*`) (*)
+`eval $(konf set local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
 
-`konf set global <context>` sets the global Kubernetes context (e.g. in Kubernetes configuration in `~/.kube/config` if not otherwise specified) to the specified one (take per default from `~/.kube/configs/*`)
+`konf set global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
 
 `konf view` shows the local (current shell) and global Kubernetes context
 
@@ -164,13 +164,29 @@ konf
 
 ## TODO list
 
-- [x] implement commands
+- [x] implement initial commands
+- [ ] implement additional commands
 - [x] implement properly logging flags
 - [x] documentation
 - [x] makefile
 - [ ] testing
-- [ ] ci/cd
 - [ ] release mechanism
+- [ ] ci/cd
+
+### Initial commands
+
+- [x] split
+- [x] list
+- [x] set
+- [x] view
+- [x] help
+- [x] version
+
+### Additional commands
+
+- [x] shell auto-completion
+- [ ] reset (reset local to defualt ~/.kube/config)
+- [ ] clean kube-config (remove specified context from ~/.kube/config)
 
 ---
 
