@@ -27,7 +27,7 @@ debug :		## Debug running directly from source code
 
 release :		## Create a new git tag and push it to remote to trigger the release GitHub action
 ifdef NEW_VERSION
-	git tag -a $(NEW_VERSION) -m "Tag for release $(NEW_VERSIO)
+	git tag -a $(NEW_VERSION) -m "Tag for release $(NEW_VERSIO)"
 	git push origin $(NEW_VERSION)
 else
 	@echo "New version (environment variable NEW_VERSION) not specified, please run command again like 'make release NEW_VERSION=...'"
