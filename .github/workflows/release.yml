@@ -35,5 +35,7 @@ jobs:
           args: release --rm-dist
           # key: ${{ secrets.YOUR_PRIVATE_KEY }}
         env:
-          # Provided by GitHub action, does not need to be set.
+          # GitHub automatically creates a GITHUB_TOKEN secret to use in your workflow.
+          # You can use the GITHUB_TOKEN to authenticate in a workflow run.
+          # WARN: please do not set it manually.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
