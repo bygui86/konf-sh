@@ -6,7 +6,16 @@ Kubernetes Configurator
 
 ---
 
+## Status
+
+![](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)
+
+![](https://github.com/bygui86/konf/workflows/release/badge.svg)
+
+---
+
 ## Build
+
 ```shell
 git clone git@github.com:bygui86/konf.git
 cd konf
@@ -15,7 +24,35 @@ make build
 
 ---
 
-## Run
+## Commands
+
+`konf split` separates the Kubernetes configuration (e.g. `~/.kube/config` if not otherwise specified) into single Kubernetes configurations files (per default saved in `~/.kube/configs/*`)
+
+`konf list` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
+
+`eval $(konf set local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
+
+`konf set global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
+
+`konf view` shows the local (current shell) and global Kubernetes context
+
+`konf view local` shows only the local (current shell) Kubernetes context
+
+`konf view global` shows only the global Kubernetes context
+
+`konf completion <bash|zsh>` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
+
+`konf help` shows the helper
+
+`konf version` shows the current version of konf
+
+(*) INFO: The `konf set local` command must be executed in an `eval`, because it has to set the `KUBECONFIG` environment variable on the caller shell instance. 
+
+---
+
+## Makefile actions
+
+### Run
 ```shell
 # from source
 make debug
@@ -59,31 +96,10 @@ make view-local
 make view-global
 ```
 
----
-
-## Commands
-
-`konf split` separates the Kubernetes configuration (e.g. `~/.kube/config` if not otherwise specified) into single Kubernetes configurations files (per default saved in `~/.kube/configs/*`)
-
-`konf list` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
-
-`eval $(konf set local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
-
-`konf set global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
-
-`konf view` shows the local (current shell) and global Kubernetes context
-
-`konf view local` shows only the local (current shell) Kubernetes context
-
-`konf view global` shows only the global Kubernetes context
-
-`konf completion <bash|zsh>` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
-
-`konf help` shows the helper
-
-`konf version` shows the current version of konf
-
-(*) INFO: The `konf set local` command must be executed in an `eval`, because it has to set the `KUBECONFIG` environment variable on the caller shell instance. 
+### Release `WORK IN PROGRESS`
+```shell
+make release 
+```
 
 ---
 
@@ -191,9 +207,38 @@ konf
 
 ---
 
-## Release mechanisms
+## Release
+
+1. Choose a new version
+	```shell
+	NEW_VERSION="v0.1"
+	```
+2. Create a new tag with choosen version
+	```shell
+	git tag -a $NEW_VERSION -m "Tag for release $NEW_VERSION"
+	```
+3. Push new tag to remote, triggering `release` GitHub Action
+	```shell
+	git push origin $NEW_VERSION
+	```
+
+### Available mechanisms
+
+- goreleaser
+- GitHub Actions
+- GitHub Package Registry
+- PackagePublishing
+
+### GitHub Actions
+
+| Action | Triggered by | Steps |
+| --- | --- | --- |
+| build | push to master, push to branch features/\*\*, PR to master, PR to branch features/\*\* | setup go, checkout, get dependencies, build, test |
+| release | new tag creation | setup go, checkout, unshallow, run goreleaser |
 
 ### goreleaser
+
+`WARN`: The first three steps will trigger the `release` GitHub Action, performing the last step (goreleaser), so be careful if you want to release manually.
 
 1. version
 	```shell
@@ -211,17 +256,6 @@ konf
 	```shell
 	goreleaser release --rm-dist
 	```
-
-### GitHub Actions
-
-`WORK IN PROGRESS`
-
-### Available options
-
-- goreleaser
-- GitHub Actions
-- GitHub Package Registry
-- PackagePublishing
 
 ---
 
