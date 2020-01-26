@@ -188,8 +188,8 @@ konf
 - [x] documentation
 - [x] makefile
 - [ ] testing
-- [ ] release mechanism
-- [ ] ci/cd
+- [x] release mechanism
+- [x] ci/cd
 
 ### Initial commands
 
