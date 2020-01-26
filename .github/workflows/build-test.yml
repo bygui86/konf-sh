@@ -1,0 +1,32 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup Go v.1.13.6
+        id: setup
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13.6
+
+      - name: Checkout codebase into the Go module directory
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Get dependencies
+        id: get-dependencies
+        run: |
+          go get -v -t -d ./...
+
+      - name: Build
+        id: build
+        run: go build -v .
+
+#       - name: Test
+#         id: test
+#         run: go test ./...
