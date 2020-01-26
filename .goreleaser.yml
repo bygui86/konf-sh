@@ -2,7 +2,6 @@
 before:
   hooks:
     - go mod download
-    # - go generate ./...
 builds:
   - env:
     - GO111MODULE=on
