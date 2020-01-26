@@ -1,0 +1,37 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup Go
+        id: setup-go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13.6
+
+      - name: Checkout codebase into the Go module directory
+        id: checkout
+        uses: actions/checkout@v2
+    
+      # IMPORTANT: the Unshallow step is required by GoReleaser for the changelog to work correctly.
+      - name: Unshallow codebase
+        id: unshallow
+        run: git fetch --prune --unshallow
+    
+      - name: Run GoReleaser
+        id: goreleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist
+          # key: ${{ secrets.YOUR_PRIVATE_KEY }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

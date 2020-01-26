@@ -193,24 +193,35 @@ konf
 
 ## Release mechanisms
 
-### Options
+### goreleaser
 
-goreleaser
-- https://github.com/bygui86/go-releaser
-- https://goreleaser.com/quick-start/
-- https://goreleaser.com/templates/
+1. version
+	```shell
+	NEW_VERSION="v0.1"
+	```
+2. tag
+	```shell
+	git tag -a $NEW_VERSION -m "Tag for release $NEW_VERSION"
+	```
+3. push
+	```shell
+	git push origin $NEW_VERSION
+	```
+4. release
+	```shell
+	goreleaser release --rm-dist
+	```
 
-GitHub Actions
-- https://help.github.com/en/articles/about-github-actions
-- https://help.github.com/en/articles/configuring-a-workflow
-- https://help.github.com/en/articles/workflow-syntax-for-github-actions
-- https://github.com/actions/setup-go
+### GitHub Actions
 
-GitHub Package Registry
-- https://github.com/features/packages
+`WORK IN PROGRESS`
 
-PackagePublishing
-- https://github.com/golang/go/wiki/PackagePublishing
+### Available options
+
+- goreleaser
+- GitHub Actions
+- GitHub Package Registry
+- PackagePublishing
 
 ---
 
@@ -232,3 +243,24 @@ PackagePublishing
 #### examples
 - https://rancher.com/using-kubernetes-api-go-kubecon-2017-session-recap/
 - https://github.com/alena1108/kubecon2017/blob/master/main.go
+
+### Release
+
+#### goreleaser
+- https://github.com/bygui86/go-releaser
+- https://goreleaser.com/
+- https://goreleaser.com/actions/
+- https://github.com/goreleaser/goreleaser-action
+- https://github.com/marketplace/actions/goreleaser-action
+
+#### GitHub Actions
+- https://help.github.com/en/articles/about-github-actions
+- https://help.github.com/en/articles/configuring-a-workflow
+- https://help.github.com/en/articles/workflow-syntax-for-github-actions
+- https://github.com/actions/setup-go
+
+#### GitHub Package Registry
+- https://github.com/features/packages
+
+#### (Golang) PackagePublishing
+- https://github.com/golang/go/wiki/PackagePublishing
