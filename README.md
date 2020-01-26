@@ -9,8 +9,7 @@ Kubernetes Configurator
 ## Status
 
 ![](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)
-
-![](https://github.com/bygui86/konf/workflows/release/badge.svg)
+&nbsp;&nbsp;&nbsp;![](https://github.com/bygui86/konf/workflows/release/badge.svg)
 
 ---
 
@@ -96,9 +95,12 @@ make view-local
 make view-global
 ```
 
-### Release `WORK IN PROGRESS`
+### Release
+
+`WARN`: Be careful, this command triggers the `release` GitHub Action that results in a new release on GitHub repo
+
 ```shell
-make release 
+make release NEW_VERSION=...
 ```
 
 ---
