@@ -1,6 +1,14 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - features/**
+  pull_request:
+    branches:
+      - master
+      - features/**
 
 jobs:
   build:
@@ -27,6 +35,6 @@ jobs:
         id: build
         run: go build -v .
 
-#       - name: Test
-#         id: test
-#         run: go test ./...
+      - name: Test
+        id: test
+        run: go test ./...
