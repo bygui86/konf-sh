@@ -191,6 +191,29 @@ konf
 
 ---
 
+## Release mechanisms
+
+### Options
+
+goreleaser
+- https://github.com/bygui86/go-releaser
+- https://goreleaser.com/quick-start/
+- https://goreleaser.com/templates/
+
+GitHub Actions
+- https://help.github.com/en/articles/about-github-actions
+- https://help.github.com/en/articles/configuring-a-workflow
+- https://help.github.com/en/articles/workflow-syntax-for-github-actions
+- https://github.com/actions/setup-go
+
+GitHub Package Registry
+- https://github.com/features/packages
+
+PackagePublishing
+- https://github.com/golang/go/wiki/PackagePublishing
+
+---
+
 ## Links
 
 ### Golang
