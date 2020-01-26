@@ -7,7 +7,7 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create completion command")
+	logger.Logger.Debug("🐛 Create COMPLETION command")
 	return &cli.Command{
 		Name:  "completion",
 		Usage: "Generate shell auto-completion script",

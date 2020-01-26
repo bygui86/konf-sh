@@ -11,7 +11,7 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create split command")
+	logger.Logger.Debug("🐛 Create SPLIT command")
 	home := utils.GetHomeDirOrExit("split")
 	return &cli.Command{
 		Name:   "split",

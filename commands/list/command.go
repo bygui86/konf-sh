@@ -11,7 +11,7 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create list command")
+	logger.Logger.Debug("🐛 Create LIST command")
 	home := utils.GetHomeDirOrExit("list")
 	return &cli.Command{
 		Name:   "list",

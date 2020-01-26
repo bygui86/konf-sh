@@ -10,7 +10,7 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create set command")
+	logger.Logger.Debug("🐛 Create SET command")
 	home := utils.GetHomeDirOrExit("set")
 	return &cli.Command{
 		Name:  "set",

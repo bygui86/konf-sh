@@ -10,7 +10,7 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create view command")
+	logger.Logger.Debug("🐛 Create VIEW command")
 	home := utils.GetHomeDirOrExit("view")
 	return &cli.Command{
 		Name:   "view",
