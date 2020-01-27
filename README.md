@@ -190,6 +190,8 @@ konf
 - [ ] testing
 - [x] release mechanism
 - [x] ci/cd
+- [ ] finalize split command (see todo in commdans/set/action.go)
+- [ ] add 'ArgsUsage' description in all commands
 
 ### Initial commands
 
@@ -203,9 +205,11 @@ konf
 ### Additional commands
 
 - [x] shell auto-completion
-- [ ] reset (reset local to defualt ~/.kube/config)
-- [ ] clean kube-config (remove specified context and relatives from ~/.kube/config)
-- [ ] rename context
+- [ ] clean (remove specified context and relatives from kubernetes configuration)
+- [ ] rename (rename specified context in kubernetes configuration)
+- [ ] reset
+    - [ ] TBD reset local to default ~/.kube/config
+    - [ ] TBD reset global to default ~/.kube/config
 
 ---
 

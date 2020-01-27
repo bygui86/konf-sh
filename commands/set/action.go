@@ -57,8 +57,6 @@ func setGlobal(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing SET-GLOBAL command")
 	logger.Logger.Debug("")
 
-	logger.Logger.Warn("⚠️  WORK IN PROGRESS")
-
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
 	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)

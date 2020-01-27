@@ -31,8 +31,8 @@ func split(ctx *cli.Context) error {
 			12)
 	}
 
-	logger.Logger.Info("✂️  Split Kubernetes configuration")
-	singleConfigs := kubeconfig.Split(kubeConfig)
+	logger.SugaredLogger.Infof("✂️  Split Kubernetes configuration from %s", kubeConfigFilePath)
+	singleConfigs := kubeconfig.Split(kubeConfig, kubeConfigFilePath)
 
 	logger.Logger.Info("💾 Save single Kubernetes configurations files")
 	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")

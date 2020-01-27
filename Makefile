@@ -1,6 +1,7 @@
 
 # VARIABLES
-# -
+KONF_LOG_LEVEL ?= info
+KONF_PREFIX := KONF_LOG_LEVEL=$(KONF_LOG_LEVEL)
 
 
 # CONFIG
@@ -17,10 +18,10 @@ build :		## Build
 	go build -o konf .
 
 run : build		## Run
-	konf
+	konf $(ARGS)
 
-clean : 		## Clean binary
-	rm -rf konf
+clean-bin : 		## Clean binary
+	@rm -rf konf >/dev/null 2>&1
 
 debug :		## Debug running directly from source code
 	go run main.go
@@ -36,10 +37,10 @@ endif
 ## features samples
 
 split : build		## Split a sample Kubernetes configuration file
-	konf split --kube-config ./examples/config --single-configs ./examples/configs
+	$(KONF_PREFIX) konf split --kube-config ./examples/config --single-configs ./examples/configs
 
 list : build		## List a set of sample Kubernetes configurations files
-	konf list --single-configs ./examples/configs
+	$(KONF_PREFIX) konf list --single-configs ./examples/configs
 
 set-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
@@ -47,16 +48,16 @@ set-local : build		## Set local Kubernetes context (current shell)
 	@echo ""
 
 set-global : build		## Set global Kubernetes context
-	konf set global context_b --kube-config ./examples/config
+	$(KONF_PREFIX) konf set global context_b --kube-config ./examples/config
 
 view : build		## View local and global Kubernetes contexts
-	konf view --kube-config ./examples/config
+	$(KONF_PREFIX) konf view --kube-config ./examples/config
 
 view-local : build		## View local Kubernetes context (current shell)
-	konf view local
+	$(KONF_PREFIX) konf view local
 
 view-global : build		## View global Kubernetes context
-	konf view global --kube-config ./examples/config
+	$(KONF_PREFIX) konf view global --kube-config ./examples/config
 
 ## helpers
 

@@ -14,8 +14,8 @@ func Load(kubeConfigFilePath string) *clientcmdapi.Config {
 	return clientcmd.GetConfigFromFileOrDie(kubeConfigFilePath)
 }
 
-func Split(kubeConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
-	logger.Logger.Debug("🐛 Split Kubernetes configuration")
+func Split(kubeConfig *clientcmdapi.Config, kubeConfigFilePath string) map[string]*clientcmdapi.Config {
+	logger.SugaredLogger.Debugf("🐛 Split Kubernetes configuration from %s", kubeConfigFilePath)
 	singleConfigs := make(map[string]*clientcmdapi.Config, len(kubeConfig.Contexts))
 	for ctxKey, ctxValue := range kubeConfig.Contexts {
 		contexts := make(map[string]*clientcmdapi.Context, 1)
@@ -37,7 +37,7 @@ func Split(kubeConfig *clientcmdapi.Config) map[string]*clientcmdapi.Config {
 }
 
 func Validate(kubeConfig *clientcmdapi.Config) error {
-	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", kubeConfig.CurrentContext)
+	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration")
 	err := clientcmd.Validate(*kubeConfig)
 	if clientcmd.IsConfigurationInvalid(err) {
 		return err
@@ -46,7 +46,7 @@ func Validate(kubeConfig *clientcmdapi.Config) error {
 }
 
 func Write(kubeConfig *clientcmdapi.Config, filepath string) error {
-	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file '%s'", kubeConfig.CurrentContext, filepath)
+	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration to file '%s'", filepath)
 	return clientcmd.WriteToFile(*kubeConfig, filepath)
 }
 
