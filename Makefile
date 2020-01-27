@@ -59,6 +59,9 @@ view-local : build		## View local Kubernetes context (current shell)
 view-global : build		## View global Kubernetes context
 	$(KONF_PREFIX) konf view global --kube-config ./examples/config
 
+clean : build		## Remove context list from Kubernetes configuration
+	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a
+
 ## helpers
 
 help :		## Help

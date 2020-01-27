@@ -133,13 +133,16 @@ make release NEW_VERSION=...
 | 2 | (global) | Error starting application |
 | 3 | (global) | Error creating specific application command |
 | 11 | split | Error checking existence of Kubernetes configurations files path |
-| 12 | split, set global | Error validating single Kubernetes configuration |
-| 13 | split, set global | Error writing single Kubernetes configuration to file |
+| 12 | split, set global, clean | Error validating Kubernetes configuration (single, global, cleaned) |
+| 13 | split, set global, clean | Error writing Kubernetes configuration (single, global, cleaned) to file |
 | 21 | list | Error listing single Kubernetes configurations |
 | 31 | set local | Error checking existence of Kubernetes configurations files path |
 | 32 | set local, set global | Error getting Kubernetes context: context argument not specified |
 | 33 | set local | Error checking existence of Kubernetes context |
 | 34 | set global | Error checking existence of context in Kubernetes configuration |
+| 41 | clean | Error getting Kubernetes context list: context list argument not specified |
+| 42 | clean | Error validating Kubernetes context list: context list argument not valid |
+| 43 | clean | Error cleaning Kubernetes context list |
 
 ---
 

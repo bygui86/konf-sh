@@ -52,6 +52,7 @@ func addCommands(app *cli.App) {
 		*list.BuildCommand(),
 		*view.BuildCommand(),
 		*set.BuildCommand(),
+		*clean.BuildCommand(),
 		*completion.BuildCommand(),
 	}
 }

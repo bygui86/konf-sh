@@ -1,20 +1,30 @@
 package clean
 
 import (
-	"bygui86/konf/commons"
-	"bygui86/konf/kubeconfig"
-	"bygui86/konf/utils"
-
 	"github.com/urfave/cli"
-	
-	"bygui86/konf/logger"
+
+	"github.com/bygui86/konf/commons"
+	"github.com/bygui86/konf/kubeconfig"
+	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf/utils"
 )
 
 func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create CLEAN command")
+	home := utils.GetHomeDirOrExit("clean")
 	return &cli.Command{
-		Name:   "clean",
-		Usage:  "",
-		Action: clean,
+		Name:      "clean",
+		Usage:     "Remove specified context (and relative user and cluster) from Kubernetes configuration",
+		Action:    clean,
+		ArgsUsage: "<context_list_commad-separated>",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
+				Usage:    commons.CustomKubeConfigFlagDescription,
+				EnvVar:   commons.CustomKubeConfigPathEnvVar,
+				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
+				Required: false,
+			},
+		},
 	}
 }
