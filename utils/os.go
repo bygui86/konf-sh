@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/user"
 
-	"bygui86/konf/logger"
+	"github.com/bygui86/konf/logger"
 )
 
 const (

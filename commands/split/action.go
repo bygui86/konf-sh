@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"bygui86/konf/commons"
-	"bygui86/konf/kubeconfig"
-	"bygui86/konf/logger"
-	"bygui86/konf/utils"
+	"github.com/bygui86/konf/commons"
+	"github.com/bygui86/konf/kubeconfig"
+	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf/utils"
 
 	"github.com/urfave/cli"
 )

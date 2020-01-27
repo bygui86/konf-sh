@@ -2,8 +2,8 @@ package completion
 
 import (
 	"github.com/urfave/cli"
-	
-	"bygui86/konf/logger"
+
+	"github.com/bygui86/konf/logger"
 )
 
 func BuildCommand() *cli.Command {

@@ -1,7 +1,7 @@
 package completion
 
 import (
-	"bygui86/konf/logger"
+	"github.com/bygui86/konf/logger"
 
 	"github.com/urfave/cli"
 )

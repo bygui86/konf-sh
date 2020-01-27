@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bygui86/konf/application"
+	"github.com/bygui86/konf/application"
 )
 
 func main() {
