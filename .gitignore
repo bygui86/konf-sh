@@ -61,4 +61,5 @@ dist/
 # vendor/*
 # !vendor/.gitkeep
 konf
+examples/config
 examples/configs/*
