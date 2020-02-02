@@ -65,6 +65,13 @@ clean-ctx : build		## Remove context list from Kubernetes configuration
 rename-ctx : build		## Rename specified context in Kubernetes configuration
 	$(KONF_PREFIX) konf rename-ctx --kube-config ./examples/config context_a NEW_context_a
 
+reset-cfg-local : build		## Reset local Kubernetes configuration (current shell)
+	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
+	@echo "Please manually execute 'eval $(konf reset-cfg local)'"
+	@echo ""
+
+reset-cfg-global : build		## Reset global Kubernetes configuration
+	$(KONF_PREFIX) konf reset-cfg global --kube-config ./examples/config
 
 ## helpers
 

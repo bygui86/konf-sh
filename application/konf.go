@@ -1,6 +1,7 @@
 package application
 
 import (
+	"github.com/bygui86/konf/commands/reset"
 	"os"
 	"sort"
 
@@ -55,6 +56,7 @@ func addCommands(app *cli.App) {
 		*set.BuildCommand(),
 		*clean.BuildCommand(),
 		*rename.BuildCommand(),
+		*reset.BuildCommand(),
 		*completion.BuildCommand(),
 	}
 }

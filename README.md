@@ -43,6 +43,10 @@ make build
 
 `konf rename-ctx <context-to-rename> <new-context-name>` renames the specified context in Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
 
+`eval $(konf reset-cfg local)` resets the local (current shell) Kubernetes configuration, un-setting `KUBECONFIG` environment variable
+
+`konf reset-cfg global` resets `currentContext` to N/A in Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
+
 `konf completion [bash | zsh]` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
 
 `konf help` shows the helper
@@ -239,8 +243,8 @@ konf
 - [x] clean-ctx (remove specified context and relatives from kubernetes configuration)
 - [x] rename-ctx (rename specified context in kubernetes configuration)
 - [ ] reset-cfg
-    - [ ] reset-cfg local removing KUBECONFIG environment variable
-    - [ ] reset-cfg global ? to default ~/.kube/config
+    - [ ] reset-cfg local removes KUBECONFIG environment variable
+    - [ ] reset-cfg global resets currentContext to N/A in Kubernetes configuration
 
 ---
 
