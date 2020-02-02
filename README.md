@@ -1,4 +1,8 @@
 
+<div style="text-align:center">
+	<img src="logo/logo.png" width="50%">
+</div>
+
 # konf
 Kubernetes Configurator
 
@@ -8,8 +12,7 @@ Kubernetes Configurator
 
 ## Status
 
-![](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)
-&nbsp;&nbsp;&nbsp;![](https://github.com/bygui86/konf/workflows/release/badge.svg)
+![build](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)&nbsp;&nbsp;&nbsp;![release](https://github.com/bygui86/konf/workflows/release/badge.svg)
 
 ---
 
