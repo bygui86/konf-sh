@@ -19,6 +19,7 @@ func BuildCommand() *cli.Command {
 			{
 				Name:   "local",
 				Usage:  "Set local Kubernetes context (current shell)",
+				ArgsUsage: "<context>",
 				Action: setLocal,
 				Flags: []cli.Flag{
 					cli.StringFlag{
@@ -33,6 +34,7 @@ func BuildCommand() *cli.Command {
 			{
 				Name:   "global",
 				Usage:  "Set global Kubernetes context",
+				ArgsUsage: "<context>",
 				Action: setGlobal,
 				Flags: []cli.Flag{
 					cli.StringFlag{

@@ -15,8 +15,8 @@ func BuildCommand() *cli.Command {
 	return &cli.Command{
 		Name:      "clean",
 		Usage:     "Remove specified context (and relative user and cluster) from Kubernetes configuration",
+		ArgsUsage: "<context-list_comma-separated>",
 		Action:    clean,
-		ArgsUsage: "<context_list_commad-separated>",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),

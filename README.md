@@ -39,7 +39,9 @@ make build
 
 `konf view global` shows only the global Kubernetes context
 
-`konf completion <bash|zsh>` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
+`konf clean <context-list_comma-separated>` remove the specified comma-separated context list from Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
+
+`konf completion [bash | zsh]` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
 
 `konf help` shows the helper
 
@@ -51,13 +53,23 @@ make build
 
 ## Makefile actions
 
+### Build binary
+```shell
+make build
+```
+
 ### Run
 ```shell
 # from source
-make debug
+make run
 
 # from bin
-make run
+make run-bin
+```
+
+### Clean binary
+```shell
+make clean-bin
 ```
 
 ### Split a sample Kubernetes configuration file
@@ -93,6 +105,11 @@ make view-local
 ### View global Kubernetes context
 ```shell
 make view-global
+```
+
+### Clean Kubernetes contexts
+```shell
+make clean
 ```
 
 ### Release
@@ -193,8 +210,8 @@ konf
 - [ ] testing
 - [x] release mechanism
 - [x] ci/cd
-- [ ] finalize split command (see todo in commdans/set/action.go)
-- [ ] add 'ArgsUsage' description in all commands
+- [ ] finalize split command (see TODO in commands/set/action.go)
+- [x] add 'ArgsUsage' description in all commands
 
 ### Initial commands
 
@@ -208,7 +225,7 @@ konf
 ### Additional commands
 
 - [x] shell auto-completion
-- [ ] clean (remove specified context and relatives from kubernetes configuration)
+- [x] clean (remove specified context and relatives from kubernetes configuration)
 - [ ] rename (rename specified context in kubernetes configuration)
 - [ ] reset
     - [ ] TBD reset local to default ~/.kube/config
