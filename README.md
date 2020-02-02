@@ -218,37 +218,29 @@ konf
 ## TODO list
 
 - [x] implement initial commands
-- [ ] implement additional commands
+- [x] implement additional commands
+- [ ] finalize split command (see TODO in commands/set/action.go)
 - [x] implement properly logging flags
 - [x] documentation
 - [x] makefile
 - [ ] testing
 - [x] release mechanism
 - [x] ci/cd
-- [ ] finalize split command (see TODO in commands/set/action.go)
 - [x] add 'ArgsUsage' description in all commands
-
-### Initial commands
-
-- [x] split-cfg
-- [x] list-cfg
-- [x] set-cfg
-- [x] view-cfg
-- [x] help
-- [x] version
-
-### Additional commands
-
-- [x] shell auto-completion
-- [x] clean-ctx (remove specified context and relatives from kubernetes configuration)
-- [x] rename-ctx (rename specified context in kubernetes configuration)
-- [ ] reset-cfg
-    - [ ] reset-cfg local removes KUBECONFIG environment variable
-    - [ ] reset-cfg global resets currentContext to N/A in Kubernetes configuration
 
 ---
 
 ## Release
+
+`NEXT VERSION:` v0.3
+
+### Automatic
+
+```shell
+make release NEW_VERSION=...
+```
+
+### Manual
 
 1. Choose a new version
 	```shell
