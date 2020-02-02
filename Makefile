@@ -13,18 +13,18 @@ KONF_PREFIX := KONF_LOG_LEVEL=$(KONF_LOG_LEVEL)
 
 ## commands
 
+run :		## Debug running directly from source code
+	go run main.go
+
 build :		## Build
 	@export GO111MODULE=on && \
 	go build -o konf .
 
-run : build		## Run
+run-bin : build		## Run
 	konf $(ARGS)
 
 clean-bin : 		## Clean binary
 	@rm -rf konf >/dev/null 2>&1
-
-debug :		## Debug running directly from source code
-	go run main.go
 
 release :		## Create a new git tag and push it to remote to trigger the release GitHub action
 ifdef NEW_VERSION
@@ -60,9 +60,12 @@ view-global : build		## View global Kubernetes context
 	$(KONF_PREFIX) konf view global --kube-config ./examples/config
 
 clean : build		## Remove context list from Kubernetes configuration
-	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a
+	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a,context_b
 
 ## helpers
+
+reset-config-sample :		## Reset Kubernetes configuration sample to original
+	cp -f ./examples/config_origin ./examples/config
 
 help :		## Help
 	@echo ""
