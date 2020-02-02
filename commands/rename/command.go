@@ -13,7 +13,7 @@ func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create RENAME-CONTEXT command")
 	home := utils.GetHomeDirOrExit("rename-ctx")
 	return &cli.Command{
-		Name:   "rename",
+		Name:   "rename-ctx",
 		Usage:  "Rename specified context with a new one",
 		ArgsUsage: "<context-to-rename> <new-context-name>",
 		Action: rename,

@@ -37,10 +37,10 @@ endif
 ## features samples
 
 split-cfg : build		## Split a sample Kubernetes configuration file
-	$(KONF_PREFIX) konf split --kube-config ./examples/config --single-configs ./examples/configs
+	$(KONF_PREFIX) konf split-cfg --kube-config ./examples/config --single-configs ./examples/configs
 
 list-cfg : build		## List a set of sample Kubernetes configurations files
-	$(KONF_PREFIX) konf list --single-configs ./examples/configs
+	$(KONF_PREFIX) konf list-cfg --single-configs ./examples/configs
 
 set-cfg-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
@@ -48,22 +48,23 @@ set-cfg-local : build		## Set local Kubernetes context (current shell)
 	@echo ""
 
 set-cfg-global : build		## Set global Kubernetes context
-	$(KONF_PREFIX) konf set global context_b --kube-config ./examples/config
+	$(KONF_PREFIX) konf set-cfg global context_b --kube-config ./examples/config
 
 view-cfg : build		## View local and global Kubernetes contexts
-	$(KONF_PREFIX) konf view --kube-config ./examples/config
+	$(KONF_PREFIX) konf view-cfg --kube-config ./examples/config
 
 view-cfg-local : build		## View local Kubernetes context (current shell)
-	$(KONF_PREFIX) konf view local
+	$(KONF_PREFIX) konf view-cfg local
 
 view-cfg-global : build		## View global Kubernetes context
-	$(KONF_PREFIX) konf view global --kube-config ./examples/config
+	$(KONF_PREFIX) konf view-cfg global --kube-config ./examples/config
 
 clean-ctx : build		## Remove context list from Kubernetes configuration
-	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a,context_b
+	$(KONF_PREFIX) konf clean-ctx --kube-config ./examples/config context_a,context_b
 
 rename-ctx : build		## Rename specified context in Kubernetes configuration
-	$(KONF_PREFIX) konf rename --kube-config ./examples/config context_a NEW_context_a
+	$(KONF_PREFIX) konf rename-ctx --kube-config ./examples/config context_a NEW_context_a
+
 
 ## helpers
 

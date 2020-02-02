@@ -14,7 +14,7 @@ func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create SPLIT-CONFIG command")
 	home := utils.GetHomeDirOrExit("split-cfg")
 	return &cli.Command{
-		Name:   "split",
+		Name:   "split-cfg",
 		Usage:  "Split kube-config into multiple single Kubernetes configurations based on the context",
 		Action: split,
 		Flags: []cli.Flag{

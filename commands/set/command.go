@@ -13,7 +13,7 @@ func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create SET-CONFIG command")
 	home := utils.GetHomeDirOrExit("set-cfg")
 	return &cli.Command{
-		Name:  "set",
+		Name:  "set-cfg",
 		Usage: "Set local or global Kubernetes context",
 		Subcommands: cli.Commands{
 			{

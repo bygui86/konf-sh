@@ -29,7 +29,7 @@ make build
 
 `konf list-cfg` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
 
-`eval $(konf set-cfg local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
+`eval $(konf set-cfg local <context>)` sets the local (current shell) Kubernetes context (`KUBECONFIG` environment variable) to the specified one (per default `~/.kube/configs/*`) (*)
 
 `konf set-cfg global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
 

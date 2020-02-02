@@ -76,7 +76,7 @@ func getContextInfo(ctx *cli.Context) ([]string, error) {
 }
 
 func renameContext(kubeConfig *clientcmdapi.Config, kubeConfigFilePath, contextToRename, newContextName string) error {
-	logger.SugaredLogger.Infof("🔁 Renaming Kubernetes context '%s' as '%s'", contextToRename, newContextName)
+	logger.SugaredLogger.Infof("🔀 Renaming Kubernetes context '%s' as '%s'", contextToRename, newContextName)
 
 	if strings.Compare(kubeConfig.CurrentContext, contextToRename) == 0 {
 		logger.SugaredLogger.Debugf("🐛 Set new current context '%s' in Kubernetes configuration '%s'", newContextName, kubeConfigFilePath)

@@ -45,11 +45,19 @@ compdef _cli_zsh_autocomplete $PROG`
 )
 
 func bashCompletion(ctx *cli.Context) error {
+	logger.Logger.Debug("")
+	logger.Logger.Debug("🐛 Executing BASH-COMPLETION command")
+	logger.Logger.Debug("")
+
 	logger.Logger.Info(bashScript)
 	return nil
 }
 
 func zshCompletion(ctx *cli.Context) error {
+	logger.Logger.Debug("")
+	logger.Logger.Debug("🐛 Executing ZSH-COMPLETION command")
+	logger.Logger.Debug("")
+
 	logger.Logger.Info(zshScript)
 	return nil
 }

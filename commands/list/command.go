@@ -14,7 +14,7 @@ func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create LIST-CONFIG command")
 	home := utils.GetHomeDirOrExit("list-cfg")
 	return &cli.Command{
-		Name:   "list",
+		Name:   "list-cfg",
 		Usage:  "List all single Kubernetes configurations",
 		Action: list,
 		Flags: []cli.Flag{
