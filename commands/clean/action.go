@@ -1,8 +1,10 @@
 package clean
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/urfave/cli"
@@ -18,25 +20,77 @@ func clean(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing CLEAN command")
 	logger.Logger.Debug("")
 
+	contextSlice, ctxErr := getContextList(ctx)
+	if ctxErr != nil {
+		return ctxErr
+	}
+
+	logger.Logger.Debug("🐛 Ask for user confirmation to clean context list")
+	if userDeletionConfirm() {
+		kubeConfigFilePath, cleanErr := cleanInternal(ctx, contextSlice)
+		if cleanErr != nil {
+			return cleanErr
+		}
+		logger.SugaredLogger.Infof("✅ Completed! Context list '%s' removed from Kubernetes configuration '%s'", strings.Join(contextSlice, ", "), kubeConfigFilePath)
+		logger.Logger.Info("")
+
+	} else {
+		logger.Logger.Info("❌ User didn't confirm to proceed, aborting...")
+		logger.Logger.Info("")
+	}
+
+	return nil
+}
+
+func getContextList(ctx *cli.Context) ([]string, error) {
 	logger.Logger.Debug("🐛 Get Kubernetes context list to clean")
 	args := ctx.Args()
-	if len(args) == 0 || args[0] == "" {
-		return cli.NewExitError(
-			"❌ Error getting Kubernetes context list: context list argument not specified",
+	if len(args) == 0 || strings.Compare(args[0], "") == 0 {
+		return nil, cli.NewExitError(
+			"❌ Error getting Kubernetes context list: 'context list' argument not specified",
 			41)
 	}
+
 	contextList := args[0]
-	contextSlice, ctxValErr := validateContextList(contextList)
+	contextSlice, ctxValErr := validateContextListArgument(contextList)
 	if ctxValErr != nil {
-		return cli.NewExitError(
-			"❌ Error validating Kubernetes context list: context list argument not valid. Context list must be a comma-separated list.",
+		return nil, cli.NewExitError(
+			"❌ Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list.",
 			42)
 	}
-	logger.SugaredLogger.Infof("📋 Context list to clean: %s", strings.Join(contextSlice, ", "))
 
-	// TODO question to the user
-	// Deleting contextList from Kubernetes configuration can't be undone, are you sure you want to proceed?
+	logger.SugaredLogger.Infof("📋 Context list to clean: '%s'", strings.Join(contextSlice, ", "))
+	return contextSlice, nil
+}
 
+func validateContextListArgument(contextList string) ([]string, error) {
+	contextSlice := strings.Split(contextList, ",")
+	if len(contextSlice) > 0 {
+		return contextSlice, nil
+	}
+	return nil, errors.New("error validating context list")
+}
+
+func userDeletionConfirm() bool {
+	reader := bufio.NewReader(os.Stdin)
+	logger.Logger.Warn("⚠️  Deleting a context from Kubernetes configuration can't be undone")
+	logger.Logger.Info("❓ are you sure you want to proceed? [y | n]")
+	for {
+		confirm, _ := reader.ReadString('\n')
+		confirm = strings.Replace(confirm, "\n", "", -1) // convert CRLF to LF
+		logger.SugaredLogger.Debugf("🐛 User confirmation answer: %s", confirm)
+		if strings.Compare(confirm, "y") == 0 {
+			return true
+		} else if strings.Compare(confirm, "n") == 0 {
+			break
+		} else {
+			logger.Logger.Error("❌ Wrong input, please answer with 'y' or 'n'")
+		}
+	}
+	return false
+}
+
+func cleanInternal(ctx *cli.Context, contextSlice []string) (string, error) {
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
 	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
@@ -46,7 +100,7 @@ func clean(ctx *cli.Context) error {
 	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration from '%s'", kubeConfigFilePath)
 	valErr := kubeconfig.Validate(kubeConfig)
 	if valErr != nil {
-		return cli.NewExitError(
+		return "", cli.NewExitError(
 			fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, valErr.Error()),
 			12)
 	}
@@ -54,7 +108,7 @@ func clean(ctx *cli.Context) error {
 	logger.Logger.Info("🧹 Removing selected contexts from Kubernetes configuration")
 	cleanErr := cleanContextList(kubeConfig, contextSlice)
 	if cleanErr != nil {
-		return cli.NewExitError(
+		return "", cli.NewExitError(
 			fmt.Sprintf("❌ Error cleaning Kubernetes context list: %s", cleanErr.Error()),
 			43)
 	}
@@ -62,7 +116,7 @@ func clean(ctx *cli.Context) error {
 	logger.SugaredLogger.Debugf("🐛 Validate cleaned Kubernetes configuration")
 	newValErr := kubeconfig.Validate(kubeConfig)
 	if newValErr != nil {
-		return cli.NewExitError(
+		return "", cli.NewExitError(
 			fmt.Sprintf("❌ Error validating cleaned Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
 			12)
 	}
@@ -70,33 +124,23 @@ func clean(ctx *cli.Context) error {
 	logger.SugaredLogger.Debugf("🐛 Write cleaned Kubernetes configuration to file '%s'", kubeConfigFilePath)
 	newWriteErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
 	if newWriteErr != nil {
-		return cli.NewExitError(
+		return "", cli.NewExitError(
 			fmt.Sprintf("❌ Error writing cleaned Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
 			13)
 	}
 
-	logger.SugaredLogger.Infof("✅ Completed! Context list %s removed from Kubernetes configuration '%s'", strings.Join(contextSlice, ", "), kubeConfigFilePath)
-	logger.Logger.Info("")
-	return nil
-}
-
-func validateContextList(contextList string) ([]string, error) {
-	contextSlice := strings.Split(contextList, ",")
-	if len(contextSlice) > 0 {
-		return contextSlice, nil
-	}
-	return nil, errors.New("error validating context list")
+	return kubeConfigFilePath, nil
 }
 
 func cleanContextList(kubeConfig *clientcmdapi.Config, contextSlice []string) error {
 	for _, rmCtx := range contextSlice {
 		err := kubeconfig.CheckIfContextExist(kubeConfig, rmCtx)
 		if err != nil {
-			logger.SugaredLogger.Debugf("🐛 Context to clean %s not found, skipping...", rmCtx)
+			logger.SugaredLogger.Infof("❓ Context '%s' to clean not found, skipping...", rmCtx)
 			continue
 		}
 
-		logger.SugaredLogger.Debugf("🐛 Removing context %s from Kubernetes configuration", rmCtx)
+		logger.SugaredLogger.Debugf("🐛 Removing context '%s' from Kubernetes configuration", rmCtx)
 		tempCtx := kubeConfig.Contexts[rmCtx]
 		ctxMap, ctxErr := kubeconfig.RemoveContext(kubeConfig.Contexts, rmCtx)
 		if ctxErr != nil {
@@ -105,7 +149,7 @@ func cleanContextList(kubeConfig *clientcmdapi.Config, contextSlice []string) er
 		kubeConfig.Contexts = ctxMap
 
 		rmCluster := tempCtx.Cluster
-		logger.SugaredLogger.Debugf("🐛 Removing cluster %s from Kubernetes configuration", rmCluster)
+		logger.SugaredLogger.Debugf("🐛 Removing cluster '%s' from Kubernetes configuration", rmCluster)
 		clMap, clErr := kubeconfig.RemoveCluster(kubeConfig.Clusters, rmCluster)
 		if clErr != nil {
 			return clErr
@@ -113,7 +157,7 @@ func cleanContextList(kubeConfig *clientcmdapi.Config, contextSlice []string) er
 		kubeConfig.Clusters = clMap
 
 		rmAuthInfo := tempCtx.AuthInfo // user
-		logger.SugaredLogger.Debugf("🐛 Removing user %s from Kubernetes configuration", rmAuthInfo)
+		logger.SugaredLogger.Debugf("🐛 Removing user '%s' from Kubernetes configuration", rmAuthInfo)
 		authMap, authErr := kubeconfig.RemoveAuthInfo(kubeConfig.AuthInfos, rmAuthInfo)
 		if authErr != nil {
 			return authErr
