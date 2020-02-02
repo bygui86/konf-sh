@@ -41,6 +41,8 @@ make build
 
 `konf clean-ctx <context-list_comma-separated>` removes the specified comma-separated context list from Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
 
+`konf rename-ctx <context-to-rename> <new-context-name>` renames the specified context in Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
+
 `konf completion [bash | zsh]` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
 
 `konf help` shows the helper
@@ -111,6 +113,10 @@ make view-cfg-global
 ```shell
 make clean-ctx
 ```
+
+### Rename Kubernetes context
+```shell
+make rename-ctx
 ```
 
 ### Release
@@ -161,6 +167,10 @@ make release NEW_VERSION=...
 | 41 | clean-ctx | Error getting Kubernetes context list: 'context list' argument not specified |
 | 42 | clean-ctx | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
 | 43 | clean-ctx | Error cleaning Kubernetes context list |
+| 51 | rename-ctx | Error getting Kubernetes context to rename: 'context to rename' and 'new context name' arguments not specified |
+| 52 | rename-ctx | Error getting Kubernetes context to rename: 'context to rename' argument not specified |
+| 53 | rename-ctx | Error getting Kubernetes context to rename: 'new context name' argument not specified |
+| 54 | rename-ctx | Error removing context from Kubernetes configuration |
 
 ---
 
@@ -227,6 +237,10 @@ konf
 
 - [x] shell auto-completion
 - [x] clean-ctx (remove specified context and relatives from kubernetes configuration)
+- [x] rename-ctx (rename specified context in kubernetes configuration)
+- [ ] reset-cfg
+    - [ ] reset-cfg local removing KUBECONFIG environment variable
+    - [ ] reset-cfg global ? to default ~/.kube/config
 
 ---
 

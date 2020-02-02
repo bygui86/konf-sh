@@ -62,6 +62,9 @@ view-cfg-global : build		## View global Kubernetes context
 clean-ctx : build		## Remove context list from Kubernetes configuration
 	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a,context_b
 
+rename-ctx : build		## Rename specified context in Kubernetes configuration
+	$(KONF_PREFIX) konf rename --kube-config ./examples/config context_a NEW_context_a
+
 ## helpers
 
 reset-config-sample :		## Reset Kubernetes configuration sample to original

@@ -7,6 +7,7 @@ import (
 	"github.com/bygui86/konf/commands/clean"
 	"github.com/bygui86/konf/commands/completion"
 	"github.com/bygui86/konf/commands/list"
+	"github.com/bygui86/konf/commands/rename"
 	"github.com/bygui86/konf/commands/set"
 	"github.com/bygui86/konf/commands/split"
 	"github.com/bygui86/konf/commands/view"
@@ -53,6 +54,7 @@ func addCommands(app *cli.App) {
 		*view.BuildCommand(),
 		*set.BuildCommand(),
 		*clean.BuildCommand(),
+		*rename.BuildCommand(),
 		*completion.BuildCommand(),
 	}
 }
