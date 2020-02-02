@@ -25,21 +25,21 @@ make build
 
 ## Commands
 
-`konf split` separates the Kubernetes configuration (e.g. `~/.kube/config` if not otherwise specified) into single Kubernetes configurations files (per default saved in `~/.kube/configs/*`)
+`konf split-cfg` separates the Kubernetes configuration (e.g. `~/.kube/config` if not otherwise specified) into single Kubernetes configurations files (per default saved in `~/.kube/configs/*`)
 
-`konf list` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
+`konf list-cfg` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
 
-`eval $(konf set local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
+`eval $(konf set-cfg local <context>)` sets the local (current shell) Kubernetes context to the specified one (per default `~/.kube/configs/*`) (*)
 
-`konf set global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
+`konf set-cfg global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
 
-`konf view` shows the local (current shell) and global Kubernetes context
+`konf view-cfg` shows the local (current shell) and global Kubernetes context
 
-`konf view local` shows only the local (current shell) Kubernetes context
+`konf view-cfg local` shows only the local (current shell) Kubernetes context
 
-`konf view global` shows only the global Kubernetes context
+`konf view-cfg global` shows only the global Kubernetes context
 
-`konf clean <context-list_comma-separated>` remove the specified comma-separated context list from Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
+`konf clean-ctx <context-list_comma-separated>` removes the specified comma-separated context list from Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
 
 `konf completion [bash | zsh]` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
 
@@ -74,42 +74,43 @@ make clean-bin
 
 ### Split a sample Kubernetes configuration file
 ```shell
-make split
+make split-cfg
 ```
 
 ### List a set of sample Kubernetes configurations files
 ```shell
-make list
+make list-cfg
 ```
 
 ### Set local Kubernetes context (current shell)
 ```shell
-make set-local
+make set-cfg-local
 ```
 
 ### Set global Kubernetes context
 ```shell
-make set-global
+make set-cfg-global
 ```
 
 ### View local and global Kubernetes contexts
 ```shell
-make view
+make view-cfg
 ```
 
 ### View local Kubernetes context (current shell)
 ```shell
-make view-local
+make view-cfg-local
 ```
 
 ### View global Kubernetes context
 ```shell
-make view-global
+make view-cfg-global
 ```
 
 ### Clean Kubernetes contexts
 ```shell
-make clean
+make clean-ctx
+```
 ```
 
 ### Release
@@ -149,17 +150,17 @@ make release NEW_VERSION=...
 | 1 | (global) | Error initializing zap logger |
 | 2 | (global) | Error starting application |
 | 3 | (global) | Error creating specific application command |
-| 11 | split | Error checking existence of Kubernetes configurations files path |
-| 12 | split, set global, clean | Error validating Kubernetes configuration (single, global, cleaned) |
-| 13 | split, set global, clean | Error writing Kubernetes configuration (single, global, cleaned) to file |
-| 21 | list | Error listing single Kubernetes configurations |
-| 31 | set local | Error checking existence of Kubernetes configurations files path |
-| 32 | set local, set global | Error getting Kubernetes context: context argument not specified |
-| 33 | set local | Error checking existence of Kubernetes context |
-| 34 | set global | Error checking existence of context in Kubernetes configuration |
-| 41 | clean | Error getting Kubernetes context list: context list argument not specified |
-| 42 | clean | Error validating Kubernetes context list: context list argument not valid |
-| 43 | clean | Error cleaning Kubernetes context list |
+| 11 | split-cfg | Error checking existence of Kubernetes configurations files path |
+| 12 | split-cfg, set-cfg global, clean-ctx, rename-ctx | Error validating Kubernetes configuration (single, global, cleaned) |
+| 13 | split-cfg, set-cfg global, clean-ctx, rename-ctx | Error writing Kubernetes configuration (single, global, cleaned) to file |
+| 21 | list-cfg | Error listing single Kubernetes configurations |
+| 31 | set-cfg local | Error checking existence of Kubernetes configurations files path |
+| 32 | set-cfg local, set-cfg global | Error getting Kubernetes context: context argument not specified |
+| 33 | set-cfg local | Error checking existence of Kubernetes context |
+| 34 | set-cfg global, rename-ctx | Error checking existence of context in Kubernetes configuration |
+| 41 | clean-ctx | Error getting Kubernetes context list: 'context list' argument not specified |
+| 42 | clean-ctx | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
+| 43 | clean-ctx | Error cleaning Kubernetes context list |
 
 ---
 
@@ -215,21 +216,17 @@ konf
 
 ### Initial commands
 
-- [x] split
-- [x] list
-- [x] set
-- [x] view
+- [x] split-cfg
+- [x] list-cfg
+- [x] set-cfg
+- [x] view-cfg
 - [x] help
 - [x] version
 
 ### Additional commands
 
 - [x] shell auto-completion
-- [x] clean (remove specified context and relatives from kubernetes configuration)
-- [ ] rename (rename specified context in kubernetes configuration)
-- [ ] reset
-    - [ ] TBD reset local to default ~/.kube/config
-    - [ ] TBD reset global to default ~/.kube/config
+- [x] clean-ctx (remove specified context and relatives from kubernetes configuration)
 
 ---
 

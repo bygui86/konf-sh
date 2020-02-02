@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"github.com/bygui86/konf/commands"
 	"os"
 	"strings"
 
@@ -17,7 +18,7 @@ import (
 
 func clean(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing CLEAN command")
+	logger.Logger.Debug("🐛 Executing CLEAN-CONTEXT command")
 	logger.Logger.Debug("")
 
 	contextSlice, ctxErr := getContextList(ctx)
@@ -31,7 +32,8 @@ func clean(ctx *cli.Context) error {
 		if cleanErr != nil {
 			return cleanErr
 		}
-		logger.SugaredLogger.Infof("✅ Completed! Context list '%s' removed from Kubernetes configuration '%s'", strings.Join(contextSlice, ", "), kubeConfigFilePath)
+		logger.SugaredLogger.Infof("✅ Completed! Context list '%s' removed from Kubernetes configuration '%s'",
+			strings.Join(contextSlice, ", "), kubeConfigFilePath)
 		logger.Logger.Info("")
 
 	} else {
@@ -113,20 +115,9 @@ func cleanInternal(ctx *cli.Context, contextSlice []string) (string, error) {
 			43)
 	}
 
-	logger.SugaredLogger.Debugf("🐛 Validate cleaned Kubernetes configuration")
-	newValErr := kubeconfig.Validate(kubeConfig)
-	if newValErr != nil {
-		return "", cli.NewExitError(
-			fmt.Sprintf("❌ Error validating cleaned Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
-			12)
-	}
-
-	logger.SugaredLogger.Debugf("🐛 Write cleaned Kubernetes configuration to file '%s'", kubeConfigFilePath)
-	newWriteErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
-	if newWriteErr != nil {
-		return "", cli.NewExitError(
-			fmt.Sprintf("❌ Error writing cleaned Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
-			13)
+	valWrErr := commands.ValidateAndWrite(kubeConfig, kubeConfigFilePath)
+	if valWrErr != nil {
+		return "", valWrErr
 	}
 
 	return kubeConfigFilePath, nil

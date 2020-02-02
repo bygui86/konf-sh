@@ -2,6 +2,7 @@ package split
 
 import (
 	"fmt"
+	"github.com/bygui86/konf/commands"
 	"k8s.io/client-go/tools/clientcmd/api"
 	"path/filepath"
 
@@ -15,7 +16,7 @@ import (
 
 func split(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing SPLIT command")
+	logger.Logger.Debug("🐛 Executing SPLIT-CONFIG command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
@@ -61,21 +62,10 @@ func split(ctx *cli.Context) error {
 func validateAndWrite(singleConfigs map[string]*api.Config, singleConfigsPath string) error {
 	// TODO implement a mechanism to avoid complete fail if just 1 out of N configurations is not valid
 	for cfgKey, cfg := range singleConfigs {
-		logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", cfgKey)
-		cfgValErr := kubeconfig.Validate(cfg)
-		if cfgValErr != nil {
-			return cli.NewExitError(
-				fmt.Sprintf("❌ Error validating single Kubernetes configuration '%s': %s", cfgKey, cfgValErr.Error()),
-				12)
-		}
-
 		cfgFilePath := filepath.Join(singleConfigsPath, cfgKey)
-		logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file '%s'", cfgKey, cfgFilePath)
-		cfgWriteErr := kubeconfig.Write(cfg, cfgFilePath)
-		if cfgWriteErr != nil {
-			return cli.NewExitError(
-				fmt.Sprintf("❌ Error writing single Kubernetes configuration '%s' to file: %s", cfgKey, cfgWriteErr.Error()),
-				13)
+		valWrErr := commands.ValidateAndWrite(cfg, cfgFilePath)
+		if valWrErr != nil {
+			return valWrErr
 		}
 	}
 

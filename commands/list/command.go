@@ -11,8 +11,8 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create LIST command")
-	home := utils.GetHomeDirOrExit("list")
+	logger.Logger.Debug("🐛 Create LIST-CONFIG command")
+	home := utils.GetHomeDirOrExit("list-cfg")
 	return &cli.Command{
 		Name:   "list",
 		Usage:  "List all single Kubernetes configurations",

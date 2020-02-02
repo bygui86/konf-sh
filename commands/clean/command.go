@@ -10,8 +10,8 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create CLEAN command")
-	home := utils.GetHomeDirOrExit("clean")
+	logger.Logger.Debug("🐛 Create CLEAN-CONTEXT command")
+	home := utils.GetHomeDirOrExit("clean-ctx")
 	return &cli.Command{
 		Name:      "clean",
 		Usage:     "Remove specified context (and relative user and cluster) from Kubernetes configuration",

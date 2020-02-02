@@ -10,8 +10,8 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create VIEW command")
-	home := utils.GetHomeDirOrExit("view")
+	logger.Logger.Debug("🐛 Create VIEW-CONFIG command")
+	home := utils.GetHomeDirOrExit("view-cfg")
 	return &cli.Command{
 		Name:   "view",
 		Usage:  "View local and global Kubernetes contexts",

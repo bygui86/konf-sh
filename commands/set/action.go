@@ -2,6 +2,7 @@ package set
 
 import (
 	"fmt"
+	"github.com/bygui86/konf/commands"
 	"path/filepath"
 	"strings"
 
@@ -15,7 +16,7 @@ import (
 
 // INFO: it seems that is not possible to run a command like "source ./set-local-script.sh" :(
 func setLocal(ctx *cli.Context) error {
-	logger.Logger.Debug("🐛 Executing SET-LOCAL command")
+	logger.Logger.Debug("🐛 Executing SET-CONFIG-LOCAL command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
@@ -85,23 +86,12 @@ func setGlobal(ctx *cli.Context) error {
 	logger.SugaredLogger.Debugf("🐛 Set new context '%s' in Kubernetes configuration '%s'", context, kubeConfigFilePath)
 	kubeConfig.CurrentContext = context
 
-	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", kubeConfigFilePath)
-	valErr := kubeconfig.Validate(kubeConfig)
-	if valErr != nil {
-		return cli.NewExitError(
-			fmt.Sprintf("❌ Error validating Kubernetes configuration '%s': %s", kubeConfigFilePath, valErr.Error()),
-			12)
+	valWrErr := commands.ValidateAndWrite(kubeConfig, kubeConfigFilePath)
+	if valWrErr != nil {
+		return valWrErr
 	}
 
-	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration '%s' to file", kubeConfigFilePath)
-	writeErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
-	if writeErr != nil {
-		return cli.NewExitError(
-			fmt.Sprintf("❌ Error writing Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, writeErr.Error()),
-			13)
-	}
-
-	logger.SugaredLogger.Infof("✅ Completed! Kubernete global configuration '%s' successfully updated with current context '%s'", kubeConfigFilePath, context)
+	logger.SugaredLogger.Infof("✅ Completed! Kubernetes global configuration '%s' successfully updated with current context '%s'", kubeConfigFilePath, context)
 	logger.Logger.Info("")
 	return nil
 }

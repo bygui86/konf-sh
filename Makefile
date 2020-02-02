@@ -36,30 +36,30 @@ endif
 
 ## features samples
 
-split : build		## Split a sample Kubernetes configuration file
+split-cfg : build		## Split a sample Kubernetes configuration file
 	$(KONF_PREFIX) konf split --kube-config ./examples/config --single-configs ./examples/configs
 
-list : build		## List a set of sample Kubernetes configurations files
+list-cfg : build		## List a set of sample Kubernetes configurations files
 	$(KONF_PREFIX) konf list --single-configs ./examples/configs
 
-set-local : build		## Set local Kubernetes context (current shell)
+set-cfg-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
 	@echo "Please manually execute 'eval $(konf set local context_b --single-configs ./examples/configs)'"
 	@echo ""
 
-set-global : build		## Set global Kubernetes context
+set-cfg-global : build		## Set global Kubernetes context
 	$(KONF_PREFIX) konf set global context_b --kube-config ./examples/config
 
-view : build		## View local and global Kubernetes contexts
+view-cfg : build		## View local and global Kubernetes contexts
 	$(KONF_PREFIX) konf view --kube-config ./examples/config
 
-view-local : build		## View local Kubernetes context (current shell)
+view-cfg-local : build		## View local Kubernetes context (current shell)
 	$(KONF_PREFIX) konf view local
 
-view-global : build		## View global Kubernetes context
+view-cfg-global : build		## View global Kubernetes context
 	$(KONF_PREFIX) konf view global --kube-config ./examples/config
 
-clean : build		## Remove context list from Kubernetes configuration
+clean-ctx : build		## Remove context list from Kubernetes configuration
 	$(KONF_PREFIX) konf clean --kube-config ./examples/config context_a,context_b
 
 ## helpers

@@ -11,7 +11,7 @@ import (
 
 func view(ctx *cli.Context) error {
 	logger.Logger.Debug("")
-	logger.Logger.Debug("🐛 Executing VIEW command")
+	logger.Logger.Debug("🐛 Executing VIEW-CONFIG command")
 
 	viewLocal(ctx)
 	viewGlobal(ctx)
