@@ -19,7 +19,7 @@ func list(ctx *cli.Context) error {
 
 	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
 	singleConfigsPath := ctx.String(commons.SingleConfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes configurations files path: %s", singleConfigsPath)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes configurations files path: '%s'", singleConfigsPath)
 
 	checkErr := utils.CheckIfFolderExist(singleConfigsPath, false)
 	if checkErr != nil {

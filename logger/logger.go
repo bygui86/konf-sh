@@ -3,6 +3,7 @@ package logger
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -21,12 +22,12 @@ var SugaredLogger *zap.SugaredLogger
 
 func init() {
 	encoding := os.Getenv(logEncodingEnvVar)
-	if encoding == "" {
+	if strings.Compare(encoding, "") == 0 {
 		encoding = logEncodingDefault
 	}
 	level := os.Getenv(logLevelEnvVar)
-	if encoding == "" {
-		encoding = logLevelDefault
+	if strings.Compare(level, "") == 0 {
+		level = logLevelDefault
 	}
 	zapLevel := zapcore.InfoLevel
 	err := zapLevel.Set(level)

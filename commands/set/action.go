@@ -3,6 +3,7 @@ package set
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 
 	"github.com/bygui86/konf/commons"
 	"github.com/bygui86/konf/kubeconfig"
@@ -31,7 +32,7 @@ func setLocal(ctx *cli.Context) error {
 
 	logger.Logger.Debug("🐛 Get selected Kubernetes context")
 	args := ctx.Args()
-	if len(args) == 0 || args[0] == "" {
+	if len(args) == 0 || strings.Compare(args[0], "") == 0 {
 		return cli.NewExitError(
 			"❌ Error getting Kubernetes context: context argument not specified",
 			32)
@@ -65,14 +66,14 @@ func setGlobal(ctx *cli.Context) error {
 
 	logger.Logger.Debug("🐛 Get selected Kubernetes context")
 	args := ctx.Args()
-	if len(args) == 0 || args[0] == "" {
+	if len(args) == 0 || strings.Compare(args[0], "") == 0 {
 		return cli.NewExitError(
 			"❌ Error getting Kubernetes context: context argument not specified",
 			32)
 	}
 	context := args[0]
 
-	logger.SugaredLogger.Debugf("🐛 Check context '%s' existence in Kubernetes configuration '%s'", context, kubeConfigFilePath)
+	logger.SugaredLogger.Debugf("🐛 Check existence of context '%s' in Kubernetes configuration '%s'", context, kubeConfigFilePath)
 	checkCtxErr := kubeconfig.CheckIfContextExist(kubeConfig, context)
 	if checkCtxErr != nil {
 		return cli.NewExitError(

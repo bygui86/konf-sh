@@ -2,6 +2,7 @@ package split
 
 import (
 	"fmt"
+	"k8s.io/client-go/tools/clientcmd/api"
 	"path/filepath"
 
 	"github.com/bygui86/konf/commons"
@@ -47,6 +48,17 @@ func split(ctx *cli.Context) error {
 			11)
 	}
 
+	valWrErr := validateAndWrite(singleConfigs, singleConfigsPath)
+	if valWrErr != nil {
+		return valWrErr
+	}
+
+	logger.SugaredLogger.Infof("✅ Completed! Single Kubernetes configurations files saved in '%s'", singleConfigsPath)
+	logger.Logger.Info("")
+	return nil
+}
+
+func validateAndWrite(singleConfigs map[string]*api.Config, singleConfigsPath string) error {
 	// TODO implement a mechanism to avoid complete fail if just 1 out of N configurations is not valid
 	for cfgKey, cfg := range singleConfigs {
 		logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration '%s'", cfgKey)
@@ -67,7 +79,5 @@ func split(ctx *cli.Context) error {
 		}
 	}
 
-	logger.SugaredLogger.Infof("✅ Completed! Single Kubernetes configurations files saved in '%s'", singleConfigsPath)
-	logger.Logger.Info("")
 	return nil
 }
