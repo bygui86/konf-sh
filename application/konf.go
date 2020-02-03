@@ -1,9 +1,10 @@
 package application
 
 import (
-	"github.com/bygui86/konf/commands/reset"
 	"os"
 	"sort"
+
+	"github.com/bygui86/konf/commands/reset"
 
 	"github.com/bygui86/konf/commands/clean"
 	"github.com/bygui86/konf/commands/completion"
@@ -20,7 +21,7 @@ import (
 const (
 	appName    = "konf"
 	appUsage   = "Kubernetes Configurator for an easy daily job"
-	appVersion = "v0.3"
+	appVersion = "v0.5"
 )
 
 type KubeConfiguratorApp struct {

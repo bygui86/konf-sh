@@ -286,7 +286,7 @@ goreleaser --snapshot --skip-publish --rm-dist
 
 1. version
 	```shell
-	NEW_VERSION="v0.1"
+	NEW_VERSION="v0.5"
 	```
 2. tag
 	```shell
