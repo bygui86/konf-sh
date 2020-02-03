@@ -237,7 +237,7 @@ konf
 
 ## Release
 
-`NEXT VERSION:` v0.4
+`NEXT VERSION:` v0.5
 
 ### Automatic
 
@@ -249,7 +249,7 @@ make release NEW_VERSION=...
 
 1. Choose a new version
 	```shell
-	NEW_VERSION="v0.4"
+	NEW_VERSION="v0.5"
 	```
 2. Create a new tag with choosen version
 	```shell

@@ -33,6 +33,6 @@ changelog:
     - '^test:'
 checksum:
   name_template: checksums.txt
-signs:
-  - id: konf
-    artifacts: all
+# signs:
+#   - id: konf
+#     artifacts: all
