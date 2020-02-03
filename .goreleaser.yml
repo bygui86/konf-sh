@@ -1,26 +1,38 @@
 # See documentation at http://goreleaser.com
+
+project_name: konf
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org
+  - CGO_ENABLED=0
 before:
   hooks:
+    - go mod tidy
     - go mod download
 builds:
-  - env:
-    - GO111MODULE=on
-    - GOPROXY=https://proxy.golang.org
-    - CGO_ENABLED=0
+  - id: konf
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
 archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-checksum:
-  name_template: 'checksums.txt'
+  - id: konf
+    name_template: "{{ .ProjectName }}_{{ .Os }}"
+    files:
+      - logo/logo.png
+      - LICENSE
+      - README.md
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  name_template: "{{ .ProjectName }}_{{ .Tag }}_SNAPSHOT"
 changelog:
   sort: asc
   filters:
     exclude:
     - '^docs:'
     - '^test:'
+checksum:
+  name_template: checksums.txt
+signs:
+  - id: konf
+    artifacts: all

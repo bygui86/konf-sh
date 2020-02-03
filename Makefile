@@ -34,6 +34,9 @@ else
 	@echo "New version (environment variable NEW_VERSION) not specified, please run command again like 'make release NEW_VERSION=...'"
 endif
 
+simulate-release :		## Simulate a release with goreleaser
+	goreleaser release --rm-dist --snapshot --skip-publish
+
 ## features samples
 
 split-cfg : build		## Split a sample Kubernetes configuration file

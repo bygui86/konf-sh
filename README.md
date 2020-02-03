@@ -230,6 +230,8 @@ konf
 - [x] release mechanism
 - [x] ci/cd
 - [x] add 'ArgsUsage' description in all commands
+- [x] improve release mechanism
+- [ ] create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
 
 ---
 
@@ -257,6 +259,12 @@ make release NEW_VERSION=...
 	```shell
 	git push origin $NEW_VERSION
 	```
+
+### Simulate
+
+```shell
+goreleaser --snapshot --skip-publish --rm-dist
+```
 
 ### Available mechanisms
 
