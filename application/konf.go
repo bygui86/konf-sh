@@ -20,7 +20,7 @@ import (
 const (
 	appName    = "konf"
 	appUsage   = "Kubernetes Configurator for an easy daily job"
-	appVersion = "0.0.3"
+	appVersion = "v0.3"
 )
 
 type KubeConfiguratorApp struct {
