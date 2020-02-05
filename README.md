@@ -8,7 +8,9 @@ Kubernetes Configurator
 
 `konf` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
 
-This project is under active development.
+This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx).
+
+This repo is under active development.
 
 ---
 
