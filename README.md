@@ -8,6 +8,8 @@ Kubernetes Configurator
 
 `konf` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
 
+This project is under active development.
+
 ---
 
 ## Status
@@ -220,9 +222,10 @@ konf
 
 ## TODO list
 
-- [x] implement initial commands
-- [x] implement additional commands
+- [x] implement first set of commands
+- [x] implement second set of commands
 - [ ] finalize split command (see TODO in commands/set/action.go)
+- [ ] implement third set of commands
 - [x] implement properly logging flags
 - [x] documentation
 - [x] makefile
@@ -233,11 +236,19 @@ konf
 - [x] improve release mechanism
 - [ ] create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
 
+### 3rd set of commands
+
+- [ ] namespaces (inspired by kubens)
+  - [ ] view current namespace
+  - [ ] list all namespaces
+  - [ ] set local (current shell only) namespace
+  - [ ] set global namespace
+
 ---
 
 ## Release
 
-`NEXT VERSION:` v0.5
+`NEXT RELEASE:` v0.5
 
 ### Automatic
 
