@@ -16,7 +16,9 @@ This repo is under active development.
 
 ## Status
 
-![build](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)&nbsp;&nbsp;&nbsp;![release](https://github.com/bygui86/konf/workflows/release/badge.svg)
+![build](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)&nbsp;&nbsp;&nbsp;
+![release](https://github.com/bygui86/konf/workflows/release/badge.svg)&nbsp;&nbsp;&nbsp;
+![go-report](https://goreportcard.com/badge/github.com/bygui86/konf)
 
 ---
 
