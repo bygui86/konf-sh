@@ -231,7 +231,10 @@ konf
 - [ ] finalize split command (see TODO in commands/set/action.go)
 - [ ] implement third set of commands
 - [x] implement properly logging flags
-- [x] documentation
+- [ ] documentation
+  - [ ] README.md
+  - [ ] go-doc
+  - [ ] add go-doc badge (see https://pkg.go.dev/github.com/etherlabsio/healthcheck?tab=doc)
 - [x] makefile
 - [ ] testing
 - [x] release mechanism
@@ -239,6 +242,7 @@ konf
 - [x] add 'ArgsUsage' description in all commands
 - [x] improve release mechanism
 - [ ] create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
+- [ ] adding code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
 
 ### 3rd set of commands
 
