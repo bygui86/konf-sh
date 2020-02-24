@@ -243,6 +243,7 @@ konf
 - [x] improve release mechanism
 - [ ] create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
 - [ ] adding code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
+- [ ] have a look at [this library](https://github.com/gkarthiks/k8s-discovery)
 
 ### 3rd set of commands
 
