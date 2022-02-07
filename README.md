@@ -177,11 +177,11 @@ konf view
 
 ### Split
 
-`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations files (by default in `~/.kube/konfigs`), one for each context.
+`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations (by default in `~/.kube/konfigs`), one for each context.
 
 ### List
 
-`konf list` lists all single Kubernetes konfigurations files separated by `konf split` (by default in `~/.kube/konfigs`).
+`konf list` lists all single Kubernetes konfigurations separated by `konf split` (by default in `~/.kube/konfigs`).
 
 ### Set
 
@@ -229,19 +229,19 @@ konf set local <context> sets the local (current shell) Kubernetes context (sett
 
 ### Flags
 
-| Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                             |
-|:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:--------------------------------------------------------|
-| --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path     |
-| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations files path |
+| Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                         |
+|:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:----------------------------------------------------|
+| --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
+| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
 
 ### Environment variables
 
-| Key                           | Command list                         | Available values                | Default              | Corresponding flag | Description                                             |
-|:------------------------------|:-------------------------------------|:--------------------------------|:---------------------|:-------------------|:--------------------------------------------------------|
-| KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                     |
-| KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                        |
-| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path     |
-| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations files path |
+| Key                           | Command list                         | Available values                | Default              | Corresponding flag | Description                                         |
+|:------------------------------|:-------------------------------------|:--------------------------------|:---------------------|:-------------------|:----------------------------------------------------|
+| KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                 |
+| KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                    |
+| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
+| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
 
 ### Error codes
 
@@ -250,17 +250,17 @@ konf set local <context> sets the local (current shell) Kubernetes context (sett
 | 1    | (all)                             | Error initializing zap logger                                                                                            |
 | 2    | (all)                             | Error starting application                                                                                               |
 | 3    | (all)                             | Error creating specific application command                                                                              |
-| 11   | split                             | Error checking existence of Kubernetes konfigurations files path                                                         |
+| 11   | split                             | Error checking existence of Kubernetes konfigurations path                                                               |
 | 12   | split, set global, delete, rename | Error validating Kubernetes configuration (single, global, cleaned)                                                      |
 | 13   | split, set global, delete, rename | Error writing Kubernetes configuration (single, global, cleaned) to file                                                 |
 | 21   | list                              | Error listing single Kubernetes konfigurations                                                                           |
-| 31   | set local                         | Error checking existence of Kubernetes konfigurations files path                                                         |
+| 31   | set local                         | Error checking existence of Kubernetes konfigurations path                                                               |
 | 32   | set local, set global             | Error getting Kubernetes context: context argument not specified                                                         |
 | 33   | set local                         | Error checking existence of Kubernetes context                                                                           |
 | 34   | set global, rename                | Error checking existence of context in Kubernetes configuration                                                          |
 | 41   | delete                            | Error getting Kubernetes context list: 'context list' argument not specified                                             |
 | 42   | delete                            | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
-| 43   | delete                            | Error cleaning Kubernetes context list                                                                                   |
+| 43   | delete                            | Error removing Kubernetes context list                                                                                   |
 | 51   | rename                            | Error getting Kubernetes context to rename: 'context to rename' and 'new context name' arguments not specified           |
 | 52   | rename                            | Error getting Kubernetes context to rename: 'context to rename' argument not specified                                   |
 | 53   | rename                            | Error getting Kubernetes context to rename: 'new context name' argument not specified                                    |

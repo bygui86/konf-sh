@@ -35,14 +35,14 @@ func resetGlobal(ctx *cli.Context) error {
 	newValErr := kubeconfig.Validate(kubeConfig)
 	if newValErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
 			12)
 	}
 
 	newWriteErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
 	if newWriteErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error writing Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
+			fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
 			13)
 	}
 

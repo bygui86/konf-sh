@@ -29,7 +29,7 @@ make clean-bin
 make split
 ```
 
-### List a set of sample Kubernetes konfigurations files
+### List a set of sample Kubernetes konfigurations
 
 ```sh
 make list

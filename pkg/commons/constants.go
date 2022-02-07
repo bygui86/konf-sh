@@ -7,7 +7,7 @@ const (
 	KubeConfigFlagDescription    = "Kubernetes configuration custom (`PATH`)"
 	SingleKonfigsFlagName        = "single-konfigs"
 	SingleKonfigsFlagShort       = "c"
-	SingleKonfigsFlagDescription = "Single Kubernetes konfigurations files custom (`PATH`)"
+	SingleKonfigsFlagDescription = "Single Kubernetes konfigurations custom (`PATH`)"
 
 	// Environment variables
 	KubeConfigPathEnvVar     = "KONF_KUBE_CONFIG_PATH"

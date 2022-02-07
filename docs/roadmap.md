@@ -46,9 +46,9 @@
 - [x] fix "list konfigs"
     - [x] hide .DS_store and other files
     - [x] show only valid kubeconfig
-- [ ] improve "clean" command
+- [x] improve "clean/delete" command
   - [x] rename to "delete"
-  - [ ] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
+  - [x] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve "rename" command
   - [ ] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve split command (see TODO in commands/set/action.go)
@@ -59,7 +59,9 @@
 - [ ] shellwrapper
   - [ ] implement command
   - [ ] fix "konf set local <context>"
-- [ ] refactor logger (replace logger.Logger with zap.L())
+- [ ] review logging
+  - [ ] review all logs
+  - [ ] refactor logger (replace logger.Logger with zap.L())
 
 ### v0.4.0 ✅
 

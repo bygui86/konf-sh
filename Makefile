@@ -44,7 +44,7 @@ simulate-release :		## Simulate a release with goreleaser
 split : build		## Split a sample Kubernetes configuration file
 	$(KONF_PREFIX) konf-sh split --kube-config ./examples/config --single-konfigs ./examples/konfigs
 
-list : build		## List a set of sample Kubernetes konfigurations files
+list : build		## List a set of sample Kubernetes konfigurations
 	$(KONF_PREFIX) konf-sh list --single-konfigs ./examples/konfigs
 
 set-local : build		## Set local Kubernetes context (current shell)
@@ -65,10 +65,10 @@ view-global : build		## View global Kubernetes context
 	$(KONF_PREFIX) konf-sh view global --kube-config ./examples/config
 
 delete : build		## Remove context list from Kubernetes configuration
-	$(KONF_PREFIX) konf-sh delete --kube-config ./examples/config context_a,context_b
+	$(KONF_PREFIX) konf-sh delete --kube-config ./examples/config --single-konfigs ./examples/konfigs context_a,context_b
 
 rename : build		## Rename specified context in Kubernetes configuration
-	$(KONF_PREFIX) konf-sh rename --kube-config ./examples/config context_a NEW_context_a
+	$(KONF_PREFIX) konf-sh rename --kube-config ./examples/config --single-konfigs ./examples/konfigs context_a context_x
 
 reset-local : build		## Reset local Kubernetes configuration (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"

@@ -13,7 +13,7 @@ func BuildCommand() *cli.Command {
 	home := utils.GetHomeDirOrExit("rename")
 	return &cli.Command{
 		Name:      "rename",
-		Usage:     "Rename specified context with a new name",
+		Usage:     "Rename specified context in Kubernetes configuration and single Kubernetes konfiguration",
 		ArgsUsage: "<context-to-rename> <new-context-name>",
 		Action:    rename,
 		Flags: []cli.Flag{
@@ -22,6 +22,13 @@ func BuildCommand() *cli.Command {
 				Usage:    commons.KubeConfigFlagDescription,
 				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
+				Required: false,
+			},
+			&cli.StringFlag{
+				Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+				Usage:    commons.SingleKonfigsFlagDescription,
+				EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
+				Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 				Required: false,
 			},
 		},

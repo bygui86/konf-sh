@@ -18,19 +18,19 @@ func list(ctx *cli.Context) error {
 	logger.Logger.Debug("🐛 Executing LIST command")
 	logger.Logger.Debug("")
 
-	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations files path")
-	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations files path: '%s'", singleConfigsPath)
+	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations path")
+	singleKonfigsPath := ctx.String(commons.SingleKonfigsFlagName)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKonfigsPath)
 
-	checkErr := utils.CheckIfFolderExist(singleConfigsPath, false)
+	checkErr := utils.CheckIfFolderExist(singleKonfigsPath, false)
 	if checkErr != nil {
-		logger.SugaredLogger.Warn("⚠️  Single Kubernetes konfigurations files path not found")
-		logger.SugaredLogger.Warn("ℹ️  Tip: run 'konf split' before 'konf list'")
+		logger.SugaredLogger.Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
+		logger.Logger.Warn("ℹ️  Tip: run 'konf split' before anything else")
 	} else {
 		validCfg := make([]string, 0)
 		invalidCfg := make([]string, 0)
 		err := filepath.Walk(
-			singleConfigsPath,
+			singleKonfigsPath,
 			func(path string, info os.FileInfo, err error) error {
 				if info.IsDir() {
 					return nil
@@ -54,16 +54,16 @@ func list(ctx *cli.Context) error {
 		)
 		if err != nil {
 			return cli.Exit(
-				fmt.Sprintf("❌ Error listing single Kubernetes konfigurations in '%s': %s", singleConfigsPath, err.Error()),
+				fmt.Sprintf("❌  Error listing single Kubernetes konfigurations in '%s': %s", singleKonfigsPath, err.Error()),
 				21)
 		}
 
-		logger.SugaredLogger.Infof("📚 Available Kubernetes konfigurations in '%s':", singleConfigsPath)
+		logger.SugaredLogger.Infof("📚 Available Kubernetes konfigurations in '%s':", singleKonfigsPath)
 		for _, v := range validCfg {
 			logger.SugaredLogger.Infof("\t%s", v)
 		}
 		logger.Logger.Info("")
-		logger.SugaredLogger.Infof("❓️ Invalid Kubernetes konfigurations in '%s':", singleConfigsPath)
+		logger.SugaredLogger.Infof("❓️ Invalid Kubernetes konfigurations in '%s':", singleKonfigsPath)
 		for _, iv := range invalidCfg {
 			logger.SugaredLogger.Infof("\t%s", iv)
 		}

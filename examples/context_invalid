@@ -12,15 +12,3 @@ contexts:
   name: context_c
 kind: Config
 preferences: {}
-users:
-- name: clint
-  user:
-    auth-provider:
-      config:
-        access-token: access-token_sample
-        cmd-args: config config-helper --format=json
-        cmd-path: /Users/clint/tools/google-cloud-sdk/bin/gcloud
-        expiry: "2022-01-01T12:00:00Z"
-        expiry-key: '{.credential.token_expiry}'
-        token-key: '{.credential.access_token}'
-      name: gcp

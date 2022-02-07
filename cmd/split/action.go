@@ -27,23 +27,23 @@ func split(ctx *cli.Context) error {
 	valErr := kubeconfig.Validate(kubeConfig)
 	if valErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, valErr.Error()),
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, valErr.Error()),
 			12)
 	}
 
 	logger.SugaredLogger.Infof("✂️ Split Kubernetes configuration from %s", kubeConfigFilePath)
 	singleConfigs := kubeconfig.Split(kubeConfig, kubeConfigFilePath)
 
-	logger.Logger.Info("💾 Save single Kubernetes konfigurations files")
-	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations files path")
+	logger.Logger.Info("💾 Save single Kubernetes konfigurations")
+	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations path")
 	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations files path: '%s'", singleConfigsPath)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleConfigsPath)
 
-	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations files path '%s'", singleConfigsPath)
+	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations path '%s'", singleConfigsPath)
 	checkErr := utils.CheckIfFolderExist(singleConfigsPath, true)
 	if checkErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error checking existence of Kubernetes konfigurations files path '%s': %s", checkErr.Error(), singleConfigsPath),
+			fmt.Sprintf("❌  Error checking existence of Kubernetes konfigurations path '%s': %s", checkErr.Error(), singleConfigsPath),
 			11)
 	}
 
@@ -52,7 +52,7 @@ func split(ctx *cli.Context) error {
 		return valWrErr
 	}
 
-	logger.SugaredLogger.Infof("✅  Completed! Single Kubernetes konfigurations files saved in '%s'", singleConfigsPath)
+	logger.SugaredLogger.Infof("✅  Completed! Single Kubernetes konfigurations saved in '%s'", singleConfigsPath)
 	logger.Logger.Info("")
 	return nil
 }
@@ -65,14 +65,14 @@ func validateAndWrite(singleConfigs map[string]*api.Config, singleConfigsPath st
 		newValErr := kubeconfig.Validate(cfg)
 		if newValErr != nil {
 			return cli.Exit(
-				fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", cfgFilePath, newValErr.Error()),
+				fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", cfgFilePath, newValErr.Error()),
 				12)
 		}
 
 		newWriteErr := kubeconfig.Write(cfg, cfgFilePath)
 		if newWriteErr != nil {
 			return cli.Exit(
-				fmt.Sprintf("❌ Error writing Kubernetes configuration '%s' to file: %s", cfgFilePath, newWriteErr.Error()),
+				fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s", cfgFilePath, newWriteErr.Error()),
 				13)
 		}
 	}

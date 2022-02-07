@@ -13,15 +13,22 @@ func BuildCommand() *cli.Command {
 	home := utils.GetHomeDirOrExit("delete")
 	return &cli.Command{
 		Name:      "delete",
-		Usage:     "Remove specified context (and relative user and cluster) from Kubernetes configuration",
+		Usage:     "Remove all specified contexts from Kubernetes configuration and single Kubernetes konfigurations",
 		ArgsUsage: "<context-list_comma-separated>",
-		Action:    clean,
+		Action:    deleteCtx,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
 				Usage:    commons.KubeConfigFlagDescription,
 				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
+				Required: false,
+			},
+			&cli.StringFlag{
+				Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+				Usage:    commons.SingleKonfigsFlagDescription,
+				EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
+				Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 				Required: false,
 			},
 		},
