@@ -7,7 +7,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/logger"
 )
 
 func Load(kubeConfigFilePath string) *clientcmdapi.Config {

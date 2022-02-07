@@ -4,7 +4,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/logger"
 )
 
 func Check(key string) (string, bool) {

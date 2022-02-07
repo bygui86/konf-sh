@@ -2,12 +2,12 @@ package reset
 
 import (
 	"fmt"
-	"github.com/bygui86/konf/commands"
-	"github.com/bygui86/konf/commons"
-	"github.com/bygui86/konf/kubeconfig"
+	"github.com/bygui86/konf-sh/commands"
+	"github.com/bygui86/konf-sh/commons"
+	"github.com/bygui86/konf-sh/kubeconfig"
 	"github.com/urfave/cli"
 
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/logger"
 )
 
 func resetLocal(ctx *cli.Context) error {

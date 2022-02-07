@@ -3,8 +3,8 @@ package kubeconfig
 import (
 	"path/filepath"
 
-	"github.com/bygui86/konf/commons"
-	"github.com/bygui86/konf/utils"
+	"github.com/bygui86/konf-sh/commons"
+	"github.com/bygui86/konf-sh/utils"
 )
 
 func GetKubeConfigEnvVar() string {

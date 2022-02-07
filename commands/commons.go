@@ -3,8 +3,8 @@ package commands
 import (
 	"fmt"
 
-	"github.com/bygui86/konf/kubeconfig"
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/kubeconfig"
+	"github.com/bygui86/konf-sh/logger"
 	"github.com/urfave/cli"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )

@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/bygui86/konf/commons"
-	"github.com/bygui86/konf/logger"
-	"github.com/bygui86/konf/utils"
+	"github.com/bygui86/konf-sh/commons"
+	"github.com/bygui86/konf-sh/logger"
+	"github.com/bygui86/konf-sh/utils"
 
 	"github.com/urfave/cli"
 )

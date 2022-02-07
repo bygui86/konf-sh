@@ -2,10 +2,10 @@ package rename
 
 import (
 	"fmt"
-	"github.com/bygui86/konf/commands"
-	"github.com/bygui86/konf/commons"
-	"github.com/bygui86/konf/kubeconfig"
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/commands"
+	"github.com/bygui86/konf-sh/commons"
+	"github.com/bygui86/konf-sh/kubeconfig"
+	"github.com/bygui86/konf-sh/logger"
 	"github.com/urfave/cli"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"strings"

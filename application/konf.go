@@ -4,16 +4,16 @@ import (
 	"os"
 	"sort"
 
-	"github.com/bygui86/konf/commands/reset"
+	"github.com/bygui86/konf-sh/commands/reset"
 
-	"github.com/bygui86/konf/commands/clean"
-	"github.com/bygui86/konf/commands/completion"
-	"github.com/bygui86/konf/commands/list"
-	"github.com/bygui86/konf/commands/rename"
-	"github.com/bygui86/konf/commands/set"
-	"github.com/bygui86/konf/commands/split"
-	"github.com/bygui86/konf/commands/view"
-	"github.com/bygui86/konf/logger"
+	"github.com/bygui86/konf-sh/commands/clean"
+	"github.com/bygui86/konf-sh/commands/completion"
+	"github.com/bygui86/konf-sh/commands/list"
+	"github.com/bygui86/konf-sh/commands/rename"
+	"github.com/bygui86/konf-sh/commands/set"
+	"github.com/bygui86/konf-sh/commands/split"
+	"github.com/bygui86/konf-sh/commands/view"
+	"github.com/bygui86/konf-sh/logger"
 
 	"github.com/urfave/cli"
 )

@@ -2,14 +2,14 @@ package split
 
 import (
 	"fmt"
-	"github.com/bygui86/konf/commands"
+	"github.com/bygui86/konf-sh/commands"
 	"k8s.io/client-go/tools/clientcmd/api"
 	"path/filepath"
 
-	"github.com/bygui86/konf/commons"
-	"github.com/bygui86/konf/kubeconfig"
-	"github.com/bygui86/konf/logger"
-	"github.com/bygui86/konf/utils"
+	"github.com/bygui86/konf-sh/commons"
+	"github.com/bygui86/konf-sh/kubeconfig"
+	"github.com/bygui86/konf-sh/logger"
+	"github.com/bygui86/konf-sh/utils"
 
 	"github.com/urfave/cli"
 )

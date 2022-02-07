@@ -1,364 +1,242 @@
+![build](https://github.com/bygui86/konf-sh/workflows/build/badge.svg?branch=master) &nbsp; &nbsp; &nbsp;
+![release](https://github.com/bygui86/konf-sh/workflows/release/badge.svg) &nbsp; &nbsp; &nbsp;
+![go-report](https://goreportcard.com/badge/github.com/bygui86/konf-sh) &nbsp; &nbsp; &nbsp;
 
 <div style="text-align:center">
-	<img src="logo/logo.png" width="50%">
+	<img src="logo.png" align="center" width="25%">
 </div>
 
-# konf
-Kubernetes Configurator
+# konf-sh - the KubeConfig manager for your shell
 
-`konf` makes easier to manage, maintain and use the Kubernetes configuration file (per default `~/.kube/config`).
+**_⚠️ This repo is under active development 🏗_**
 
-This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx).
-
-This repo is under active development.
-
----
-
-## Status
-
-![build](https://github.com/bygui86/konf/workflows/build/badge.svg?branch=master)&nbsp;&nbsp;&nbsp;
-![release](https://github.com/bygui86/konf/workflows/release/badge.svg)&nbsp;&nbsp;&nbsp;
-![go-report](https://goreportcard.com/badge/github.com/bygui86/konf)
-
----
-
-## Build
-
-```shell
-git clone git@github.com:bygui86/konf.git
-cd konf
-make build
-```
+- [Why yet another k8s tool?](#why-yet-another-k8s-tool)
+- [Description](#description)
+- [Install & configure](#install-and-configure)
+    - [1. Install binary](#1-install-binary)
+    - [2. Install shell wrapper](#2-install-shell-wrapper)
+    - [3. Install autocompletion](#3-install-autocompletion)
+    - [4. Advised customisations](#4-advised-customisations)
+- [Usage](#usage)
+- [Some tech details](#some-tech-details)
+    - [Flags](#flags)
+    - [Environment variables](#environment-variables)
+    - [Error codes](#error-codes)
+- [Roadmap](#roadmap)
+- [Codebase](#codebase)
+    - [Build](#build)
+    - [Test](#test)
 
 ---
 
-## Commands
+## Why yet another k8s tool?
 
-`konf split-cfg` separates the Kubernetes configuration (e.g. `~/.kube/config` if not otherwise specified) into single Kubernetes configurations files (per default saved in `~/.kube/configs/*`)
+This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx), but that tool doesn't offer 2 must-to-have (in my opinion) features:
 
-`konf list-cfg` lists all single Kubernetes configurations files separated by `konf split` (per default in `~/.kube/configs/*`)
-
-`eval $(konf set-cfg local <context>)` sets the local (current shell) Kubernetes context (`KUBECONFIG` environment variable) to the specified one (per default `~/.kube/configs/*`) (*)
-
-`konf set-cfg global <context>` sets the global Kubernetes context (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified) to the specified one (per default `~/.kube/configs/*`)
-
-`konf view-cfg` shows the local (current shell) and global Kubernetes context
-
-`konf view-cfg local` shows only the local (current shell) Kubernetes context
-
-`konf view-cfg global` shows only the global Kubernetes context
-
-`konf clean-ctx <context-list_comma-separated>` removes the specified comma-separated context list from Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
-
-`konf rename-ctx <context-to-rename> <new-context-name>` renames the specified context in Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
-
-`eval $(konf reset-cfg local)` resets the local (current shell) Kubernetes configuration, un-setting `KUBECONFIG` environment variable
-
-`konf reset-cfg global` resets `currentContext` to N/A in Kubernetes configuration (per default in `~/.kube/config` Kubernetes configuration if not otherwise specified)
-
-`konf completion [bash | zsh]` outputs the auto-completion script for the selected. See [auto-completion](#auto-completion) section below.
-
-`konf help` shows the helper
-
-`konf version` shows the current version of konf
-
-(*) INFO: The `konf set local` command must be executed in an `eval`, because it has to set the `KUBECONFIG` environment variable on the caller shell instance. 
+- set k8s context just for current shell
+- manage k8s configuration file `~/.kube/config`
 
 ---
 
-## Makefile actions
+## Description
 
-### Build binary
-```shell
-make build
+`konf` makes easier to manage, maintain and use Kubernetes configuration (a.k.a. `~/.kube/config`).
+
+`konf` offers following cool features:
+
+- split k8s configuration into multiple k8s config separate files (one per context)
+- list available single k8s config files
+- set k8s context for current shell only
+- set global k8s context
+- view k8s context for current shell
+- view global k8s context
+- rename k8s context
+- delete a specific k8s context
+- reset k8s context to default 
+- cli autocompletion
+
+---
+
+## Install and configure
+
+### 1. Install binary
+
+`🏗 work in progress`
+
+### 2. Install shell wrapper
+
+#### zsh
+
+Add the following to your `.zshrc` and restart the shell:
+
+```sh
+source <(konf-sh shellwrapper zsh)
 ```
 
-### Run
-```shell
-# from source
-make run
+#### bash
 
-# from bin
-make run-bin
+Add the following to your `.bashrc` and restart the shell:
+
+```sh
+source <(konf-sh shellwrapper bash)
 ```
 
-### Clean binary
-```shell
-make clean-bin
+### 3. Install autocompletion
+
+Current supported shells: zsh, bash
+
+#### zsh
+
+Add the following to your `.zshrc` and restart the shell:
+
+```sh
+source <(konf completion zsh)
 ```
 
-### Split a sample Kubernetes configuration file
-```shell
-make split-cfg
+#### bash
+
+Add the following to your `.bashrc` and restart the shell:
+
+```sh
+source <(konf completion bash)
 ```
 
-### List a set of sample Kubernetes configurations files
-```shell
-make list-cfg
+### 4. Advised customisations
+
+Here following some optional customisations to make your life even easier.
+
+#### Open last konf used
+
+Add the following to your `.zshrc` or `.bashrc` and restart the shell:
+
+```sh
+export KUBECONFIG=$(konf --silent set -)
 ```
 
-### Set local Kubernetes context (current shell)
-```shell
-make set-cfg-local
-```
+#### Aliases
 
-### Set global Kubernetes context
-```shell
-make set-cfg-global
-```
+Add the following to your `.zshrc` or `.bashrc` and restart the shell:
 
-### View local and global Kubernetes contexts
-```shell
-make view-cfg
-```
-
-### View local Kubernetes context (current shell)
-```shell
-make view-cfg-local
-```
-
-### View global Kubernetes context
-```shell
-make view-cfg-global
-```
-
-### Clean Kubernetes contexts
-```shell
-make clean-ctx
-```
-
-### Rename Kubernetes context
-```shell
-make rename-ctx
-```
-
-### Release
-
-`WARN`: Be careful, this command triggers the `release` GitHub Action that results in a new release on GitHub repo
-
-```shell
-make release NEW_VERSION=...
+```sh
+alias kctx="konf set"
+alias kns="konf ns"
 ```
 
 ---
 
-## Configurations
+## Usage
+
+### Split
+
+`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes configurations files (by default in `~/.kube/konfigs`).
+
+### List
+
+`konf list` lists all single Kubernetes configurations files separated by `konf split` (by default in `~/.kube/konfigs`).
+
+### Set
+
+`konf set local <context>` sets the local (current shell) Kubernetes context (setting `KUBECONFIG` environment variable) to the specified one (by default `~/.kube/konfigs`).
+
+`konf set global <context>` sets the global Kubernetes context (by default `currentContext` in `~/.kube/config`) to the specified one (by default `~/.kube/konfigs`).
+
+### View
+
+`konf view` shows both local (current shell) and global Kubernetes context.
+
+`konf view local` shows only the local (current shell) Kubernetes context.
+
+`konf view global` shows only the global Kubernetes context.
+
+### Rename
+
+`konf rename <context-to-rename> <new-context-name>` renames the specified context in both Kubernetes configuration (by default in `~/.kube/config`) and single Kubernetes configurations (by default in `~/.kube/konfigs`).
+
+### Delete
+
+`konf delete <context-list>` removes the specified comma-separated context list from both Kubernetes configuration (by default `~/.kube/config`) and single Kubernetes configurations (by default in `~/.kube/konfigs`).
+
+### Reset
+
+`konf reset local` resets the local (current shell) Kubernetes configuration (unsetting `KUBECONFIG` environment variable).
+
+`konf reset global` resets global Kubernetes context to N/A (by default `currentContext` in `~/.kube/config`).
+
+### Completion
+
+`konf completion [zsh | bash]` outputs the autocompletion script for the selected shell.
+
+### Help
+
+`konf help` shows the helper.
+
+### Version
+
+`konf version` shows the version.
+
+---
+
+## Some tech details
 
 ### Flags
 
-| Flag | Command list | Available values | Default | Corresponding env-var | Description |
-| --- | --- | --- | --- | --- | --- |
-| --kube-config | split, view, view global, set global | - | $HOME/.kube/config | KONF_KUBE_CONFIG_PATH | Specify a custom Kubernetes configuration file path |
-| --single-configs | split, list, set local, set global | - | $HOME/.kube/configs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
+| Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                             |
+|:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:--------------------------------------------------------|
+| --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path     |
+| --single-configs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
 
 ### Environment variables
 
-| Key | Command list | Available values | Default | Corresponding flag | Description |
-| --- | --- | --- | --- | --- | --- |
-| KONF_LOG_ENCODING | (global) | console, json | console | - | Set logger encoding |
-| KONF_LOG_LEVEL | (global) | debug, info, warn, error, fatal | info | - | Set logger level |
-| KONF_KUBE_CONFIG_PATH | split, view, view global, set global | - | $HOME/.kube/config | --kube-config | Specify a custom Kubernetes configuration file path |
-| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global | - | $HOME/.kube/configs/ | --single-configs | Specify the single Kubernetes configurations files path |
+| Key                           | Command list                         | Available values                | Default              | Corresponding flag | Description                                             |
+|:------------------------------|:-------------------------------------|:--------------------------------|:---------------------|:-------------------|:--------------------------------------------------------|
+| KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                     |
+| KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                        |
+| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path     |
+| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-configs   | Specify the single Kubernetes configurations files path |
+
+### Error codes
+
+| Code | Command                           | Description                                                                                                              |
+|:-----|:----------------------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| 1    | (all)                             | Error initializing zap logger                                                                                            |
+| 2    | (all)                             | Error starting application                                                                                               |
+| 3    | (all)                             | Error creating specific application command                                                                              |
+| 11   | split                             | Error checking existence of Kubernetes configurations files path                                                         |
+| 12   | split, set global, delete, rename | Error validating Kubernetes configuration (single, global, cleaned)                                                      |
+| 13   | split, set global, delete, rename | Error writing Kubernetes configuration (single, global, cleaned) to file                                                 |
+| 21   | list                              | Error listing single Kubernetes configurations                                                                           |
+| 31   | set local                         | Error checking existence of Kubernetes configurations files path                                                         |
+| 32   | set local, set global             | Error getting Kubernetes context: context argument not specified                                                         |
+| 33   | set local                         | Error checking existence of Kubernetes context                                                                           |
+| 34   | set global, rename                | Error checking existence of context in Kubernetes configuration                                                          |
+| 41   | delete                            | Error getting Kubernetes context list: 'context list' argument not specified                                             |
+| 42   | delete                            | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
+| 43   | delete                            | Error cleaning Kubernetes context list                                                                                   |
+| 51   | rename                            | Error getting Kubernetes context to rename: 'context to rename' and 'new context name' arguments not specified           |
+| 52   | rename                            | Error getting Kubernetes context to rename: 'context to rename' argument not specified                                   |
+| 53   | rename                            | Error getting Kubernetes context to rename: 'new context name' argument not specified                                    |
+| 54   | rename                            | Error removing context from Kubernetes configuration                                                                     |
 
 ---
 
-## Error codes
+## Roadmap
 
-| Code | Command | Description |
-| --- | --- | --- |
-| 1 | (global) | Error initializing zap logger |
-| 2 | (global) | Error starting application |
-| 3 | (global) | Error creating specific application command |
-| 11 | split-cfg | Error checking existence of Kubernetes configurations files path |
-| 12 | split-cfg, set-cfg global, clean-ctx, rename-ctx | Error validating Kubernetes configuration (single, global, cleaned) |
-| 13 | split-cfg, set-cfg global, clean-ctx, rename-ctx | Error writing Kubernetes configuration (single, global, cleaned) to file |
-| 21 | list-cfg | Error listing single Kubernetes configurations |
-| 31 | set-cfg local | Error checking existence of Kubernetes configurations files path |
-| 32 | set-cfg local, set-cfg global | Error getting Kubernetes context: context argument not specified |
-| 33 | set-cfg local | Error checking existence of Kubernetes context |
-| 34 | set-cfg global, rename-ctx | Error checking existence of context in Kubernetes configuration |
-| 41 | clean-ctx | Error getting Kubernetes context list: 'context list' argument not specified |
-| 42 | clean-ctx | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
-| 43 | clean-ctx | Error cleaning Kubernetes context list |
-| 51 | rename-ctx | Error getting Kubernetes context to rename: 'context to rename' and 'new context name' arguments not specified |
-| 52 | rename-ctx | Error getting Kubernetes context to rename: 'context to rename' argument not specified |
-| 53 | rename-ctx | Error getting Kubernetes context to rename: 'new context name' argument not specified |
-| 54 | rename-ctx | Error removing context from Kubernetes configuration |
+See [here](docs/roadmap.md).
 
 ---
 
-## Auto-completion
+## Codebase
 
-### BASH
+### Build
 
-#### Method 1
+```sh
+git clone git@github.com:bygui86/konf.git
 
-Source the script file `commands/completion/bash_autocomplete` in your `.bashrc` or `.bash_profile` file.
+cd konf
 
-#### Method 2
-
-Execute following commands
-
-```shell
-echo 'source <(konf completion bash)' >> $HOME/.bashrc
-. ./bashrc
-konf
-# now play with tab
+make build
 ```
 
-### ZSH
+### Test
 
-#### Method 1
-
-Take the script file `commands/completion/zsh_autocomplete`, replace `PROG` with `konf, source it `in your `.zshrc` file.
-
-#### Method 2
-
-Execute following commands
-
-```shell
-PROG=konf echo 'source <(konf completion zsh)' >> $HOME/.zshrc
-konf
-# now play with tab
-```
-
----
-
-## TODO list
-
-- [x] implement first set of commands
-- [x] implement second set of commands
-- [ ] finalize split command (see TODO in commands/set/action.go)
-- [ ] implement third set of commands
-- [x] implement properly logging flags
-- [ ] documentation
-  - [ ] README.md
-  - [ ] go-doc
-  - [ ] add go-doc badge (see https://pkg.go.dev/github.com/etherlabsio/healthcheck?tab=doc)
-- [x] makefile
-- [ ] testing
-- [x] release mechanism
-- [x] ci/cd
-- [x] add 'ArgsUsage' description in all commands
-- [x] improve release mechanism
-- [ ] create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
-- [ ] adding code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
-- [ ] have a look at [this library](https://github.com/gkarthiks/k8s-discovery)
-
-### 3rd set of commands
-
-- [ ] namespaces (inspired by kubens)
-  - [ ] view current namespace
-  - [ ] list all namespaces
-  - [ ] set local (current shell only) namespace
-  - [ ] set global namespace
-
----
-
-## Release
-
-`NEXT RELEASE:` v0.5
-
-### Automatic
-
-```shell
-make release NEW_VERSION=...
-```
-
-### Manual
-
-1. Choose a new version
-	```shell
-	NEW_VERSION="v0.5"
-	```
-2. Create a new tag with choosen version
-	```shell
-	git tag -a $NEW_VERSION -m "Tag for release $NEW_VERSION"
-	```
-3. Push new tag to remote, triggering `release` GitHub Action
-	```shell
-	git push origin $NEW_VERSION
-	```
-
-### Simulate
-
-```shell
-goreleaser --snapshot --skip-publish --rm-dist
-```
-
-### Available mechanisms
-
-- goreleaser
-- GitHub Actions
-- GitHub Package Registry
-- PackagePublishing
-
-### GitHub Actions
-
-| Action | Triggered by | Steps |
-| --- | --- | --- |
-| build | push to master, push to branch features/\*\*, PR to master, PR to branch features/\*\* | setup go, checkout, get dependencies, build, test |
-| release | new tag creation | setup go, checkout, unshallow, run goreleaser |
-
-### goreleaser
-
-`WARN`: The first three steps will trigger the `release` GitHub Action, performing the last step (goreleaser), so be careful if you want to release manually.
-
-1. version
-	```shell
-	NEW_VERSION="v0.5"
-	```
-2. tag
-	```shell
-	git tag -a $NEW_VERSION -m "Tag for release $NEW_VERSION"
-	```
-3. push
-	```shell
-	git push origin $NEW_VERSION
-	```
-4. release
-	```shell
-	goreleaser release --rm-dist
-	```
-
----
-
-## Links
-
-### Golang
-- https://github.com/golang/go/wiki/Modules
-#### Logger
-- https://github.com/uber-go/zap
-- https://github.com/sandipb/zap-examples
-
-### Kubernetes
-- https://github.com/kubernetes/kubernetes/blob/master/staging/README.md
-#### client-go
-- https://godoc.org/k8s.io/client-go
-- https://github.com/kubernetes/client-go/blob/master/INSTALL.md#add-client-go-as-a-dependency
-- https://github.com/kubernetes/client-go/
-- https://github.com/kubernetes/client-go/tree/master/examples
-#### examples
-- https://rancher.com/using-kubernetes-api-go-kubecon-2017-session-recap/
-- https://github.com/alena1108/kubecon2017/blob/master/main.go
-
-### Release
-
-#### goreleaser
-- https://github.com/bygui86/go-releaser
-- https://goreleaser.com/
-- https://goreleaser.com/actions/
-- https://github.com/goreleaser/goreleaser-action
-- https://github.com/marketplace/actions/goreleaser-action
-
-#### GitHub Actions
-- https://help.github.com/en/articles/about-github-actions
-- https://help.github.com/en/articles/configuring-a-workflow
-- https://help.github.com/en/articles/workflow-syntax-for-github-actions
-- https://github.com/actions/setup-go
-
-#### GitHub Package Registry
-- https://github.com/features/packages
-
-#### (Golang) PackagePublishing
-- https://github.com/golang/go/wiki/PackagePublishing
+`🏗 work in progress`
