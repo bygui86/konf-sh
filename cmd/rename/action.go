@@ -13,11 +13,11 @@ import (
 
 func rename(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing RENAME-CONTEXT command")
+	logger.Logger.Debug("🐛 Executing RENAME command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file

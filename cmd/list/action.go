@@ -13,19 +13,19 @@ import (
 
 func list(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing LIST-CONFIG command")
+	logger.Logger.Debug("🐛 Executing LIST command")
 	logger.Logger.Debug("")
 
-	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
-	singleConfigsPath := ctx.String(commons.SingleConfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes configurations files path: '%s'", singleConfigsPath)
+	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations files path")
+	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations files path: '%s'", singleConfigsPath)
 
 	checkErr := utils.CheckIfFolderExist(singleConfigsPath, false)
 	if checkErr != nil {
-		logger.SugaredLogger.Warn("⚠️  Single Kubernetes configurations files path not found")
+		logger.SugaredLogger.Warn("⚠️  Single Kubernetes konfigurations files path not found")
 		logger.SugaredLogger.Warn("ℹ️  Tip: run 'konf split' before 'konf list'")
 	} else {
-		logger.SugaredLogger.Infof("📚 List single Kubernetes configurations in '%s':", singleConfigsPath)
+		logger.SugaredLogger.Infof("📚 List single Kubernetes konfigurations in '%s':", singleConfigsPath)
 		err := filepath.Walk(singleConfigsPath, func(path string, info os.FileInfo, err error) error {
 			if !info.IsDir() {
 				logger.SugaredLogger.Infof("\t%s", info.Name())
@@ -34,7 +34,7 @@ func list(ctx *cli.Context) error {
 		})
 		if err != nil {
 			return cli.Exit(
-				fmt.Sprintf("❌ Error listing single Kubernetes configurations in '%s': %s", singleConfigsPath, err.Error()),
+				fmt.Sprintf("❌ Error listing single Kubernetes konfigurations in '%s': %s", singleConfigsPath, err.Error()),
 				21)
 		}
 	}

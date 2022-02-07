@@ -1,4 +1,4 @@
-package clean
+package delete
 
 import (
 	"github.com/bygui86/konf-sh/pkg/commons"
@@ -9,18 +9,18 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create CLEAN-CONTEXT command")
-	home := utils.GetHomeDirOrExit("clean-ctx")
+	logger.Logger.Debug("🐛 Create DELETE command")
+	home := utils.GetHomeDirOrExit("delete")
 	return &cli.Command{
-		Name:      "clean-ctx",
+		Name:      "delete",
 		Usage:     "Remove specified context (and relative user and cluster) from Kubernetes configuration",
 		ArgsUsage: "<context-list_comma-separated>",
 		Action:    clean,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-				Usage:    commons.CustomKubeConfigFlagDescription,
-				EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+				Usage:    commons.KubeConfigFlagDescription,
+				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 				Required: false,
 			},

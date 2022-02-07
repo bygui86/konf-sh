@@ -11,7 +11,7 @@ import (
 
 func resetLocal(ctx *cli.Context) error {
 	logger.Logger.Debug("")
-	logger.Logger.Debug("🐛 Executing RESET-CFG-LOCAL command")
+	logger.Logger.Debug("🐛 Executing RESET-LOCAL command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Info(fmt.Sprintf("unset %s", commons.KubeConfigEnvVar))
@@ -20,11 +20,11 @@ func resetLocal(ctx *cli.Context) error {
 
 func resetGlobal(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing RESET-CFG-GLOBAL command")
+	logger.Logger.Debug("🐛 Executing RESET-GLOBAL command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file

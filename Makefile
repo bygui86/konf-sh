@@ -39,42 +39,42 @@ simulate-release :		## Simulate a release with goreleaser
 
 ## features samples
 
-split-cfg : build		## Split a sample Kubernetes configuration file
-	$(KONF_PREFIX) konf-sh split-cfg --kube-config ./examples/config --single-konfigs ./examples/konfigs
+split : build		## Split a sample Kubernetes configuration file
+	$(KONF_PREFIX) konf-sh split --kube-config ./examples/config --single-konfigs ./examples/konfigs
 
-list-cfg : build		## List a set of sample Kubernetes configurations files
-	$(KONF_PREFIX) konf-sh list-cfg --single-konfigs ./examples/konfigs
+list : build		## List a set of sample Kubernetes konfigurations files
+	$(KONF_PREFIX) konf-sh list --single-konfigs ./examples/konfigs
 
-set-cfg-local : build		## Set local Kubernetes context (current shell)
+set-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
 	@echo "Please manually execute 'eval $(konf-sh set local context_b --single-konfigs ./examples/konfigs)'"
 	@echo ""
 
-set-cfg-global : build		## Set global Kubernetes context
-	$(KONF_PREFIX) konf-sh set-cfg global context_b --kube-config ./examples/config
+set-global : build		## Set global Kubernetes context
+	$(KONF_PREFIX) konf-sh set global context_b --kube-config ./examples/config
 
-view-cfg : build		## View local and global Kubernetes contexts
-	$(KONF_PREFIX) konf-sh view-cfg --kube-config ./examples/config
+view : build		## View local and global Kubernetes contexts
+	$(KONF_PREFIX) konf-sh view --kube-config ./examples/config
 
-view-cfg-local : build		## View local Kubernetes context (current shell)
-	$(KONF_PREFIX) konf-sh view-cfg local
+view-local : build		## View local Kubernetes context (current shell)
+	$(KONF_PREFIX) konf-sh view local
 
-view-cfg-global : build		## View global Kubernetes context
-	$(KONF_PREFIX) konf-sh view-cfg global --kube-config ./examples/config
+view-global : build		## View global Kubernetes context
+	$(KONF_PREFIX) konf-sh view global --kube-config ./examples/config
 
-clean-ctx : build		## Remove context list from Kubernetes configuration
-	$(KONF_PREFIX) konf-sh clean-ctx --kube-config ./examples/config context_a,context_b
+delete : build		## Remove context list from Kubernetes configuration
+	$(KONF_PREFIX) konf-sh delete --kube-config ./examples/config context_a,context_b
 
-rename-ctx : build		## Rename specified context in Kubernetes configuration
-	$(KONF_PREFIX) konf-sh rename-ctx --kube-config ./examples/config context_a NEW_context_a
+rename : build		## Rename specified context in Kubernetes configuration
+	$(KONF_PREFIX) konf-sh rename --kube-config ./examples/config context_a NEW_context_a
 
-reset-cfg-local : build		## Reset local Kubernetes configuration (current shell)
+reset-local : build		## Reset local Kubernetes configuration (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
-	@echo "Please manually execute 'eval $(konf-sh reset-cfg local)'"
+	@echo "Please manually execute 'eval $(konf-sh reset local)'"
 	@echo ""
 
-reset-cfg-global : build		## Reset global Kubernetes configuration
-	$(KONF_PREFIX) konf-sh reset-cfg global --kube-config ./examples/config
+reset-global : build		## Reset global Kubernetes configuration
+	$(KONF_PREFIX) konf-sh reset global --kube-config ./examples/config
 
 ## helpers
 

@@ -128,11 +128,11 @@ alias kns="konf ns"
 
 ### Split
 
-`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes configurations files (by default in `~/.kube/konfigs`).
+`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations files (by default in `~/.kube/konfigs`).
 
 ### List
 
-`konf list` lists all single Kubernetes configurations files separated by `konf split` (by default in `~/.kube/konfigs`).
+`konf list` lists all single Kubernetes konfigurations files separated by `konf split` (by default in `~/.kube/konfigs`).
 
 ### Set
 
@@ -150,11 +150,11 @@ alias kns="konf ns"
 
 ### Rename
 
-`konf rename <context-to-rename> <new-context-name>` renames the specified context in both Kubernetes configuration (by default in `~/.kube/config`) and single Kubernetes configurations (by default in `~/.kube/konfigs`).
+`konf rename <context-to-rename> <new-context-name>` renames the specified context in both Kubernetes configuration (by default in `~/.kube/config`) and single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
 
 ### Delete
 
-`konf delete <context-list>` removes the specified comma-separated context list from both Kubernetes configuration (by default `~/.kube/config`) and single Kubernetes configurations (by default in `~/.kube/konfigs`).
+`konf delete <context-list>` removes the specified comma-separated context list from both Kubernetes configuration (by default `~/.kube/config`) and single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
 
 ### Reset
 
@@ -183,7 +183,7 @@ alias kns="konf ns"
 | Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                             |
 |:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:--------------------------------------------------------|
 | --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path     |
-| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
+| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes konfigurations files path |
 
 ### Environment variables
 
@@ -192,7 +192,7 @@ alias kns="konf ns"
 | KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                     |
 | KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                        |
 | KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path     |
-| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes configurations files path |
+| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations files path |
 
 ### Error codes
 
@@ -201,11 +201,11 @@ alias kns="konf ns"
 | 1    | (all)                             | Error initializing zap logger                                                                                            |
 | 2    | (all)                             | Error starting application                                                                                               |
 | 3    | (all)                             | Error creating specific application command                                                                              |
-| 11   | split                             | Error checking existence of Kubernetes configurations files path                                                         |
+| 11   | split                             | Error checking existence of Kubernetes konfigurations files path                                                         |
 | 12   | split, set global, delete, rename | Error validating Kubernetes configuration (single, global, cleaned)                                                      |
 | 13   | split, set global, delete, rename | Error writing Kubernetes configuration (single, global, cleaned) to file                                                 |
-| 21   | list                              | Error listing single Kubernetes configurations                                                                           |
-| 31   | set local                         | Error checking existence of Kubernetes configurations files path                                                         |
+| 21   | list                              | Error listing single Kubernetes konfigurations                                                                           |
+| 31   | set local                         | Error checking existence of Kubernetes konfigurations files path                                                         |
 | 32   | set local, set global             | Error getting Kubernetes context: context argument not specified                                                         |
 | 33   | set local                         | Error checking existence of Kubernetes context                                                                           |
 | 34   | set global, rename                | Error checking existence of context in Kubernetes configuration                                                          |

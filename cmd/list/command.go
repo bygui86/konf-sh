@@ -9,17 +9,17 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create LIST-CONFIG command")
-	home := utils.GetHomeDirOrExit("list-cfg")
+	logger.Logger.Debug("🐛 Create LIST command")
+	home := utils.GetHomeDirOrExit("list")
 	return &cli.Command{
-		Name:   "list-cfg",
-		Usage:  "List all single Kubernetes configurations",
+		Name:   "list",
+		Usage:  "List all single Kubernetes konfigurations",
 		Action: list,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
-				Usage:    commons.SingleConfigsFlagDescription,
-				EnvVars:  []string{commons.SingleConfigsPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+				Usage:    commons.SingleKonfigsFlagDescription,
+				EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
 				Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 				Required: false,
 			},

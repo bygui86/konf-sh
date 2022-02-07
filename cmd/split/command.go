@@ -9,24 +9,24 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create SPLIT-CONFIG command")
-	home := utils.GetHomeDirOrExit("split-cfg")
+	logger.Logger.Debug("🐛 Create SPLIT command")
+	home := utils.GetHomeDirOrExit("split")
 	return &cli.Command{
-		Name:   "split-cfg",
-		Usage:  "Split kube-config into multiple single Kubernetes configurations based on the context",
+		Name:   "split",
+		Usage:  "Split Kubernetes configuration into multiple single Kubernetes konfigurations based on the context",
 		Action: split,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-				Usage:    commons.CustomKubeConfigFlagDescription,
-				EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+				Usage:    commons.KubeConfigFlagDescription,
+				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 				Required: false,
 			},
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
-				Usage:    commons.SingleConfigsFlagDescription,
-				EnvVars:  []string{commons.SingleConfigsPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+				Usage:    commons.SingleKonfigsFlagDescription,
+				EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
 				Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 				Required: false,
 			},

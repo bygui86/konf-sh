@@ -14,11 +14,11 @@ import (
 
 func split(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing SPLIT-CONFIG command")
+	logger.Logger.Debug("🐛 Executing SPLIT command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
@@ -34,16 +34,16 @@ func split(ctx *cli.Context) error {
 	logger.SugaredLogger.Infof("✂️  Split Kubernetes configuration from %s", kubeConfigFilePath)
 	singleConfigs := kubeconfig.Split(kubeConfig, kubeConfigFilePath)
 
-	logger.Logger.Info("💾 Save single Kubernetes configurations files")
-	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
-	singleConfigsPath := ctx.String(commons.SingleConfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes configurations files path: '%s'", singleConfigsPath)
+	logger.Logger.Info("💾 Save single Kubernetes konfigurations files")
+	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations files path")
+	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations files path: '%s'", singleConfigsPath)
 
-	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes configurations files path '%s'", singleConfigsPath)
+	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations files path '%s'", singleConfigsPath)
 	checkErr := utils.CheckIfFolderExist(singleConfigsPath, true)
 	if checkErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error checking existence of Kubernetes configurations files path '%s': %s", checkErr.Error(), singleConfigsPath),
+			fmt.Sprintf("❌ Error checking existence of Kubernetes konfigurations files path '%s': %s", checkErr.Error(), singleConfigsPath),
 			11)
 	}
 
@@ -52,7 +52,7 @@ func split(ctx *cli.Context) error {
 		return valWrErr
 	}
 
-	logger.SugaredLogger.Infof("✅ Completed! Single Kubernetes configurations files saved in '%s'", singleConfigsPath)
+	logger.SugaredLogger.Infof("✅ Completed! Single Kubernetes konfigurations files saved in '%s'", singleConfigsPath)
 	logger.Logger.Info("")
 	return nil
 }

@@ -9,11 +9,11 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create RESET-CONFIG command")
-	home := utils.GetHomeDirOrExit("reset-cfg")
+	logger.Logger.Debug("🐛 Create RESET command")
+	home := utils.GetHomeDirOrExit("reset")
 	return &cli.Command{
-		Name:  "reset-cfg",
-		Usage: "Reset local or global Kubernetes configuration",
+		Name:  "reset",
+		Usage: "Reset Kubernetes configuration",
 		Subcommands: cli.Commands{
 			{
 				Name:      "local",
@@ -28,9 +28,9 @@ func BuildCommand() *cli.Command {
 				Action:    resetGlobal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-						Usage:    commons.CustomKubeConfigFlagDescription,
-						EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+						Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+						Usage:    commons.KubeConfigFlagDescription,
+						EnvVars:  []string{commons.KubeConfigPathEnvVar},
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 						Required: false,
 					},

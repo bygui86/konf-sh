@@ -26,55 +26,55 @@ make clean-bin
 ### Split a sample Kubernetes configuration file
 
 ```sh
-make split-cfg
+make split
 ```
 
-### List a set of sample Kubernetes configurations files
+### List a set of sample Kubernetes konfigurations files
 
 ```sh
-make list-cfg
+make list
 ```
 
 ### Set local Kubernetes context (current bash)
 
 ```sh
-make set-cfg-local
+make set-local
 ```
 
 ### Set global Kubernetes context
 
 ```sh
-make set-cfg-global
+make set-global
 ```
 
 ### View local and global Kubernetes contexts
 
 ```sh
-make view-cfg
+make view
 ```
 
 ### View local Kubernetes context (current bash)
 
 ```sh
-make view-cfg-local
+make view-local
 ```
 
 ### View global Kubernetes context
 
 ```sh
-make view-cfg-global
+make view-global
 ```
 
 ### Clean Kubernetes contexts
 
 ```sh
-make clean-ctx
+make delete
 ```
 
 ### Rename Kubernetes context
 
 ```sh
-make rename-ctx
+make rename
 ```
 
 ### Release

@@ -10,15 +10,15 @@ import (
 
 func view(ctx *cli.Context) error {
 	logger.Logger.Debug("")
-	logger.Logger.Debug("🐛 Executing VIEW-CONFIG command")
+	logger.Logger.Debug("🐛 Executing VIEW command")
 
-	viewLocal(ctx)
-	viewGlobal(ctx)
+	_ = viewLocal(ctx)
+	_ = viewGlobal(ctx)
 
 	return nil
 }
 
-// TODO remove error?
+// INFO: viewLocal function returns error even if always nil as used to build cli command
 func viewLocal(ctx *cli.Context) error {
 	logger.Logger.Info("")
 	logger.Logger.Debug("🐛 Executing VIEW-LOCAL command")
@@ -36,14 +36,14 @@ func viewLocal(ctx *cli.Context) error {
 	return nil
 }
 
-// TODO remove error?
+// INFO: viewGlobal function returns error even if always nil as used to build cli command
 func viewGlobal(ctx *cli.Context) error {
 	logger.Logger.Info("")
 	logger.Logger.Debug("🐛 Executing VIEW-GLOBAL command")
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kCfg := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file

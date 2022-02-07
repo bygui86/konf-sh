@@ -4,8 +4,8 @@ import (
 	"os"
 	"sort"
 
-	"github.com/bygui86/konf-sh/cmd/clean"
 	"github.com/bygui86/konf-sh/cmd/completion"
+	"github.com/bygui86/konf-sh/cmd/delete"
 	"github.com/bygui86/konf-sh/cmd/list"
 	"github.com/bygui86/konf-sh/cmd/rename"
 	"github.com/bygui86/konf-sh/cmd/reset"
@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	appName    = "konf"
-	appUsage   = "Kubernetes Configurator for an easy daily job"
+	appName    = "konf-sh"
+	appUsage   = "The KubeConfig manager for your shell"
 	appVersion = "v0.5"
 )
 
@@ -53,7 +53,7 @@ func addCommands(app *cli.App) {
 		list.BuildCommand(),
 		view.BuildCommand(),
 		set.BuildCommand(),
-		clean.BuildCommand(),
+		delete.BuildCommand(),
 		rename.BuildCommand(),
 		reset.BuildCommand(),
 		completion.BuildCommand(),

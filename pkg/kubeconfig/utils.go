@@ -16,5 +16,5 @@ func GetCustomKubeConfigPathDefault(home string) string {
 }
 
 func GetSingleConfigsPathDefault(home string) string {
-	return filepath.Join(home, commons.SingleConfigsPathDefault)
+	return filepath.Join(home, commons.SingleKonfigsPathDefault)
 }

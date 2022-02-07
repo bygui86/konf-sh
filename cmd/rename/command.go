@@ -9,18 +9,18 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create RENAME-CONTEXT command")
-	home := utils.GetHomeDirOrExit("rename-ctx")
+	logger.Logger.Debug("🐛 Create RENAME command")
+	home := utils.GetHomeDirOrExit("rename")
 	return &cli.Command{
-		Name:      "rename-ctx",
-		Usage:     "Rename specified context with a new one",
+		Name:      "rename",
+		Usage:     "Rename specified context with a new name",
 		ArgsUsage: "<context-to-rename> <new-context-name>",
 		Action:    rename,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-				Usage:    commons.CustomKubeConfigFlagDescription,
-				EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+				Usage:    commons.KubeConfigFlagDescription,
+				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 				Required: false,
 			},

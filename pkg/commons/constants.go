@@ -2,20 +2,18 @@ package commons
 
 const (
 	// Flags
-	CustomKubeConfigFlagName        = "kube-config"
-	CustomKubeConfigFlagShort       = "k"
-	CustomKubeConfigFlagDescription = "Kubernetes configuration custom (`PATH`)"
-	SingleConfigsFlagName           = "single-konfigs"
-	SingleConfigsFlagShort          = "c"
-	SingleConfigsFlagDescription    = "Single Kubernetes configurations files custom (`PATH`)"
+	KubeConfigFlagName           = "kube-config"
+	KubeConfigFlagShort          = "k"
+	KubeConfigFlagDescription    = "Kubernetes configuration custom (`PATH`)"
+	SingleKonfigsFlagName        = "single-konfigs"
+	SingleKonfigsFlagShort       = "c"
+	SingleKonfigsFlagDescription = "Single Kubernetes konfigurations files custom (`PATH`)"
 
 	// Environment variables
-	CustomKubeConfigPathEnvVar = "KONF_KUBE_CONFIG_PATH"
-	SingleConfigsPathEnvVar    = "KONF_SINGLE_KUBE_CONFIGS_PATH"
-	KubeConfigEnvVar           = "KUBECONFIG"
-
-	// Defaults
+	KubeConfigPathEnvVar     = "KONF_KUBE_CONFIG_PATH"
 	KubeConfigPathDefault    = ".kube/config"
-	SingleConfigsPathDefault = ".kube/konfigs"
+	SingleKonfigsPathEnvVar  = "KONF_SINGLE_KUBE_CONFIGS_PATH"
+	SingleKonfigsPathDefault = ".kube/konfigs"
+	KubeConfigEnvVar         = "KUBECONFIG"
 	KubeConfigEnvVarDefault  = ""
 )

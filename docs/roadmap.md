@@ -34,20 +34,27 @@
   - [x] libraries
   - [x] package structure
 - [x] rename "configs" to "konfigs"
-- [ ] rename commands removing "-cfg"
+- [x] rename commands removing "-cfg" and "-ctx"
+  - [x] clean/delete
+  - [x] list
+  - [x] rename
+  - [x] reset
+  - [x] set
+  - [x] split
+  - [x] view
+- [x] rename binary to "konf-sh"
+- [ ] fix "list konfigs"
+    - [ ] hide .DS_store and other files
+    - [ ] show only valid kubeconfig
 - [ ] improve "clean" command
-  - [ ] rename to "delete"
+  - [x] rename to "delete"
   - [ ] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve "rename" command
   - [ ] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve split command (see TODO in commands/set/action.go)
-- [ ] fix "completion zsh" (replace "PROG" with "konf")
-- [ ] fix "list konfigs"
-    - [ ] hide .DS_store and other files
-    - [ ] show only valid kubeconfig
-- [ ] rename binary to "konf-sh"
 - [ ] improve "set"
   - [ ] add "-" to set "last konf used" in new shell 
+- [ ] fix "completion zsh" (replace "PROG" with "konf")
 - [ ] implement "--silent" flag
 - [ ] shellwrapper
   - [ ] implement command

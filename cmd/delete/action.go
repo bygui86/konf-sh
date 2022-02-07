@@ -1,4 +1,4 @@
-package clean
+package delete
 
 import (
 	"bufio"
@@ -16,7 +16,7 @@ import (
 
 func clean(ctx *cli.Context) error {
 	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing CLEAN-CONTEXT command")
+	logger.Logger.Debug("🐛 Executing DELETE command")
 	logger.Logger.Debug("")
 
 	contextSlice, ctxErr := getContextList(ctx)
@@ -92,7 +92,7 @@ func userDeletionConfirm() bool {
 
 func cleanInternal(ctx *cli.Context, contextSlice []string) (string, error) {
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file

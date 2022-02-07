@@ -14,20 +14,20 @@ import (
 
 // INFO: it seems that is not possible to run a command like "source ./set-local-script.sh" :(
 func setLocal(ctx *cli.Context) error {
-	logger.Logger.Debug("🐛 Executing SET-CONFIG-LOCAL command")
+	logger.Logger.Debug("🐛 Executing SET-LOCAL command")
 	logger.Logger.Debug("")
 
-	logger.Logger.Debug("🐛 Get single Kubernetes configurations files path")
-	singleConfigsPath := ctx.String(commons.SingleConfigsFlagName)
+	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations files path")
+	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
 
-	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes configurations files path '%s'", singleConfigsPath)
+	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations files path '%s'", singleConfigsPath)
 	checkFolderErr := utils.CheckIfFolderExist(singleConfigsPath, true)
 	if checkFolderErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌ Error checking existence of Kubernetes configurations files path '%s': %s", singleConfigsPath, checkFolderErr.Error()),
+			fmt.Sprintf("❌ Error checking existence of Kubernetes konfigurations files path '%s': %s", singleConfigsPath, checkFolderErr.Error()),
 			31)
 	}
-	logger.SugaredLogger.Debugf("📚 Single Kubernetes configurations files path: '%s'", singleConfigsPath)
+	logger.SugaredLogger.Debugf("📚 Single Kubernetes konfigurations files path: '%s'", singleConfigsPath)
 
 	logger.Logger.Debug("🐛 Get selected Kubernetes context")
 	args := ctx.Args()
@@ -38,7 +38,7 @@ func setLocal(ctx *cli.Context) error {
 	}
 	context := args.Get(0)
 
-	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes configurations file for context '%s'", context)
+	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations file for context '%s'", context)
 	localKubeConfig := filepath.Join(singleConfigsPath, context)
 	checkFileErr := utils.CheckIfFileExist(localKubeConfig)
 	if checkFileErr != nil {
@@ -58,7 +58,7 @@ func setGlobal(ctx *cli.Context) error {
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.CustomKubeConfigFlagName)
+	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
 	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file

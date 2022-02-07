@@ -9,17 +9,17 @@ import (
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create VIEW-CONFIG command")
-	home := utils.GetHomeDirOrExit("view-cfg")
+	logger.Logger.Debug("🐛 Create VIEW command")
+	home := utils.GetHomeDirOrExit("view")
 	return &cli.Command{
-		Name:   "view-cfg",
+		Name:   "view",
 		Usage:  "View local and global Kubernetes contexts",
 		Action: view,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-				Usage:    commons.CustomKubeConfigFlagDescription,
-				EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+				Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+				Usage:    commons.KubeConfigFlagDescription,
+				EnvVars:  []string{commons.KubeConfigPathEnvVar},
 				Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 				Required: false,
 			},
@@ -36,9 +36,9 @@ func BuildCommand() *cli.Command {
 				Action: viewGlobal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-						Usage:    commons.CustomKubeConfigFlagDescription,
-						EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+						Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+						Usage:    commons.KubeConfigFlagDescription,
+						EnvVars:  []string{commons.KubeConfigPathEnvVar},
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 						Required: false,
 					},

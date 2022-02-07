@@ -10,9 +10,9 @@ import (
 
 func BuildCommand() *cli.Command {
 	logger.Logger.Debug("🐛 Create SET-CONFIG command")
-	home := utils.GetHomeDirOrExit("set-cfg")
+	home := utils.GetHomeDirOrExit("set")
 	return &cli.Command{
-		Name:  "set-cfg",
+		Name:  "set",
 		Usage: "Set local or global Kubernetes context",
 		Subcommands: cli.Commands{
 			{
@@ -22,9 +22,9 @@ func BuildCommand() *cli.Command {
 				Action:    setLocal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.SingleConfigsFlagName, commons.SingleConfigsFlagShort),
-						Usage:    commons.SingleConfigsFlagDescription,
-						EnvVars:  []string{commons.SingleConfigsPathEnvVar},
+						Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+						Usage:    commons.SingleKonfigsFlagDescription,
+						EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
 						Value:    kubeconfig.GetSingleConfigsPathDefault(home),
 						Required: false,
 					},
@@ -37,9 +37,9 @@ func BuildCommand() *cli.Command {
 				Action:    setGlobal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.CustomKubeConfigFlagName, commons.CustomKubeConfigFlagShort),
-						Usage:    commons.CustomKubeConfigFlagDescription,
-						EnvVars:  []string{commons.CustomKubeConfigPathEnvVar},
+						Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+						Usage:    commons.KubeConfigFlagDescription,
+						EnvVars:  []string{commons.KubeConfigPathEnvVar},
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
 						Required: false,
 					},
