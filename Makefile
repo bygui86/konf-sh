@@ -1,7 +1,10 @@
 
 # VARIABLES
+KONF_LOG_ENCODING ?= console
 KONF_LOG_LEVEL ?= info
-KONF_PREFIX := KONF_LOG_LEVEL=$(KONF_LOG_LEVEL)
+KONF_PREFIX := KONF_LOG_ENCODING=$(KONF_LOG_ENCODING) KONF_LOG_LEVEL=$(KONF_LOG_LEVEL)
+## global
+export GO111MODULE = on
 
 
 # CONFIG
@@ -11,20 +14,19 @@ KONF_PREFIX := KONF_LOG_LEVEL=$(KONF_LOG_LEVEL)
 
 # ACTIONS
 
-## commands
-
-run :		## Debug running directly from source code
-	go run main.go
+## code
 
 build :		## Build
-	@export GO111MODULE=on && \
 	go build -o konf-sh .
 
-run-bin : build		## Run
-	konf-sh $(ARGS)
+clean :		## Clean
+	-@rm -rf konf-sh
 
-clean-bin : 		## Clean binary
-	@rm -rf konf-sh >/dev/null 2>&1
+#TODO
+#test :		## Test
+#	go test -coverprofile=coverage.out -count=5 -race ./...
+
+## release
 
 release :		## Create a new git tag and push it to remote to trigger the release GitHub action
 ifdef NEW_VERSION
@@ -37,7 +39,7 @@ endif
 simulate-release :		## Simulate a release with goreleaser
 	goreleaser release --rm-dist --snapshot --skip-publish
 
-## features samples
+## commands
 
 split : build		## Split a sample Kubernetes configuration file
 	$(KONF_PREFIX) konf-sh split --kube-config ./examples/config --single-konfigs ./examples/konfigs
@@ -78,8 +80,10 @@ reset-global : build		## Reset global Kubernetes configuration
 
 ## helpers
 
-reset-config-sample :		## Reset Kubernetes configuration sample to original
-	cp -f ./examples/config_origin ./examples/config
+restore-origin-example :		## Restore original example
+	@rm -rf ./examples/konfigs/context_*
+	@cp -f ./examples/config_origin ./examples/config
+	@cp -f ./examples/context_invalid ./examples/konfigs/context_invalid
 
 help :		## Help
 	@echo ""

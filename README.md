@@ -18,6 +18,7 @@
     - [3. Install autocompletion](#3-install-autocompletion)
     - [4. Advised customisations](#4-advised-customisations)
 - [Usage](#usage)
+- [Commands](#commands)
 - [Some tech details](#some-tech-details)
     - [Flags](#flags)
     - [Environment variables](#environment-variables)
@@ -126,9 +127,57 @@ alias kns="konf ns"
 
 ## Usage
 
+### 1. Split k8s config
+
+First we have to split your Kubernetes config into multiple single Kubernetes konfigs
+
+```sh
+konf split
+```
+
+If we don't do this, no other command will have any effect.
+
+### 2. List all available k8s konfigs
+
+Let's list all available k8s konfigs to select the right k8s ctx we want to set
+
+```sh
+konf list
+```
+
+### 3. Set a global k8s ctx
+
+We set our k8s ctx as global
+
+```sh
+konf set global <context>
+```
+
+### 4. Set a local k8s ctx
+
+We open another terminal because we need access to different k8s ctx, then we execute
+
+```sh
+konf set local <context>
+```
+
+This will point our kubectl to the selected k8s ctx, but ONLY IN THE CURRENT SHELL! Amazing don't you think?
+
+### 5. View our settings
+
+Still from the second terminal window, we want to review our current settings
+
+```sh
+konf view
+```
+
+---
+
+## Commands
+
 ### Split
 
-`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations files (by default in `~/.kube/konfigs`).
+`konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations files (by default in `~/.kube/konfigs`), one for each context.
 
 ### List
 
@@ -136,7 +185,7 @@ alias kns="konf ns"
 
 ### Set
 
-`konf set local <context>` sets the local (current shell) Kubernetes context (setting `KUBECONFIG` environment variable) to the specified one (by default `~/.kube/konfigs`).
+konf set local <context> sets the local (current shell) Kubernetes context (setting `KUBECONFIG` environment variable) to the specified one (by default `~/.kube/konfigs`).
 
 `konf set global <context>` sets the global Kubernetes context (by default `currentContext` in `~/.kube/config`) to the specified one (by default `~/.kube/konfigs`).
 
@@ -183,7 +232,7 @@ alias kns="konf ns"
 | Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                             |
 |:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:--------------------------------------------------------|
 | --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path     |
-| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes konfigurations files path |
+| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations files path |
 
 ### Environment variables
 
@@ -192,7 +241,7 @@ alias kns="konf ns"
 | KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                     |
 | KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                        |
 | KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path     |
-| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations files path |
+| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations files path |
 
 ### Error codes
 

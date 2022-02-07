@@ -12,7 +12,7 @@ const (
 	// Environment variables
 	KubeConfigPathEnvVar     = "KONF_KUBE_CONFIG_PATH"
 	KubeConfigPathDefault    = ".kube/config"
-	SingleKonfigsPathEnvVar  = "KONF_SINGLE_KUBE_CONFIGS_PATH"
+	SingleKonfigsPathEnvVar  = "KONF_SINGLE_KUBE_KONFIGS_PATH"
 	SingleKonfigsPathDefault = ".kube/konfigs"
 	KubeConfigEnvVar         = "KUBECONFIG"
 	KubeConfigEnvVarDefault  = ""

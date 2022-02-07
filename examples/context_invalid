@@ -3,24 +3,23 @@ clusters:
 - cluster:
     certificate-authority-data: Y2VydGlmaWNhdGUtYXV0aG9yaXR5LWRhdGFfc2FtcGxl
     server: https://127.0.0.1
-  name: cluster_a
+  name: cluster_c
 contexts:
 - context:
-    cluster: cluster_a
-    namespace: default
-    user: john
-  name: context_a
-current-context: context_a
+    cluster: cluster_c
+    namespace: monitoring
+    user: clint
+  name: context_c
 kind: Config
 preferences: {}
 users:
-- name: john
+- name: clint
   user:
     auth-provider:
       config:
         access-token: access-token_sample
         cmd-args: config config-helper --format=json
-        cmd-path: /Users/mbaiguini/tools/google-cloud-sdk/bin/gcloud
+        cmd-path: /Users/clint/tools/google-cloud-sdk/bin/gcloud
         expiry: "2022-01-01T12:00:00Z"
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'

@@ -43,9 +43,9 @@
   - [x] split
   - [x] view
 - [x] rename binary to "konf-sh"
-- [ ] fix "list konfigs"
-    - [ ] hide .DS_store and other files
-    - [ ] show only valid kubeconfig
+- [x] fix "list konfigs"
+    - [x] hide .DS_store and other files
+    - [x] show only valid kubeconfig
 - [ ] improve "clean" command
   - [x] rename to "delete"
   - [ ] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
@@ -59,6 +59,7 @@
 - [ ] shellwrapper
   - [ ] implement command
   - [ ] fix "konf set local <context>"
+- [ ] refactor logger (replace logger.Logger with zap.L())
 
 ### v0.4.0 ✅
 
