@@ -60,6 +60,6 @@ dist/
 ########### Project specific
 # vendor/*
 # !vendor/.gitkeep
-konf
+konf-sh
 examples/config
 examples/configs/*

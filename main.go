@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/bygui86/konf/application"
+	"github.com/bygui86/konf-sh/pkg/app"
 )
 
 func main() {
-	application.Create().Start()
+	app.Create().Start()
 }

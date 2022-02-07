@@ -1,6 +1,6 @@
 # See documentation at http://goreleaser.com
 
-project_name: konf
+project_name: konf-sh
 env:
   - GO111MODULE=on
   - GOPROXY=https://proxy.golang.org
@@ -10,14 +10,14 @@ before:
     - go mod tidy
     - go mod download
 builds:
-  - id: konf
+  - id: konf-sh
     goos:
       - darwin
       - linux
     goarch:
       - amd64
 archives:
-  - id: konf
+  - id: konf-sh
     name_template: "{{ .ProjectName }}_{{ .Os }}"
     files:
       - logo/logo.png
