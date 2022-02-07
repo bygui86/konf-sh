@@ -12,7 +12,7 @@ func GetKubeConfigEnvVar() string {
 }
 
 func GetCustomKubeConfigPathDefault(home string) string {
-	return filepath.Join(home, commons.CustomKubeConfigPathDefault)
+	return filepath.Join(home, commons.KubeConfigPathDefault)
 }
 
 func GetSingleConfigsPathDefault(home string) string {

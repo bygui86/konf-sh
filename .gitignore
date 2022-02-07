@@ -62,4 +62,4 @@ dist/
 # !vendor/.gitkeep
 konf-sh
 examples/config
-examples/configs/*
+examples/konfigs/*

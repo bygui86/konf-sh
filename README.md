@@ -183,7 +183,7 @@ alias kns="konf ns"
 | Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                             |
 |:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:--------------------------------------------------------|
 | --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path     |
-| --single-configs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
+| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_CONFIGS_PATH | Specify the single Kubernetes configurations files path |
 
 ### Environment variables
 
@@ -192,7 +192,7 @@ alias kns="konf ns"
 | KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                     |
 | KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                        |
 | KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path     |
-| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-configs   | Specify the single Kubernetes configurations files path |
+| KONF_SINGLE_KUBE_CONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes configurations files path |
 
 ### Error codes
 

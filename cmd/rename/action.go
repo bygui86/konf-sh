@@ -42,9 +42,18 @@ func rename(ctx *cli.Context) error {
 		return renameErr
 	}
 
-	valWrErr := commons.ValidateAndWrite(kubeConfig, kubeConfigFilePath)
-	if valWrErr != nil {
-		return valWrErr
+	newValErr := kubeconfig.Validate(kubeConfig)
+	if newValErr != nil {
+		return cli.Exit(
+			fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
+			12)
+	}
+
+	newWriteErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
+	if newWriteErr != nil {
+		return cli.Exit(
+			fmt.Sprintf("❌ Error writing Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
+			13)
 	}
 
 	logger.SugaredLogger.Infof("✅ Completed! Context successfully renamed from '%s' to '%s' in Kubernetes configuration '%s'",

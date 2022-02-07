@@ -40,14 +40,14 @@ simulate-release :		## Simulate a release with goreleaser
 ## features samples
 
 split-cfg : build		## Split a sample Kubernetes configuration file
-	$(KONF_PREFIX) konf-sh split-cfg --kube-config ./examples/config --single-configs ./examples/configs
+	$(KONF_PREFIX) konf-sh split-cfg --kube-config ./examples/config --single-konfigs ./examples/konfigs
 
 list-cfg : build		## List a set of sample Kubernetes configurations files
-	$(KONF_PREFIX) konf-sh list-cfg --single-configs ./examples/configs
+	$(KONF_PREFIX) konf-sh list-cfg --single-konfigs ./examples/konfigs
 
 set-cfg-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
-	@echo "Please manually execute 'eval $(konf-sh set local context_b --single-configs ./examples/configs)'"
+	@echo "Please manually execute 'eval $(konf-sh set local context_b --single-konfigs ./examples/konfigs)'"
 	@echo ""
 
 set-cfg-global : build		## Set global Kubernetes context

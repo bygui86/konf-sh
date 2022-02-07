@@ -29,11 +29,11 @@
 ### v0.5.0 🏗
 
 - [x] improve README and overall documentation
-- [ ] update codebase
+- [x] update codebase
   - [x] move to go 1.17
-  - [ ] libraries
-  - [ ] package structure
-- [ ] rename "configs" to "konfigs"
+  - [x] libraries
+  - [x] package structure
+- [x] rename "configs" to "konfigs"
 - [ ] rename commands removing "-cfg"
 - [ ] improve "clean" command
   - [ ] rename to "delete"
@@ -42,7 +42,7 @@
   - [ ] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve split command (see TODO in commands/set/action.go)
 - [ ] fix "completion zsh" (replace "PROG" with "konf")
-- [ ] fix "list configs"
+- [ ] fix "list konfigs"
     - [ ] hide .DS_store and other files
     - [ ] show only valid kubeconfig
 - [ ] rename binary to "konf-sh"

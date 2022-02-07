@@ -61,9 +61,19 @@ func validateAndWrite(singleConfigs map[string]*api.Config, singleConfigsPath st
 	// TODO implement a mechanism to avoid complete fail if just 1 out of N configurations is not valid
 	for cfgKey, cfg := range singleConfigs {
 		cfgFilePath := filepath.Join(singleConfigsPath, cfgKey)
-		valWrErr := commons.ValidateAndWrite(cfg, cfgFilePath)
-		if valWrErr != nil {
-			return valWrErr
+
+		newValErr := kubeconfig.Validate(cfg)
+		if newValErr != nil {
+			return cli.Exit(
+				fmt.Sprintf("❌ Error validating Kubernetes configuration from '%s': %s", cfgFilePath, newValErr.Error()),
+				12)
+		}
+
+		newWriteErr := kubeconfig.Write(cfg, cfgFilePath)
+		if newWriteErr != nil {
+			return cli.Exit(
+				fmt.Sprintf("❌ Error writing Kubernetes configuration '%s' to file: %s", cfgFilePath, newWriteErr.Error()),
+				13)
 		}
 	}
 

@@ -29,7 +29,7 @@ func viewLocal(ctx *cli.Context) error {
 	if kCfg != "" {
 		logger.SugaredLogger.Infof("💻 Local Kubernetes context: '%s'", kCfg)
 	} else {
-		logger.SugaredLogger.Infof("💻 No local Kubernetes context set or default to '%s/%s'", utils.GetHomeDirOrExit("view-local"), commons.CustomKubeConfigPathDefault)
+		logger.SugaredLogger.Infof("💻 No local Kubernetes context set or default to '%s/%s'", utils.GetHomeDirOrExit("view-local"), commons.KubeConfigPathDefault)
 	}
 
 	logger.Logger.Info("")
