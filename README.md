@@ -185,7 +185,7 @@ konf view
 
 ### Set
 
-konf set local <context> sets the local (current shell) Kubernetes context (setting `KUBECONFIG` environment variable) to the specified one (by default `~/.kube/konfigs`).
+`konf set local <context>` sets the local (current shell) Kubernetes context (setting `KUBECONFIG` environment variable) to the specified one (by default `~/.kube/konfigs`).
 
 `konf set global <context>` sets the global Kubernetes context (by default `currentContext` in `~/.kube/config`) to the specified one (by default `~/.kube/konfigs`).
 
@@ -197,13 +197,13 @@ konf set local <context> sets the local (current shell) Kubernetes context (sett
 
 `konf view global` shows only the global Kubernetes context.
 
-### Rename
-
-`konf rename <context-to-rename> <new-context-name>` renames the specified context in both Kubernetes configuration (by default in `~/.kube/config`) and single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
-
 ### Delete
 
 `konf delete <context-list>` removes the specified comma-separated context list from both Kubernetes configuration (by default `~/.kube/config`) and single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
+
+### Rename
+
+`konf rename <context-to-rename> <new-context-name>` renames the specified context in both Kubernetes configuration (by default in `~/.kube/config`) and single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
 
 ### Reset
 
@@ -229,19 +229,19 @@ konf set local <context> sets the local (current shell) Kubernetes context (sett
 
 ### Flags
 
-| Flag             | Command list                         | Available values | Default              | Corresponding env-var         | Description                                         |
-|:-----------------|:-------------------------------------|:-----------------|:---------------------|:------------------------------|:----------------------------------------------------|
-| --kube-config    | split, view, view global, set global | -                | $HOME/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
-| --single-konfigs | split, list, set local, set global   | -                | $HOME/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
+| Flag             | Command list                                                       | Available values | Default          | Corresponding env-var         | Description                                         |
+|:-----------------|:-------------------------------------------------------------------|:-----------------|:-----------------|:------------------------------|:----------------------------------------------------|
+| --kube-config    | split, view, view global, set global, delete, rename, reset global | -                | ~/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
+| --single-konfigs | split, list, set local, delete, rename                             | -                | ~/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
 
 ### Environment variables
 
-| Key                           | Command list                         | Available values                | Default              | Corresponding flag | Description                                         |
-|:------------------------------|:-------------------------------------|:--------------------------------|:---------------------|:-------------------|:----------------------------------------------------|
-| KONF_LOG_ENCODING             | (global)                             | console, json                   | console              | -                  | Set logger encoding                                 |
-| KONF_LOG_LEVEL                | (global)                             | debug, info, warn, error, fatal | info                 | -                  | Set logger level                                    |
-| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global | -                               | $HOME/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
-| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, set global   | -                               | $HOME/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
+| Key                           | Command list                                                       | Available values                | Default          | Corresponding flag | Description                                         |
+|:------------------------------|:-------------------------------------------------------------------|:--------------------------------|:-----------------|:-------------------|:----------------------------------------------------|
+| KONF_LOG_ENCODING             | all                                                                | console, json                   | console          | -                  | Set logger encoding                                 |
+| KONF_LOG_LEVEL                | all                                                                | debug, info, warn, error, fatal | info             | -                  | Set logger level                                    |
+| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global, delete, rename, reset global | -                               | ~/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
+| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, delete, rename                             | -                               | ~/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
 
 ### Error codes
 

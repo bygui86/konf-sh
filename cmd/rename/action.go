@@ -15,10 +15,6 @@ import (
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )
 
-const (
-	stopWalkingErrMsg = "STOP WALKING"
-)
-
 func rename(ctx *cli.Context) error {
 	logger.Logger.Info("")
 	logger.Logger.Debug("🐛 Executing RENAME command")
@@ -95,15 +91,15 @@ func renameInKubeConfig(kCfgFilePath string, contextToRename, newContextName str
 	newValErr := kubeconfig.Validate(kCfg)
 	if newValErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", kCfgFilePath, newValErr.Error()),
-			12)
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s",
+				kCfgFilePath, newValErr.Error()), 12)
 	}
 
 	newWriteErr := kubeconfig.Write(kCfg, kCfgFilePath)
 	if newWriteErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s", kCfgFilePath, newWriteErr.Error()),
-			13)
+			fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s",
+				kCfgFilePath, newWriteErr.Error()), 13)
 	}
 
 	logger.SugaredLogger.Infof("✅  Context renamed from '%s' to '%s' in Kubernetes configuration '%s'",
@@ -124,8 +120,8 @@ func renameContext(kCfg *clientcmdapi.Config, kCfgFilePath, contextToRename, new
 	newContexts, remCtxErr := kubeconfig.RemoveContext(kCfg.Contexts, contextToRename)
 	if remCtxErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error removing context '%s' from Kubernetes configuration '%s': %s", contextToRename, kCfgFilePath, remCtxErr.Error()),
-			54)
+			fmt.Sprintf("❌  Error removing context '%s' from Kubernetes configuration '%s': %s",
+				contextToRename, kCfgFilePath, remCtxErr.Error()), 54)
 	}
 
 	logger.SugaredLogger.Debugf("🐛 Insert context '%s' in Kubernetes configuration '%s'", newContextName, kCfgFilePath)
@@ -141,7 +137,7 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 		logger.SugaredLogger.Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
 		logger.Logger.Warn("ℹ️  Tip: run 'konf split' before anything else")
 	} else {
-		var cfgToRename string
+		stopWalkingErrMsg := "STOP WALKING"
 		walkErr := filepath.Walk(
 			singleKonfigsPath,
 			func(path string, info os.FileInfo, err error) error {
@@ -155,11 +151,44 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 
 				kCfg := kubeconfig.Load(path)
 				// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
+				ctxFound := false
 				for name := range kCfg.Contexts {
 					if name == contextToRename {
-						cfgToRename = path
-						return errors.New(stopWalkingErrMsg)
+						ctxFound = true
 					}
+				}
+
+				if ctxFound {
+					newPath := strings.Replace(path, contextToRename, newContextName, 1)
+					logger.SugaredLogger.Infof("🔀 Renaming context '%s' to '%s' in single Kubernetes konfigurations",
+						contextToRename, newContextName)
+					renErr := os.Rename(path, newPath)
+					if renErr != nil {
+						return cli.Exit(
+							fmt.Sprintf("❌  Error renaming '%s' single Kubernetes konfigurations from '%s': %s",
+								contextToRename, singleKonfigsPath, renErr.Error()), 43)
+					}
+
+					currentCtx := kCfg.Contexts[contextToRename]
+					delete(kCfg.Contexts, contextToRename)
+					kCfg.Contexts[newContextName] = currentCtx
+					kCfg.CurrentContext = newContextName
+
+					newValErr := kubeconfig.Validate(kCfg)
+					if newValErr != nil {
+						return cli.Exit(
+							fmt.Sprintf("❌  Error validating Kubernetes konfiguration from '%s' (rename): %s",
+								newPath, newValErr.Error()), 12)
+					}
+
+					newWriteErr := kubeconfig.Write(kCfg, newPath)
+					if newWriteErr != nil {
+						return cli.Exit(
+							fmt.Sprintf("❌  Error writing Kubernetes konfiguration '%s' to file (rename): %s",
+								newPath, newWriteErr.Error()), 13)
+					}
+
+					return errors.New(stopWalkingErrMsg)
 				}
 
 				return nil
@@ -168,23 +197,10 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 		if walkErr != nil {
 			if walkErr.Error() != stopWalkingErrMsg {
 				return cli.Exit(
-					fmt.Sprintf("❌  Error removing single Kubernetes konfigurations from '%s': %s",
+					fmt.Sprintf("❌  Error renaming single Kubernetes konfigurations from '%s': %s",
 						singleKonfigsPath, walkErr.Error()), 43)
 			}
 		}
-
-		logger.SugaredLogger.Infof("🔀 Renaming context '%s' to '%s' in single Kubernetes konfigurations", contextToRename, newContextName)
-		renErr := os.Rename(
-			cfgToRename,
-			strings.Replace(cfgToRename, contextToRename, newContextName, 1),
-		)
-		if renErr != nil {
-			return cli.Exit(
-				fmt.Sprintf("❌  Error renaming '%s' single Kubernetes konfigurations from '%s': %s",
-					cfgToRename, singleKonfigsPath, renErr.Error()), 43)
-		}
-
-		// TODO rename also content of file!
 
 		logger.SugaredLogger.Infof("✅  Context '%s' renamed to '%s' in single Kubernetes konfigurations '%s'",
 			contextToRename, newContextName, singleKonfigsPath)

@@ -49,8 +49,8 @@
 - [x] improve "clean/delete" command
   - [x] rename to "delete"
   - [x] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
-- [ ] improve "rename" command
-  - [ ] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
+- [x] improve "rename" command
+  - [x] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
 - [ ] improve split command (see TODO in commands/set/action.go)
 - [ ] improve "set"
   - [ ] add "-" to set "last konf used" in new shell 
