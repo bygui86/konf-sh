@@ -177,14 +177,14 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 					newValErr := kubeconfig.Validate(kCfg)
 					if newValErr != nil {
 						return cli.Exit(
-							fmt.Sprintf("❌  Error validating Kubernetes konfiguration from '%s' (rename): %s",
+							fmt.Sprintf("❌  Error validating Kubernetes konfiguration from '%s': %s",
 								newPath, newValErr.Error()), 12)
 					}
 
 					newWriteErr := kubeconfig.Write(kCfg, newPath)
 					if newWriteErr != nil {
 						return cli.Exit(
-							fmt.Sprintf("❌  Error writing Kubernetes konfiguration '%s' to file (rename): %s",
+							fmt.Sprintf("❌  Error writing Kubernetes konfiguration '%s' to file: %s",
 								newPath, newWriteErr.Error()), 13)
 					}
 

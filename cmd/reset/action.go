@@ -29,7 +29,7 @@ func resetGlobal(ctx *cli.Context) error {
 	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 
-	logger.SugaredLogger.Debugf("♻️ Reset Kubernetes configuration '%s'", kubeConfigFilePath)
+	logger.SugaredLogger.Debugf("🧹️ Reset Kubernetes configuration '%s'", kubeConfigFilePath)
 	kubeConfig.CurrentContext = ""
 
 	newValErr := kubeconfig.Validate(kubeConfig)

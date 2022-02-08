@@ -90,7 +90,7 @@ func validateContextListArgument(contextList string) ([]string, error) {
 
 func userDeletionConfirm() bool {
 	reader := bufio.NewReader(os.Stdin)
-	logger.Logger.Warn("⚠️ Deleting a context from Kubernetes configuration can't be undone")
+	logger.Logger.Warn("🚨 Deleting a context from Kubernetes configuration can't be undone")
 	logger.Logger.Info("❓  are you sure you want to proceed? [y | n]")
 	for {
 		confirm, _ := reader.ReadString('\n')
@@ -191,8 +191,8 @@ func deleteContextList(kCfg *clientcmdapi.Config, contextSlice []string) error {
 func deleteFromKubeKonfigs(singleKonfigsPath string, contextSlice []string) error {
 	checkErr := utils.CheckIfFolderExist(singleKonfigsPath, false)
 	if checkErr != nil {
-		logger.SugaredLogger.Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
-		logger.Logger.Warn("ℹ️  Tip: run 'konf split' before anything else")
+		logger.SugaredLogger.Warnf("🚨 Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
+		logger.Logger.Warn("💬 Tip: run 'konf split' before anything else")
 	} else {
 		cfgToDel := make([]string, 0)
 		walkErr := filepath.Walk(

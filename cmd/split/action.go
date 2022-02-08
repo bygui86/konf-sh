@@ -9,7 +9,6 @@ import (
 	"github.com/bygui86/konf-sh/pkg/logger"
 	"github.com/bygui86/konf-sh/pkg/utils"
 	"github.com/urfave/cli/v2"
-	"k8s.io/client-go/tools/clientcmd/api"
 )
 
 func split(ctx *cli.Context) error {
@@ -18,64 +17,80 @@ func split(ctx *cli.Context) error {
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
-	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
-	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kubeConfigFilePath)
-	kubeConfig := kubeconfig.Load(kubeConfigFilePath)
+	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
+	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kCfgFilePath)
+	kCfg := kubeconfig.Load(kCfgFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 
-	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration from '%s'", kubeConfigFilePath)
-	valErr := kubeconfig.Validate(kubeConfig)
+	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration from '%s'", kCfgFilePath)
+	valErr := kubeconfig.Validate(kCfg)
 	if valErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, valErr.Error()),
-			12)
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s",
+				kCfgFilePath, valErr.Error()), 12)
 	}
 
-	logger.SugaredLogger.Infof("✂️ Split Kubernetes configuration from %s", kubeConfigFilePath)
-	singleConfigs := kubeconfig.Split(kubeConfig, kubeConfigFilePath)
+	logger.SugaredLogger.Infof("🪚 Split Kubernetes configuration from %s", kCfgFilePath)
+	singleKcfs := kubeconfig.Split(kCfg, kCfgFilePath)
 
 	logger.Logger.Info("💾 Save single Kubernetes konfigurations")
 	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations path")
-	singleConfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleConfigsPath)
+	singleKfgsPath := ctx.String(commons.SingleKonfigsFlagName)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKfgsPath)
 
-	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations path '%s'", singleConfigsPath)
-	checkErr := utils.CheckIfFolderExist(singleConfigsPath, true)
+	logger.SugaredLogger.Debugf("🐛 Check existence of single Kubernetes konfigurations path '%s'", singleKfgsPath)
+	checkErr := utils.CheckIfFolderExist(singleKfgsPath, true)
 	if checkErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error checking existence of Kubernetes konfigurations path '%s': %s", checkErr.Error(), singleConfigsPath),
-			11)
+			fmt.Sprintf("❌  Error checking existence of Kubernetes konfigurations path '%s': %s",
+				checkErr.Error(), singleKfgsPath), 11)
 	}
 
-	valWrErr := validateAndWrite(singleConfigs, singleConfigsPath)
-	if valWrErr != nil {
-		return valWrErr
-	}
+	validKfgs := make([]string, 0)
+	invalidKfgs := make([]string, 0)
+	for kfgName, kfg := range singleKcfs {
+		kfgFilePath := filepath.Join(singleKfgsPath, kfgName)
 
-	logger.SugaredLogger.Infof("✅  Completed! Single Kubernetes konfigurations saved in '%s'", singleConfigsPath)
-	logger.Logger.Info("")
-	return nil
-}
-
-func validateAndWrite(singleConfigs map[string]*api.Config, singleConfigsPath string) error {
-	// TODO implement a mechanism to avoid complete fail if just 1 out of N configurations is not valid
-	for cfgKey, cfg := range singleConfigs {
-		cfgFilePath := filepath.Join(singleConfigsPath, cfgKey)
-
-		newValErr := kubeconfig.Validate(cfg)
+		newValErr := kubeconfig.Validate(kfg)
 		if newValErr != nil {
-			return cli.Exit(
-				fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", cfgFilePath, newValErr.Error()),
-				12)
+			logger.SugaredLogger.Errorf("❌  Error validating Kubernetes konfiguration '%s': %s - skipping",
+				kfgName, newValErr.Error())
+			invalidKfgs = append(invalidKfgs, kfgName)
+			continue
 		}
 
-		newWriteErr := kubeconfig.Write(cfg, cfgFilePath)
+		newWriteErr := kubeconfig.Write(kfg, kfgFilePath)
 		if newWriteErr != nil {
-			return cli.Exit(
-				fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s", cfgFilePath, newWriteErr.Error()),
-				13)
+			logger.SugaredLogger.Errorf("❌  Error writing Kubernetes konfiguration '%s' to file '%s': %s",
+				kfgName, kfgFilePath, newValErr.Error())
+			invalidKfgs = append(invalidKfgs, kfgName)
+			continue
+		}
+
+		validKfgs = append(validKfgs, kfgName)
+	}
+
+	if len(validKfgs) > 0 {
+		logger.SugaredLogger.Infof("📚 Available Kubernetes konfigurations in '%s':", singleKfgsPath)
+		for _, v := range validKfgs {
+			logger.SugaredLogger.Infof("\t%s", v)
 		}
 	}
 
+	if len(invalidKfgs) > 0 {
+		logger.Logger.Info("")
+		logger.SugaredLogger.Infof("❓️ Invalid context found in Kubernetes configuration from '%s':", kCfgFilePath)
+		for _, iv := range invalidKfgs {
+			logger.SugaredLogger.Infof("\t%s", iv)
+		}
+	}
+
+	if len(validKfgs) > 0 {
+		logger.SugaredLogger.Infof("✅  Single Kubernetes konfigurations saved to '%s'", singleKfgsPath)
+	} else {
+		logger.SugaredLogger.Infof("❌  Split Kubernetes configurations from '%s' failed: no valid context found",
+			kCfgFilePath)
+	}
+	logger.Logger.Info("")
 	return nil
 }

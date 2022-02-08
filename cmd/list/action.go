@@ -19,18 +19,18 @@ func list(ctx *cli.Context) error {
 	logger.Logger.Debug("")
 
 	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations path")
-	singleKonfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKonfigsPath)
+	singleKfgsPath := ctx.String(commons.SingleKonfigsFlagName)
+	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKfgsPath)
 
-	checkErr := utils.CheckIfFolderExist(singleKonfigsPath, false)
+	checkErr := utils.CheckIfFolderExist(singleKfgsPath, false)
 	if checkErr != nil {
-		logger.SugaredLogger.Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
-		logger.Logger.Warn("ℹ️  Tip: run 'konf split' before anything else")
+		logger.SugaredLogger.Warnf("🚨 Single Kubernetes konfigurations path not found ('%s')", singleKfgsPath)
+		logger.Logger.Warn("💬 Tip: run 'konf split' before anything else")
 	} else {
-		validCfg := make([]string, 0)
-		invalidCfg := make([]string, 0)
+		validCfgs := make([]string, 0)
+		invalidCfgs := make([]string, 0)
 		err := filepath.Walk(
-			singleKonfigsPath,
+			singleKfgsPath,
 			func(path string, info os.FileInfo, err error) error {
 				if info.IsDir() {
 					return nil
@@ -43,29 +43,37 @@ func list(ctx *cli.Context) error {
 				kCfg := kubeconfig.Load(path)
 				// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 				if kubeconfig.Validate(kCfg) != nil {
-					invalidCfg = append(invalidCfg, info.Name())
+					invalidCfgs = append(invalidCfgs, info.Name())
 					return nil
 				}
 
-				validCfg = append(validCfg, info.Name())
+				validCfgs = append(validCfgs, info.Name())
 
 				return nil
 			},
 		)
 		if err != nil {
 			return cli.Exit(
-				fmt.Sprintf("❌  Error listing single Kubernetes konfigurations in '%s': %s", singleKonfigsPath, err.Error()),
+				fmt.Sprintf("❌  Error listing single Kubernetes konfigurations in '%s': %s", singleKfgsPath, err.Error()),
 				21)
 		}
 
-		logger.SugaredLogger.Infof("📚 Available Kubernetes konfigurations in '%s':", singleKonfigsPath)
-		for _, v := range validCfg {
-			logger.SugaredLogger.Infof("\t%s", v)
+		if len(validCfgs) > 0 {
+			logger.SugaredLogger.Infof("📚 Available Kubernetes konfigurations in '%s':", singleKfgsPath)
+			for _, v := range validCfgs {
+				logger.SugaredLogger.Infof("\t%s", v)
+			}
+		} else {
+			logger.SugaredLogger.Warnf("🚨 No available Kubernetes konfigurations in '%s'", singleKfgsPath)
+			logger.Logger.Warn("💬 Tip: run 'konf split' before anything else")
 		}
-		logger.Logger.Info("")
-		logger.SugaredLogger.Infof("❓️ Invalid Kubernetes konfigurations in '%s':", singleKonfigsPath)
-		for _, iv := range invalidCfg {
-			logger.SugaredLogger.Infof("\t%s", iv)
+
+		if len(invalidCfgs) > 0 {
+			logger.Logger.Info("")
+			logger.SugaredLogger.Infof("❓ Invalid Kubernetes konfigurations in '%s':", singleKfgsPath)
+			for _, iv := range invalidCfgs {
+				logger.SugaredLogger.Infof("\t%s", iv)
+			}
 		}
 	}
 

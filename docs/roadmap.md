@@ -7,7 +7,7 @@
 - [ ] `TBD` create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
 - [ ] have a look at [this library](https://github.com/gkarthiks/k8s-discovery)
 
-### v0.7.0 🗓
+### v0.8.0 🗓
 
 - [ ] additional documentation
     - [ ] `TBD` go-doc
@@ -18,13 +18,21 @@
     - [ ] code-coverage check
     - [ ] `TBD` add code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
 
-### v0.6.0 🗓
+### v0.7.0 🗓
 
 - [ ] implement namespaces commands
   - [ ] view current namespace
   - [ ] list all namespaces
   - [ ] set local (current shell only) namespace
   - [ ] set global namespace
+
+### v0.6.0 🗓
+
+- [ ] implement "--silent" flag
+- [ ] shellwrapper
+  - [ ] implement command
+  - [ ] fix "konf set local <context>"
+  - [ ] fix "konf reset local"
 
 ### v0.5.0 🏗
 
@@ -51,16 +59,22 @@
   - [x] remove ctx from both "~/.kube/config" and "~/.kube/konfigs" 
 - [x] improve "rename" command
   - [x] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
-- [ ] improve split command (see TODO in commands/set/action.go)
-- [ ] improve "set"
+- [x] improve "split" command (see TODO in commands/set/action.go)
+- [ ] improve "completion" command
+  - [ ] return content of "scripts" instead of using constants
+  - [ ] fix "completion zsh" (replace "PROG" with "konf")
+- [ ] improve "set" command
   - [ ] add "-" to set "last konf used" in new shell 
-- [ ] fix "completion zsh" (replace "PROG" with "konf")
-- [ ] implement "--silent" flag
-- [ ] shellwrapper
-  - [ ] implement command
-  - [ ] fix "konf set local <context>"
 - [ ] review logging
-  - [ ] review all logs
+  - [ ] review logs in all commands
+    - [ ] completion
+    - [ ] clean/delete
+    - [ ] list
+    - [ ] rename
+    - [ ] reset
+    - [ ] set
+    - [ ] split
+    - [ ] view
   - [ ] refactor logger (replace logger.Logger with zap.L())
 
 ### v0.4.0 ✅
