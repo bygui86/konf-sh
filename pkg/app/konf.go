@@ -12,8 +12,8 @@ import (
 	"github.com/bygui86/konf-sh/cmd/set"
 	"github.com/bygui86/konf-sh/cmd/split"
 	"github.com/bygui86/konf-sh/cmd/view"
-	"github.com/bygui86/konf-sh/pkg/logger"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 )
 
 const (
@@ -27,7 +27,7 @@ type KubeConfiguratorApp struct {
 }
 
 func Create() *KubeConfiguratorApp {
-	logger.Logger.Debug("🐛 Creating application")
+	zap.L().Debug("🐛 Creating application")
 	app := cli.NewApp()
 	setGlobalConfig(app)
 	addCommands(app)
@@ -38,7 +38,7 @@ func Create() *KubeConfiguratorApp {
 }
 
 func setGlobalConfig(app *cli.App) {
-	logger.Logger.Debug("🐛 Setting global configurations")
+	zap.L().Debug("🐛 Setting global configurations")
 	app.Name = appName
 	app.Usage = appUsage
 	app.Version = appVersion
@@ -47,7 +47,7 @@ func setGlobalConfig(app *cli.App) {
 }
 
 func addCommands(app *cli.App) {
-	logger.Logger.Debug("🐛 Adding commands")
+	zap.L().Debug("🐛 Adding commands")
 	app.Commands = []*cli.Command{
 		split.BuildCommand(),
 		list.BuildCommand(),
@@ -61,7 +61,7 @@ func addCommands(app *cli.App) {
 }
 
 func setLastConfig(app *cli.App) {
-	logger.Logger.Debug("🐛 Setting last configurations")
+	zap.L().Debug("🐛 Setting last configurations")
 	// sort flags in help section
 	sort.Sort(cli.FlagsByName(app.Flags))
 	// sort commands in help section
@@ -69,10 +69,10 @@ func setLastConfig(app *cli.App) {
 }
 
 func (k *KubeConfiguratorApp) Start() {
-	logger.Logger.Debug("🐛 Starting application")
+	zap.L().Debug("🐛 Starting application")
 	err := k.app.Run(os.Args)
 	if err != nil {
-		logger.SugaredLogger.Errorf("❌ Error starting application: %s", err.Error())
+		zap.S().Errorf("❌ Error starting application: %s", err.Error())
 		os.Exit(2)
 	}
 }

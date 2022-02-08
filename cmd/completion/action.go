@@ -1,8 +1,8 @@
 package completion
 
 import (
-	"github.com/bygui86/konf-sh/pkg/logger"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 )
 
 const (
@@ -28,7 +28,7 @@ _cli_bash_autocomplete() {
 complete -o bashdefault -o default -o nospace -F _cli_bash_autocomplete $PROG
 unset PROG`
 
-	zshScript = `#compdef $PROG
+	zshScript = `#compdef konf
 
 _cli_zsh_autocomplete() {
 
@@ -40,23 +40,23 @@ _cli_zsh_autocomplete() {
   return
 }
 
-compdef _cli_zsh_autocomplete $PROG`
+compdef _cli_zsh_autocomplete konf`
 )
 
 func bashCompletion(ctx *cli.Context) error {
-	logger.Logger.Debug("")
-	logger.Logger.Debug("🐛 Executing BASH-COMPLETION command")
-	logger.Logger.Debug("")
+	zap.L().Debug("")
+	zap.L().Debug("🐛 Executing BASH-COMPLETION command")
+	zap.L().Debug("")
 
-	logger.Logger.Info(bashScript)
+	zap.L().Info(bashScript)
 	return nil
 }
 
 func zshCompletion(ctx *cli.Context) error {
-	logger.Logger.Debug("")
-	logger.Logger.Debug("🐛 Executing ZSH-COMPLETION command")
-	logger.Logger.Debug("")
+	zap.L().Debug("")
+	zap.L().Debug("🐛 Executing ZSH-COMPLETION command")
+	zap.L().Debug("")
 
-	logger.Logger.Info(zshScript)
+	zap.L().Info(zshScript)
 	return nil
 }

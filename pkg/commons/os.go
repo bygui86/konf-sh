@@ -1,17 +1,11 @@
-package utils
+package commons
 
 import (
 	"errors"
 	"os"
 	"os/user"
 
-	"github.com/bygui86/konf-sh/pkg/logger"
-)
-
-const (
-	standardOsPerm = 0755
-
-	homeEnvVar = "HOME"
+	"go.uber.org/zap"
 )
 
 func CheckIfFolderExist(path string, createIfNot bool) error {
@@ -19,7 +13,7 @@ func CheckIfFolderExist(path string, createIfNot bool) error {
 	if err != nil {
 		if os.IsNotExist(err) {
 			if createIfNot {
-				return os.Mkdir(path, standardOsPerm)
+				return os.Mkdir(path, 0755)
 			}
 		}
 		return err
@@ -42,13 +36,13 @@ func CheckIfFileExist(filepath string) error {
 }
 
 func GetHomeDirOrExit(methodCaller string) string {
-	logger.Logger.Debug("🐛 Get HOME path")
+	zap.L().Debug("🐛 Get HOME path")
 	home, homeErr := GetHomeDir()
 	if homeErr != nil {
-		logger.SugaredLogger.Errorf("❌ Error creating '%s' methodCaller - Error getting HOME environment variable: '%s'", methodCaller, homeErr.Error())
+		zap.S().Errorf("❌  Error creating '%s' methodCaller - Error getting HOME environment variable: '%s'", methodCaller, homeErr.Error())
 		os.Exit(3)
 	}
-	logger.SugaredLogger.Debugf("🐛 HOME path: '%s'", home)
+	zap.S().Debugf("🐛 HOME path: '%s'", home)
 	return home
 }
 
@@ -57,7 +51,7 @@ func GetHomeDir() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return GetString(homeEnvVar, userHome), nil
+	return GetString("HOME", userHome), nil
 }
 
 func getCurrentUserHomeDir() (string, error) {

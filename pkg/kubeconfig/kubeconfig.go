@@ -4,19 +4,18 @@ import (
 	"errors"
 	"strings"
 
+	"go.uber.org/zap"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
-
-	"github.com/bygui86/konf-sh/pkg/logger"
 )
 
 func Load(kubeConfigFilePath string) *clientcmdapi.Config {
-	logger.SugaredLogger.Debugf("🐛 Load Kubernetes configuration from file '%s'", kubeConfigFilePath)
+	zap.S().Debugf("🐛 Load Kubernetes configuration from file '%s'", kubeConfigFilePath)
 	return clientcmd.GetConfigFromFileOrDie(kubeConfigFilePath)
 }
 
 func Split(kubeConfig *clientcmdapi.Config, kubeConfigFilePath string) map[string]*clientcmdapi.Config {
-	logger.SugaredLogger.Debugf("🐛 Split Kubernetes configuration from %s", kubeConfigFilePath)
+	zap.S().Debugf("🐛 Split Kubernetes configuration from %s", kubeConfigFilePath)
 	singleConfigs := make(map[string]*clientcmdapi.Config, len(kubeConfig.Contexts))
 	for ctxKey, ctxValue := range kubeConfig.Contexts {
 		contexts := make(map[string]*clientcmdapi.Context, 1)
@@ -38,7 +37,7 @@ func Split(kubeConfig *clientcmdapi.Config, kubeConfigFilePath string) map[strin
 }
 
 func Validate(kubeConfig *clientcmdapi.Config) error {
-	logger.SugaredLogger.Debugf("🐛 Validate Kubernetes configuration")
+	zap.S().Debugf("🐛 Validate Kubernetes configuration")
 	err := clientcmd.Validate(*kubeConfig)
 	if clientcmd.IsConfigurationInvalid(err) {
 		return err
@@ -47,47 +46,47 @@ func Validate(kubeConfig *clientcmdapi.Config) error {
 }
 
 func Write(kubeConfig *clientcmdapi.Config, filepath string) error {
-	logger.SugaredLogger.Debugf("🐛 Write Kubernetes configuration to file '%s'", filepath)
+	zap.S().Debugf("🐛 Write Kubernetes configuration to file '%s'", filepath)
 	return clientcmd.WriteToFile(*kubeConfig, filepath)
 }
 
 func CheckIfContextExist(kubeConfig *clientcmdapi.Config, context string) error {
-	logger.SugaredLogger.Debugf("🐛 Check context '%s' existence in Kubernetes configuration '%s'", context, kubeConfig.CurrentContext)
+	zap.S().Debugf("🐛 Check context '%s' existence in Kubernetes configuration '%s'", context, kubeConfig.CurrentContext)
 	ctxValue := kubeConfig.Contexts[context]
 	if ctxValue == nil {
-		logger.SugaredLogger.Debugf("🐛 Context '%s' not found", context)
+		zap.S().Debugf("🐛 Context '%s' not found", context)
 		return errors.New("context not found")
 	}
-	logger.SugaredLogger.Debugf("🐛 Context '%s' is valid", context)
+	zap.S().Debugf("🐛 Context '%s' is valid", context)
 	return nil
 }
 
 func CheckIfClusterExist(kubeConfig *clientcmdapi.Config, cluster string) error {
-	logger.SugaredLogger.Debugf("🐛 Check cluster '%s' existence in Kubernetes configuration '%s'", cluster, kubeConfig.CurrentContext)
+	zap.S().Debugf("🐛 Check cluster '%s' existence in Kubernetes configuration '%s'", cluster, kubeConfig.CurrentContext)
 	clValue := kubeConfig.Clusters[cluster]
 	if clValue == nil {
-		logger.SugaredLogger.Debugf("🐛 Cluster '%s' not found", cluster)
+		zap.S().Debugf("🐛 Cluster '%s' not found", cluster)
 		return errors.New("cluster not found")
 	}
-	logger.SugaredLogger.Debugf("🐛 Cluster '%s' is valid", cluster)
+	zap.S().Debugf("🐛 Cluster '%s' is valid", cluster)
 	return nil
 }
 
 func CheckIfAuthInfoExist(kubeConfig *clientcmdapi.Config, authInfo string) error {
-	logger.SugaredLogger.Debugf("🐛 Check user '%s' existence in Kubernetes configuration '%s'", authInfo, kubeConfig.CurrentContext)
+	zap.S().Debugf("🐛 Check user '%s' existence in Kubernetes configuration '%s'", authInfo, kubeConfig.CurrentContext)
 	authValue := kubeConfig.AuthInfos[authInfo]
 	if authValue == nil {
-		logger.SugaredLogger.Debugf("🐛 User '%s' not found", authInfo)
+		zap.S().Debugf("🐛 User '%s' not found", authInfo)
 		return errors.New("user not found")
 	}
-	logger.SugaredLogger.Debugf("🐛 User '%s' is valid", authInfo)
+	zap.S().Debugf("🐛 User '%s' is valid", authInfo)
 	return nil
 }
 
 func RemoveContext(ctxMap map[string]*clientcmdapi.Context, context string) (map[string]*clientcmdapi.Context, error) {
 	ctxValue := ctxMap[context]
 	if ctxValue == nil {
-		logger.SugaredLogger.Debugf("🐛 Context '%s' not found", context)
+		zap.S().Debugf("🐛 Context '%s' not found", context)
 		return nil, errors.New("context not found")
 	}
 
@@ -103,7 +102,7 @@ func RemoveContext(ctxMap map[string]*clientcmdapi.Context, context string) (map
 func RemoveCluster(clMap map[string]*clientcmdapi.Cluster, cluster string) (map[string]*clientcmdapi.Cluster, error) {
 	clValue := clMap[cluster]
 	if clValue == nil {
-		logger.SugaredLogger.Debugf("🐛 Cluster '%s' not found", cluster)
+		zap.S().Debugf("🐛 Cluster '%s' not found", cluster)
 		return nil, errors.New("cluster not found")
 	}
 
@@ -119,7 +118,7 @@ func RemoveCluster(clMap map[string]*clientcmdapi.Cluster, cluster string) (map[
 func RemoveAuthInfo(authMap map[string]*clientcmdapi.AuthInfo, authInfo string) (map[string]*clientcmdapi.AuthInfo, error) {
 	clValue := authMap[authInfo]
 	if clValue == nil {
-		logger.SugaredLogger.Debugf("🐛 User '%s' not found", authInfo)
+		zap.S().Debugf("🐛 User '%s' not found", authInfo)
 		return nil, errors.New("user not found")
 	}
 
@@ -160,16 +159,16 @@ func PrintOnLogs(kubeConfig *clientcmdapi.Config, isDebug bool) {
 	if isDebug {
 		// logger.SugaredLogger.Debugf("Api version: %s", kubeConfig.APIVersion)
 		// logger.SugaredLogger.Debugf("Kind: %s", kubeConfig.Kind)
-		logger.SugaredLogger.Debugf("Current context: %s", kubeConfig.CurrentContext)
-		logger.SugaredLogger.Debugf("Contexts: %s", strings.Join(GetContextsKeys(kubeConfig.Contexts), ", "))
-		logger.SugaredLogger.Debugf("Clusters: %s", strings.Join(GetClustersKeys(kubeConfig.Clusters), ", "))
-		logger.SugaredLogger.Debugf("Users: %s", strings.Join(GetAuthInfosKeys(kubeConfig.AuthInfos), ", "))
+		zap.S().Debugf("Current context: %s", kubeConfig.CurrentContext)
+		zap.S().Debugf("Contexts: %s", strings.Join(GetContextsKeys(kubeConfig.Contexts), ", "))
+		zap.S().Debugf("Clusters: %s", strings.Join(GetClustersKeys(kubeConfig.Clusters), ", "))
+		zap.S().Debugf("Users: %s", strings.Join(GetAuthInfosKeys(kubeConfig.AuthInfos), ", "))
 	} else {
 		// logger.SugaredLogger.Infof("Api version: %s", kubeConfig.APIVersion)
 		// logger.SugaredLogger.Infof("Kind: %s", kubeConfig.Kind)
-		logger.SugaredLogger.Infof("Current context: %s", kubeConfig.CurrentContext)
-		logger.SugaredLogger.Infof("Contexts: %s", strings.Join(GetContextsKeys(kubeConfig.Contexts), ", "))
-		logger.SugaredLogger.Infof("Clusters: %s", strings.Join(GetClustersKeys(kubeConfig.Clusters), ", "))
-		logger.SugaredLogger.Infof("Users: %s", strings.Join(GetAuthInfosKeys(kubeConfig.AuthInfos), ", "))
+		zap.S().Infof("Current context: %s", kubeConfig.CurrentContext)
+		zap.S().Infof("Contexts: %s", strings.Join(GetContextsKeys(kubeConfig.Contexts), ", "))
+		zap.S().Infof("Clusters: %s", strings.Join(GetClustersKeys(kubeConfig.Clusters), ", "))
+		zap.S().Infof("Users: %s", strings.Join(GetAuthInfosKeys(kubeConfig.AuthInfos), ", "))
 	}
 }

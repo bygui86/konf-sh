@@ -9,26 +9,25 @@ import (
 
 	"github.com/bygui86/konf-sh/pkg/commons"
 	"github.com/bygui86/konf-sh/pkg/kubeconfig"
-	"github.com/bygui86/konf-sh/pkg/logger"
-	"github.com/bygui86/konf-sh/pkg/utils"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )
 
 func rename(ctx *cli.Context) error {
-	logger.Logger.Info("")
-	logger.Logger.Debug("🐛 Executing RENAME command")
-	logger.Logger.Debug("")
+	zap.L().Info("")
+	zap.L().Debug("🐛 Executing RENAME command")
+	zap.L().Debug("")
 
-	logger.Logger.Debug("🐛 Get Kubernetes configuration file path")
+	zap.L().Debug("🐛 Get Kubernetes configuration file path")
 	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
-	logger.SugaredLogger.Debugf("🐛 Kubernetes configuration file path: '%s'", kCfgFilePath)
+	zap.S().Debugf("🐛 Kubernetes configuration file path: '%s'", kCfgFilePath)
 
-	logger.Logger.Debug("🐛 Get single Kubernetes konfigurations path")
+	zap.L().Debug("🐛 Get single Kubernetes konfigurations path")
 	singleKonfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	logger.SugaredLogger.Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKonfigsPath)
+	zap.S().Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKonfigsPath)
 
-	logger.Logger.Debug("🐛 Get context to rename")
+	zap.L().Debug("🐛 Get context to rename")
 	contextToRename, newContextName, ctxErr := getContextInfo(ctx)
 	if ctxErr != nil {
 		return ctxErr
@@ -44,13 +43,13 @@ func rename(ctx *cli.Context) error {
 		return kfgsErr
 	}
 
-	logger.SugaredLogger.Infof("✅  Context '%s' renamed to '%s'", contextToRename, newContextName)
-	logger.Logger.Info("")
+	zap.S().Infof("✅  Context '%s' renamed to '%s'", contextToRename, newContextName)
+	zap.L().Info("")
 	return nil
 }
 
 func getContextInfo(ctx *cli.Context) (string, string, error) {
-	logger.Logger.Debug("🐛 Get Kubernetes context to rename")
+	zap.L().Debug("🐛 Get Kubernetes context to rename")
 	args := ctx.Args()
 	if args.Len() == 0 {
 		return "", "", cli.Exit(
@@ -72,7 +71,7 @@ func getContextInfo(ctx *cli.Context) (string, string, error) {
 }
 
 func renameInKubeConfig(kCfgFilePath string, contextToRename, newContextName string) error {
-	logger.SugaredLogger.Infof("📖 Load Kubernetes configuration from '%s'", kCfgFilePath)
+	zap.S().Infof("📖 Load Kubernetes configuration from '%s'", kCfgFilePath)
 	kCfg := kubeconfig.Load(kCfgFilePath)
 	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
 
@@ -102,20 +101,20 @@ func renameInKubeConfig(kCfgFilePath string, contextToRename, newContextName str
 				kCfgFilePath, newWriteErr.Error()), 13)
 	}
 
-	logger.SugaredLogger.Infof("✅  Context renamed from '%s' to '%s' in Kubernetes configuration '%s'",
+	zap.S().Infof("✅  Context renamed from '%s' to '%s' in Kubernetes configuration '%s'",
 		contextToRename, newContextName, kCfgFilePath)
 	return nil
 }
 
 func renameContext(kCfg *clientcmdapi.Config, kCfgFilePath, contextToRename, newContextName string) error {
-	logger.SugaredLogger.Infof("🔀 Renaming Kubernetes context '%s' as '%s'", contextToRename, newContextName)
+	zap.S().Infof("🔀 Renaming Kubernetes context '%s' as '%s'", contextToRename, newContextName)
 
 	if strings.Compare(kCfg.CurrentContext, contextToRename) == 0 {
-		logger.SugaredLogger.Debugf("🐛 Set new current context '%s' in Kubernetes configuration '%s'", newContextName, kCfgFilePath)
+		zap.S().Debugf("🐛 Set new current context '%s' in Kubernetes configuration '%s'", newContextName, kCfgFilePath)
 		kCfg.CurrentContext = newContextName
 	}
 
-	logger.SugaredLogger.Debugf("🐛 Remove context '%s' from Kubernetes configuration '%s'", contextToRename, kCfgFilePath)
+	zap.S().Debugf("🐛 Remove context '%s' from Kubernetes configuration '%s'", contextToRename, kCfgFilePath)
 	ctx := kCfg.Contexts[contextToRename]
 	newContexts, remCtxErr := kubeconfig.RemoveContext(kCfg.Contexts, contextToRename)
 	if remCtxErr != nil {
@@ -124,7 +123,7 @@ func renameContext(kCfg *clientcmdapi.Config, kCfgFilePath, contextToRename, new
 				contextToRename, kCfgFilePath, remCtxErr.Error()), 54)
 	}
 
-	logger.SugaredLogger.Debugf("🐛 Insert context '%s' in Kubernetes configuration '%s'", newContextName, kCfgFilePath)
+	zap.S().Debugf("🐛 Insert context '%s' in Kubernetes configuration '%s'", newContextName, kCfgFilePath)
 	newContexts[newContextName] = ctx
 	kCfg.Contexts = newContexts
 
@@ -132,10 +131,10 @@ func renameContext(kCfg *clientcmdapi.Config, kCfgFilePath, contextToRename, new
 }
 
 func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName string) error {
-	checkErr := utils.CheckIfFolderExist(singleKonfigsPath, false)
+	checkErr := commons.CheckIfFolderExist(singleKonfigsPath, false)
 	if checkErr != nil {
-		logger.SugaredLogger.Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
-		logger.Logger.Warn("ℹ️  Tip: run 'konf split' before anything else")
+		zap.S().Warnf("⚠️  Single Kubernetes konfigurations path not found ('%s')", singleKonfigsPath)
+		zap.L().Warn("ℹ️  Tip: run 'konf split' before anything else")
 	} else {
 		stopWalkingErrMsg := "STOP WALKING"
 		walkErr := filepath.Walk(
@@ -160,7 +159,7 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 
 				if ctxFound {
 					newPath := strings.Replace(path, contextToRename, newContextName, 1)
-					logger.SugaredLogger.Infof("🔀 Renaming context '%s' to '%s' in single Kubernetes konfigurations",
+					zap.S().Infof("🔀 Renaming context '%s' to '%s' in single Kubernetes konfigurations",
 						contextToRename, newContextName)
 					renErr := os.Rename(path, newPath)
 					if renErr != nil {
@@ -202,7 +201,7 @@ func renameInKubeKonfigs(singleKonfigsPath, contextToRename, newContextName stri
 			}
 		}
 
-		logger.SugaredLogger.Infof("✅  Context '%s' renamed to '%s' in single Kubernetes konfigurations '%s'",
+		zap.S().Infof("✅  Context '%s' renamed to '%s' in single Kubernetes konfigurations '%s'",
 			contextToRename, newContextName, singleKonfigsPath)
 	}
 

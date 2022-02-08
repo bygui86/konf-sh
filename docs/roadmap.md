@@ -33,6 +33,8 @@
   - [ ] implement command
   - [ ] fix "konf set local <context>"
   - [ ] fix "konf reset local"
+- [ ] prompting
+  - [ ] make it interactive with https://github.com/manifoldco/promptui
 
 ### v0.5.0 🏗
 
@@ -60,12 +62,12 @@
 - [x] improve "rename" command
   - [x] rename ctx in both "~/.kube/config" and "~/.kube/konfigs" 
 - [x] improve "split" command (see TODO in commands/set/action.go)
-- [ ] improve "completion" command
-  - [ ] return content of "scripts" instead of using constants
-  - [ ] fix "completion zsh" (replace "PROG" with "konf")
+- [x] improve "completion" command
+  - [x] fix "completion zsh" (replace "PROG" with "konf")
 - [ ] improve "set" command
   - [ ] add "-" to set "last konf used" in new shell 
 - [ ] review logging
+  - [x] refactor logger embracing better and more standard approach with zap library
   - [ ] review logs in all commands
     - [ ] completion
     - [ ] clean/delete
@@ -75,7 +77,6 @@
     - [ ] set
     - [ ] split
     - [ ] view
-  - [ ] refactor logger (replace logger.Logger with zap.L())
 
 ### v0.4.0 ✅
 

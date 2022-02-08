@@ -38,7 +38,10 @@ konf
 Execute following commands
 
 ```sh
+# OLD, deprecated, to be replaced soon
 PROG=konf echo 'source <(konf completion zsh)' >> $HOME/.zshrc
+# NEW, recommended
+echo 'source <(konf completion zsh)' >> $HOME/.zshrc
 
 konf
 

@@ -84,6 +84,8 @@ source <(konf-sh shellwrapper bash)
 
 ### 3. Install autocompletion
 
+**_⚠️ Autocompletion won't work if shell wrapper is not installed_**
+
 Current supported shells: zsh, bash
 
 #### zsh
@@ -236,18 +238,20 @@ konf view
 
 ### Environment variables
 
-| Key                           | Command list                                                       | Available values                | Default          | Corresponding flag | Description                                         |
-|:------------------------------|:-------------------------------------------------------------------|:--------------------------------|:-----------------|:-------------------|:----------------------------------------------------|
-| KONF_LOG_ENCODING             | all                                                                | console, json                   | console          | -                  | Set logger encoding                                 |
-| KONF_LOG_LEVEL                | all                                                                | debug, info, warn, error, fatal | info             | -                  | Set logger level                                    |
-| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global, delete, rename, reset global | -                               | ~/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
-| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, delete, rename                             | -                               | ~/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
+| Key                           | Command list                                                       | Available values         | Default          | Corresponding flag | Description                                         |
+|:------------------------------|:-------------------------------------------------------------------|:-------------------------|:-----------------|:-------------------|:----------------------------------------------------|
+| KONF_LOG_ENCODING             | all                                                                | console, json            | console          | -                  | Set logger encoding                                 |
+| KONF_LOG_LEVEL                | all                                                                | debug, info, warn, error | info             | -                  | Set logger level                                    |
+| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global, delete, rename, reset global | -                        | ~/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
+| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, delete, rename                             | -                        | ~/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
+
+**_⚠️ Please note `KONF_LOG_ENCODING` and `KONF_LOG_LEVEL` are available only as environment variables_**
 
 ### Error codes
 
 | Code | Command                           | Description                                                                                                              |
 |:-----|:----------------------------------|:-------------------------------------------------------------------------------------------------------------------------|
-| 1    | (all)                             | Error initializing zap logger                                                                                            |
+| 1    | (all)                             | Error initializing logger                                                                                                |
 | 2    | (all)                             | Error starting application                                                                                               |
 | 3    | (all)                             | Error creating specific application command                                                                              |
 | 11   | split                             | Error checking existence of Kubernetes konfigurations path                                                               |

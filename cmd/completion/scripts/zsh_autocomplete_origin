@@ -1,4 +1,4 @@
-#compdef konf
+#compdef $PROG
 
 _cli_zsh_autocomplete() {
 
@@ -10,4 +10,4 @@ _cli_zsh_autocomplete() {
   return
 }
 
-compdef _cli_zsh_autocomplete konf
+compdef _cli_zsh_autocomplete $PROG

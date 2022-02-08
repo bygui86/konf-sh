@@ -4,11 +4,10 @@ import (
 	"path/filepath"
 
 	"github.com/bygui86/konf-sh/pkg/commons"
-	"github.com/bygui86/konf-sh/pkg/utils"
 )
 
 func GetKubeConfigEnvVar() string {
-	return utils.GetString(commons.KubeConfigEnvVar, commons.KubeConfigEnvVarDefault)
+	return commons.GetString(commons.KubeConfigEnvVar, commons.KubeConfigEnvVarDefault)
 }
 
 func GetCustomKubeConfigPathDefault(home string) string {

@@ -1,12 +1,15 @@
 package completion
 
 import (
-	"github.com/bygui86/konf-sh/pkg/logger"
+	"github.com/bygui86/konf-sh/pkg/logging"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create COMPLETION command")
+	logging.InitLogger()
+
+	zap.L().Debug("🐛 Create COMPLETION command")
 	return &cli.Command{
 		Name:  "completion",
 		Usage: "Generate shell auto-completion script",

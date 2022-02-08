@@ -3,14 +3,16 @@ package set
 import (
 	"github.com/bygui86/konf-sh/pkg/commons"
 	"github.com/bygui86/konf-sh/pkg/kubeconfig"
-	"github.com/bygui86/konf-sh/pkg/logger"
-	"github.com/bygui86/konf-sh/pkg/utils"
+	"github.com/bygui86/konf-sh/pkg/logging"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 )
 
 func BuildCommand() *cli.Command {
-	logger.Logger.Debug("🐛 Create SET-CONFIG command")
-	home := utils.GetHomeDirOrExit("set")
+	logging.InitLogger()
+
+	zap.L().Debug("🐛 Create SET-CONFIG command")
+	home := commons.GetHomeDirOrExit("set")
 	return &cli.Command{
 		Name:  "set",
 		Usage: "Set local or global Kubernetes context",
@@ -22,7 +24,7 @@ func BuildCommand() *cli.Command {
 				Action:    setLocal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
+						Name:     commons.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
 						Usage:    commons.SingleKonfigsFlagDescription,
 						EnvVars:  []string{commons.SingleKonfigsPathEnvVar},
 						Value:    kubeconfig.GetSingleConfigsPathDefault(home),
@@ -37,7 +39,7 @@ func BuildCommand() *cli.Command {
 				Action:    setGlobal,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:     utils.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+						Name:     commons.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
 						Usage:    commons.KubeConfigFlagDescription,
 						EnvVars:  []string{commons.KubeConfigPathEnvVar},
 						Value:    kubeconfig.GetCustomKubeConfigPathDefault(home),
