@@ -1,5 +1,5 @@
 
-# konf - Autocompletion
+# konf-sh - Autocompletion
 
 Current supported shells: zsh, bash
 

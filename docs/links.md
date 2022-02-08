@@ -1,5 +1,5 @@
 
-# konf - Links
+# konf-sh - Links
 
 ## Inspirations
 - https://github.com/ahmetb/kubectx

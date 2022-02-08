@@ -26,29 +26,29 @@ func deleteCtx(ctx *cli.Context) error {
 	zap.S().Debugf("🐛 Kubernetes configuration file path: '%s'", kCfgFilePath)
 
 	zap.L().Debug("🐛 Get single Kubernetes konfigurations path")
-	singleKonfigsPath := ctx.String(commons.SingleKonfigsFlagName)
-	zap.S().Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKonfigsPath)
+	singleKfgsPath := ctx.String(commons.SingleKonfigsFlagName)
+	zap.S().Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKfgsPath)
 
 	zap.L().Debug("🐛 Get contexts to delete")
-	contextSlice, ctxErr := getContextList(ctx)
+	contexts, ctxErr := getContextList(ctx)
 	if ctxErr != nil {
 		return ctxErr
 	}
-	zap.S().Infof("📋 Contexts to delete: '%s'", strings.Join(contextSlice, ", "))
+	zap.S().Infof("📋 Contexts to delete: '%s'", strings.Join(contexts, ", "))
 
 	zap.L().Debug("🐛 Ask for user confirmation to delete contexts")
 	if userDeletionConfirm() {
-		kCfgErr := deleteFromKubeConfig(kCfgFilePath, contextSlice)
+		kCfgErr := deleteFromKubeConfig(kCfgFilePath, contexts)
 		if kCfgErr != nil {
 			return kCfgErr
 		}
 
-		kfgsErr := deleteFromKubeKonfigs(singleKonfigsPath, contextSlice)
+		kfgsErr := deleteFromKubeKonfigs(singleKfgsPath, contexts)
 		if kfgsErr != nil {
 			return kfgsErr
 		}
 
-		zap.S().Infof("✅  Removing contexts '%s' completed", strings.Join(contextSlice, ", "))
+		zap.S().Infof("✅  Removing contexts '%s' completed", strings.Join(contexts, ", "))
 
 		zap.L().Info("")
 

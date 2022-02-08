@@ -3,14 +3,11 @@ package list
 import (
 	"github.com/bygui86/konf-sh/pkg/commons"
 	"github.com/bygui86/konf-sh/pkg/kubeconfig"
-	"github.com/bygui86/konf-sh/pkg/logging"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
 )
 
 func BuildCommand() *cli.Command {
-	logging.InitLogger()
-
 	zap.L().Debug("🐛 Create LIST command")
 	home := commons.GetHomeDirOrExit("list")
 	return &cli.Command{

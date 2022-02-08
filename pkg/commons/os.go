@@ -37,16 +37,17 @@ func CheckIfFileExist(filepath string) error {
 
 func GetHomeDirOrExit(methodCaller string) string {
 	zap.L().Debug("🐛 Get HOME path")
-	home, homeErr := GetHomeDir()
+	home, homeErr := getHomeDir()
 	if homeErr != nil {
-		zap.S().Errorf("❌  Error creating '%s' methodCaller - Error getting HOME environment variable: '%s'", methodCaller, homeErr.Error())
+		zap.S().Errorf("❌  Error creating '%s' methodCaller - Error getting HOME environment variable: '%s'",
+			methodCaller, homeErr.Error())
 		os.Exit(3)
 	}
 	zap.S().Debugf("🐛 HOME path: '%s'", home)
 	return home
 }
 
-func GetHomeDir() (string, error) {
+func getHomeDir() (string, error) {
 	userHome, err := getCurrentUserHomeDir()
 	if err != nil {
 		return "", err

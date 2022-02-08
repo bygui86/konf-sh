@@ -1,13 +1,13 @@
 
-# konf - Roadmap
+# konf-sh - Roadmap
 
-### v1.0.0 🗓
+## v1.0.0 🗓
 
 - [ ] create go install
 - [ ] `TBD` create homebrew-tap (see https://goreleaser.com/customization/#Homebrew)
 - [ ] have a look at [this library](https://github.com/gkarthiks/k8s-discovery)
 
-### v0.8.0 🗓
+## v0.8.0 🗓
 
 - [ ] additional documentation
     - [ ] `TBD` go-doc
@@ -18,7 +18,7 @@
     - [ ] code-coverage check
     - [ ] `TBD` add code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
 
-### v0.7.0 🗓
+## v0.7.0 🗓
 
 - [ ] implement namespaces commands
   - [ ] view current namespace
@@ -26,7 +26,7 @@
   - [ ] set local (current shell only) namespace
   - [ ] set global namespace
 
-### v0.6.0 🗓
+## v0.6.0 🗓
 
 - [ ] implement "--silent" flag
 - [ ] shellwrapper
@@ -36,7 +36,7 @@
 - [ ] prompting
   - [ ] make it interactive with https://github.com/manifoldco/promptui
 
-### v0.5.0 🏗
+## v0.5.0 🏗
 
 - [x] improve README and overall documentation
 - [x] update codebase
@@ -66,30 +66,31 @@
   - [x] fix "completion zsh" (replace "PROG" with "konf")
 - [ ] improve "set" command
   - [ ] add "-" to set "last konf used" in new shell 
-- [ ] review logging
+- [x] review logging
   - [x] refactor logger embracing better and more standard approach with zap library
-  - [ ] review logs in all commands
-    - [ ] completion
-    - [ ] clean/delete
-    - [ ] list
-    - [ ] rename
-    - [ ] reset
-    - [ ] set
-    - [ ] split
-    - [ ] view
+  - [x] review logs in all commands
+    - [x] app
+    - [x] completion
+    - [x] clean/delete
+    - [x] list
+    - [x] rename
+    - [x] reset
+    - [x] set
+    - [x] split
+    - [x] view
 
-### v0.4.0 ✅
+## v0.4.0 ✅
 
 - [x] fix GitHub Action release
 - [x] fix Makefile bug in release target
 - [x] improve release mechanism
 
-### v0.3.0 ✅
+## v0.3.0 ✅
 
 - [x] add logo
 - [x] align version everywhere
 
-### v0.2.0 ✅
+## v0.2.0 ✅
 
 - [x] add arguments usage
 - [x] new commands skeleton
@@ -101,7 +102,7 @@
 - [x] improved logging
 - [x] rename commands
 
-### v0.1.0 ✅
+## v0.1.0 ✅
 
 - [x] implement first set of commands
 - [x] implement properly logging flags

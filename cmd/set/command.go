@@ -3,14 +3,11 @@ package set
 import (
 	"github.com/bygui86/konf-sh/pkg/commons"
 	"github.com/bygui86/konf-sh/pkg/kubeconfig"
-	"github.com/bygui86/konf-sh/pkg/logging"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
 )
 
 func BuildCommand() *cli.Command {
-	logging.InitLogger()
-
 	zap.L().Debug("🐛 Create SET-CONFIG command")
 	home := commons.GetHomeDirOrExit("set")
 	return &cli.Command{

@@ -1,5 +1,5 @@
 
-# konf - Emoji in cli
+# konf-sh - Emoji in cli
 
 ## Working
 
