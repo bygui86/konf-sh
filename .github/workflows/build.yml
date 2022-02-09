@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      - features/**
+      - feature/**
   pull_request:
     branches:
       - master
-      - features/**
+      - feature/**
 
 env:
   GO111MODULE: on
@@ -21,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Setup Go v.1.13.6
-        id: setup
-        uses: actions/setup-go@v1
-        with:
-          go-version: 1.13.6
-
       - name: Checkout codebase into the Go module directory
         id: checkout
         uses: actions/checkout@v2
+
+      - name: Setup Go v.1.17.6
+        id: setup
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.6
 
       - name: Get dependencies
         id: get-dependencies
