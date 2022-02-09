@@ -20,7 +20,7 @@ archives:
   - id: konf-sh
     name_template: "{{ .ProjectName }}_{{ .Os }}"
     files:
-      - logo/logo.png
+      - logo.png
       - LICENSE
       - README.md
 snapshot:
