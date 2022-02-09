@@ -23,7 +23,7 @@ clean :		## Clean
 	-@rm -rf konf-sh
 
 test :		## Test
-	go test -coverprofile=coverage.out -count=5 -race ./...
+	CGO_ENABLED=1 go test -coverprofile=coverage.out -count=5 -race ./...
 
 ## release
 
