@@ -13,6 +13,17 @@ func Load(kubeConfigFilePath string) *clientcmdApi.Config {
 	return clientcmd.GetConfigFromFileOrDie(kubeConfigFilePath)
 }
 
+func ListContexts(kubeConfig *clientcmdApi.Config) []string {
+	zap.L().Debug("🐛 List available Kubernetes contexts")
+	ctxs := make([]string, len(kubeConfig.Contexts))
+	idx := 0
+	for ctx := range kubeConfig.Contexts {
+		ctxs[idx] = ctx
+		idx++
+	}
+	return ctxs
+}
+
 func Split(kubeConfig *clientcmdApi.Config, kubeConfigFilePath string) map[string]*clientcmdApi.Config {
 	zap.S().Debugf("🐛 Split Kubernetes configuration from %s", kubeConfigFilePath)
 	singleConfigs := make(map[string]*clientcmdApi.Config, len(kubeConfig.Contexts))

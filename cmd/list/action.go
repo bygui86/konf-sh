@@ -15,6 +15,51 @@ import (
 func list(ctx *cli.Context) error {
 	zap.L().Debug("🐛 Executing LIST command")
 
+	cfgsErr := listKubeCfgs(ctx)
+	if cfgsErr != nil {
+		return cfgsErr
+	}
+
+	kfgsErr := listSingleKfgs(ctx)
+	if kfgsErr != nil {
+		return kfgsErr
+	}
+
+	zap.L().Info("")
+	return nil
+}
+
+func listKubeCfgs(ctx *cli.Context) error {
+	zap.L().Debug("🐛 Get Kubernetes configuration file path")
+	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
+	zap.S().Infof("📖 Load Kubernetes configuration from '%s'", kCfgFilePath)
+	kCfg := kubeconfig.Load(kCfgFilePath)
+	// INFO: no need to check if kubeConfig is nil, because the inner method called will exit if it does not find the configuration file
+
+	zap.S().Debugf("🐛 Validate Kubernetes configuration from '%s'", kCfgFilePath)
+	valErr := kubeconfig.Validate(kCfg)
+	if valErr != nil {
+		return cli.Exit(
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s",
+				kCfgFilePath, valErr.Error()), 12)
+	}
+
+	zap.S().Debugf("🐛 List contexts in Kubernetes configuration '%s'", kCfgFilePath)
+	ctxs := kubeconfig.ListContexts(kCfg)
+	if len(ctxs) > 0 {
+		zap.S().Infof("📚 Available Kubernetes contexts in '%s':", kCfgFilePath)
+		for _, v := range ctxs {
+			zap.S().Infof("\t%s", v)
+		}
+	} else {
+		zap.S().Warnf("🚨 No available Kubernetes context in '%s'", kCfgFilePath)
+	}
+
+	zap.L().Info("")
+	return nil
+}
+
+func listSingleKfgs(ctx *cli.Context) error {
 	zap.L().Debug("🐛 Get single Kubernetes konfigurations path")
 	singleKfgsPath := ctx.String(commons.SingleKonfigsFlagName)
 	zap.S().Debugf("🐛 Single Kubernetes konfigurations path: '%s'", singleKfgsPath)
@@ -74,6 +119,5 @@ func list(ctx *cli.Context) error {
 		}
 	}
 
-	zap.L().Info("")
 	return nil
 }

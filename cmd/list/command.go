@@ -16,6 +16,13 @@ func BuildCommand() *cli.Command {
 		Action: list,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
+				Name:     commons.GetUrfaveFlagName(commons.KubeConfigFlagName, commons.KubeConfigFlagShort),
+				Usage:    commons.KubeConfigFlagDescription,
+				EnvVars:  []string{commons.KubeConfigPathEnvVar},
+				Value:    kubeconfig.GetKubeConfigPathDefault(home),
+				Required: false,
+			},
+			&cli.StringFlag{
 				Name:     commons.GetUrfaveFlagName(commons.SingleKonfigsFlagName, commons.SingleKonfigsFlagShort),
 				Usage:    commons.SingleKonfigsFlagDescription,
 				EnvVars:  []string{commons.SingleKonfigsPathEnvVar},

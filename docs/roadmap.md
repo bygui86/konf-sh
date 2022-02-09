@@ -82,6 +82,8 @@
 - [x] improve "set" command
   - [x] save last set ctx to "~/.kube/konfigs/last-ctx/"
   - [x] add "set -" to switch back ctx to previous
+- [x] improve "list" command
+  - [x] add listing ctx from "~/.kube/config"
 - [x] review logging
   - [x] refactor logger embracing better and more standard approach with zap library
   - [x] review logs in all commands

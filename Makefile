@@ -22,9 +22,8 @@ build :		## Build
 clean :		## Clean
 	-@rm -rf konf-sh
 
-#TODO
-#test :		## Test
-#	go test -coverprofile=coverage.out -count=5 -race ./...
+test :		## Test
+	go test -coverprofile=coverage.out -count=5 -race ./...
 
 ## release
 
@@ -45,7 +44,7 @@ split : build		## Split a sample Kubernetes configuration file
 	$(KONF_PREFIX) konf-sh split --kube-config ./examples/config --single-konfigs ./examples/konfigs
 
 list : build		## List a set of sample Kubernetes konfigurations
-	$(KONF_PREFIX) konf-sh list --single-konfigs ./examples/konfigs
+	$(KONF_PREFIX) konf-sh list --kube-config ./examples/config --single-konfigs ./examples/konfigs
 
 # TODO refactor after shell wrapper implementation
 set-local : build		## Set local Kubernetes context (current shell)

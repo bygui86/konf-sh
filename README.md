@@ -62,7 +62,7 @@ This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx)
 
 ### 1. Install binary
 
-**_⚠️ A more automated installation process is under development_**
+**_⚠️ PLEASE NOTE: A more automated installation process is under development_**
 
 1. Download compressed binary from the [release page](https://github.com/bygui86/konf-sh/releases)
 2. Extract binary wherever you prefer
@@ -70,7 +70,7 @@ This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx)
 
 ### 2. Install shell wrapper
 
-**_⚠️ Shell wrapper won't work if binary is not in PATH_**
+**_⚠️ PLEASE NOTE: Shell wrapper won't work if binary is not in PATH_**
 
 #### zsh
 
@@ -90,7 +90,7 @@ source <(konf-sh shellwrapper bash)
 
 ### 3. Install autocompletion
 
-**_⚠️ Autocompletion won't work if shell wrapper is not installed_**
+**_⚠️ PLEASE NOTE: Autocompletion won't work if shell wrapper is not installed_**
 
 Current supported shells: zsh, bash
 
@@ -116,7 +116,7 @@ Here following some optional customisations to make your life even easier.
 
 #### Aliases
 
-**_⚠️ Aliases won't work if shell wrapper is not installed_**
+**_⚠️ PLEASE NOTE: Aliases won't work if shell wrapper is not installed_**
 
 Add the following to your `.zshrc` or `.bashrc` and restart the shell:
 
@@ -181,9 +181,11 @@ konf view
 
 `konf split` separates the Kubernetes configuration (by default `~/.kube/config`) into single Kubernetes konfigurations (by default in `~/.kube/konfigs`), one for each context.
 
+**_⚠️ PLEASE NOTE: Almost all other commands don't work if split was not previously executed_**
+
 ### List
 
-`konf list` lists all single Kubernetes konfigurations separated by `konf split` (by default in `~/.kube/konfigs`).
+`konf list` lists all Kubernetes context available in the Kubernetes configuration (by default `~/.kube/config`) and in single Kubernetes konfigurations (by default in `~/.kube/konfigs`).
 
 ### Set
 
@@ -233,12 +235,12 @@ konf view
 
 ### Flags
 
-| Flag             | Command list                                                       | Available values | Default          | Corresponding env-var         | Description                                         |
-|:-----------------|:-------------------------------------------------------------------|:-----------------|:-----------------|:------------------------------|:----------------------------------------------------|
-| --kube-config    | split, view, view global, set global, delete, rename, reset global | -                | ~/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
-| --single-konfigs | split, list, set local, delete, rename                             | -                | ~/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
+| Flag             | Command list                                                             | Available values | Default          | Corresponding env-var         | Description                                         |
+|:-----------------|:-------------------------------------------------------------------------|:-----------------|:-----------------|:------------------------------|:----------------------------------------------------|
+| --kube-config    | split, list, view, view global, set global, delete, rename, reset global | -                | ~/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
+| --single-konfigs | split, list, set local, delete, rename                                   | -                | ~/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
 
-> **_⚠️ Please note_**
+> **_⚠️ PLEASE NOTE_**
 > 
 > All flags must be specified BEFORE arguments
 > 
@@ -248,14 +250,14 @@ konf view
 
 ### Environment variables
 
-| Key                           | Command list                                                       | Available values         | Default          | Corresponding flag | Description                                         |
-|:------------------------------|:-------------------------------------------------------------------|:-------------------------|:-----------------|:-------------------|:----------------------------------------------------|
-| KONF_LOG_ENCODING             | all                                                                | console, json            | console          | -                  | Set logger encoding                                 |
-| KONF_LOG_LEVEL                | all                                                                | debug, info, warn, error | info             | -                  | Set logger level                                    |
-| KONF_KUBE_CONFIG_PATH         | split, view, view global, set global, delete, rename, reset global | -                        | ~/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
-| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, delete, rename                             | -                        | ~/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
+| Key                           | Command list                                                             | Available values         | Default          | Corresponding flag | Description                                         |
+|:------------------------------|:-------------------------------------------------------------------------|:-------------------------|:-----------------|:-------------------|:----------------------------------------------------|
+| KONF_LOG_ENCODING             | all                                                                      | console, json            | console          | -                  | Set logger encoding                                 |
+| KONF_LOG_LEVEL                | all                                                                      | debug, info, warn, error | info             | -                  | Set logger level                                    |
+| KONF_KUBE_CONFIG_PATH         | split, list, view, view global, set global, delete, rename, reset global | -                        | ~/.kube/config   | --kube-config      | Specify a custom Kubernetes configuration file path |
+| KONF_SINGLE_KUBE_KONFIGS_PATH | split, list, set local, delete, rename                                   | -                        | ~/.kube/konfigs/ | --single-konfigs   | Specify the single Kubernetes konfigurations path   |
 
-**_⚠️ Please note `KONF_LOG_ENCODING` and `KONF_LOG_LEVEL` are available only as environment variables_**
+**_⚠️ PLEASE NOTE: `KONF_LOG_ENCODING` and `KONF_LOG_LEVEL` are available only as environment variables_**
 
 ### Error codes
 
@@ -295,9 +297,7 @@ See [here](docs/roadmap.md).
 ### Build
 
 ```sh
-git clone git@github.com:bygui86/konf.git
-
-cd konf
+git clone git@github.com:bygui86/konf-sh.git && cd konf-sh
 
 make build
 ```
@@ -305,3 +305,9 @@ make build
 ### Test
 
 `🏗 work in progress`
+
+```sh
+git clone git@github.com:bygui86/konf-sh.git && cd konf-sh
+
+make test
+```

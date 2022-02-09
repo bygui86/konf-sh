@@ -28,7 +28,7 @@ func split(ctx *cli.Context) error {
 	}
 
 	zap.S().Infof("🪚 Split Kubernetes configuration from %s", kCfgFilePath)
-	singleKcfs := kubeconfig.Split(kCfg, kCfgFilePath)
+	singleKfs := kubeconfig.Split(kCfg, kCfgFilePath)
 
 	zap.L().Info("💾 Save single Kubernetes konfigurations")
 	zap.L().Debug("🐛 Get single Kubernetes konfigurations path")
@@ -45,7 +45,7 @@ func split(ctx *cli.Context) error {
 
 	validKfgs := make([]string, 0)
 	invalidKfgs := make([]string, 0)
-	for kfgName, kfg := range singleKcfs {
+	for kfgName, kfg := range singleKfs {
 		kfgFilePath := filepath.Join(singleKfgsPath, kfgName)
 
 		newValErr := kubeconfig.Validate(kfg)
