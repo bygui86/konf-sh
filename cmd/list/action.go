@@ -13,9 +13,7 @@ import (
 )
 
 func list(ctx *cli.Context) error {
-	zap.L().Info("")
 	zap.L().Debug("🐛 Executing LIST command")
-	zap.L().Debug("")
 
 	zap.L().Debug("🐛 Get single Kubernetes konfigurations path")
 	singleKfgsPath := ctx.String(commons.SingleKonfigsFlagName)

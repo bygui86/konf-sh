@@ -17,9 +17,7 @@ import (
 
 // INFO: deleteCtx cannot be named delete because of name collision
 func deleteCtx(ctx *cli.Context) error {
-	zap.L().Info("")
 	zap.L().Debug("🐛 Executing DELETE command")
-	zap.L().Debug("")
 
 	zap.L().Debug("🐛 Get Kubernetes configuration file path")
 	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
@@ -180,6 +178,7 @@ func deleteContextList(kCfg *clientcmdapi.Config, contextSlice []string) error {
 		kCfg.AuthInfos = authMap
 
 		if rmCtx == kCfg.CurrentContext {
+			zap.L().Debug("🐛 Resetting current context in Kubernetes configuration")
 			kCfg.CurrentContext = ""
 		}
 	}

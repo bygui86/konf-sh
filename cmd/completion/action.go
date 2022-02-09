@@ -44,18 +44,14 @@ compdef _cli_zsh_autocomplete konf`
 )
 
 func bashCompletion(ctx *cli.Context) error {
-	zap.L().Debug("")
 	zap.L().Debug("🐛 Executing BASH-COMPLETION command")
-	zap.L().Debug("")
 
 	zap.L().Info(bashScript)
 	return nil
 }
 
 func zshCompletion(ctx *cli.Context) error {
-	zap.L().Debug("")
 	zap.L().Debug("🐛 Executing ZSH-COMPLETION command")
-	zap.L().Debug("")
 
 	zap.L().Info(zshScript)
 	return nil

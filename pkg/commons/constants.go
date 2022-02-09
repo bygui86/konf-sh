@@ -3,10 +3,10 @@ package commons
 const (
 	// Flags
 	KubeConfigFlagName           = "kube-config"
-	KubeConfigFlagShort          = "k"
+	KubeConfigFlagShort          = "c"
 	KubeConfigFlagDescription    = "Kubernetes configuration custom (`PATH`)"
 	SingleKonfigsFlagName        = "single-konfigs"
-	SingleKonfigsFlagShort       = "c"
+	SingleKonfigsFlagShort       = "k"
 	SingleKonfigsFlagDescription = "Single Kubernetes konfigurations custom (`PATH`)"
 
 	// Environment variables

@@ -62,9 +62,15 @@ This project was inspired by [kubectx+kubens](https://github.com/ahmetb/kubectx)
 
 ### 1. Install binary
 
-`🏗 work in progress`
+**_⚠️ A more automated installation process is under development_**
+
+1. Download compressed binary from the [release page](https://github.com/bygui86/konf-sh/releases)
+2. Extract binary wherever you prefer
+3. Add binary to your PATH
 
 ### 2. Install shell wrapper
+
+**_⚠️ Shell wrapper won't work if binary is not in PATH_**
 
 #### zsh
 
@@ -108,15 +114,9 @@ source <(konf completion bash)
 
 Here following some optional customisations to make your life even easier.
 
-#### Open last konf used
-
-Add the following to your `.zshrc` or `.bashrc` and restart the shell:
-
-```sh
-export KUBECONFIG=$(konf --silent set -)
-```
-
 #### Aliases
+
+**_⚠️ Aliases won't work if shell wrapper is not installed_**
 
 Add the following to your `.zshrc` or `.bashrc` and restart the shell:
 
@@ -191,6 +191,8 @@ konf view
 
 `konf set global <context>` sets the global Kubernetes context (by default `currentContext` in `~/.kube/config`) to the specified one (by default `~/.kube/konfigs`).
 
+`konf set [local | global] -` switches back the local or global Kubernetes context to the previous one.
+
 ### View
 
 `konf view` shows both local (current shell) and global Kubernetes context.
@@ -236,6 +238,14 @@ konf view
 | --kube-config    | split, view, view global, set global, delete, rename, reset global | -                | ~/.kube/config   | KONF_KUBE_CONFIG_PATH         | Specify a custom Kubernetes configuration file path |
 | --single-konfigs | split, list, set local, delete, rename                             | -                | ~/.kube/konfigs/ | KONF_SINGLE_KUBE_KONFIGS_PATH | Specify the single Kubernetes konfigurations path   |
 
+> **_⚠️ Please note_**
+> 
+> All flags must be specified BEFORE arguments
+> 
+> This works: `konf set global --kube-config ./examples/config context_b`
+> 
+> This doesn't work: `konf set global context_b --kube-config ./examples/config`
+
 ### Environment variables
 
 | Key                           | Command list                                                       | Available values         | Default          | Corresponding flag | Description                                         |
@@ -257,11 +267,13 @@ konf view
 | 11   | split                             | Error checking existence of Kubernetes konfigurations path                                                               |
 | 12   | split, set global, delete, rename | Error validating Kubernetes configuration (single, global, cleaned)                                                      |
 | 13   | split, set global, delete, rename | Error writing Kubernetes configuration (single, global, cleaned) to file                                                 |
+| 14   | set local, set global             | Error checking existence of last Kubernetes context path                                                                 |
 | 21   | list                              | Error listing single Kubernetes konfigurations                                                                           |
 | 31   | set local                         | Error checking existence of Kubernetes konfigurations path                                                               |
 | 32   | set local, set global             | Error getting Kubernetes context: context argument not specified                                                         |
 | 33   | set local                         | Error checking existence of Kubernetes context                                                                           |
 | 34   | set global, rename                | Error checking existence of context in Kubernetes configuration                                                          |
+| 35   | set global                        | Error retrieving last Kubernetes context                                                                                 |
 | 41   | delete                            | Error getting Kubernetes context list: 'context list' argument not specified                                             |
 | 42   | delete                            | Error validating Kubernetes context list: 'context list' argument not valid. Context list must be a comma-separated list |
 | 43   | delete                            | Error removing Kubernetes context list                                                                                   |

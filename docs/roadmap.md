@@ -1,6 +1,17 @@
 
 # konf-sh - Roadmap
 
+## Legend
+
+| Emoji | Description               |
+|:------|:--------------------------|
+| ✅     | Released                  |
+| 🏗    | In development            |
+| 🗓    | Scheduled for development | 
+| 🧐    | Evaluating                |
+
+---
+
 ## v1.0.0 🗓
 
 - [ ] create go install
@@ -17,6 +28,7 @@
     - [ ] `TBD` add test badge (maybe https://github.com/bygui86/konf-sh/actions/workflows/test.yaml/badge.svg)
     - [ ] code-coverage check
     - [ ] `TBD` add code-coverage badge (see https://codecov.io/gh/etherlabsio/healthcheck)
+- [ ] `TBD` introduce https://github.com/spf13/afero (A FileSystem Abstraction System for Go)
 
 ## v0.7.0 🗓
 
@@ -25,9 +37,12 @@
   - [ ] list all namespaces
   - [ ] set local (current shell only) namespace
   - [ ] set global namespace
+  - [ ] set "-" to switch back namespace to previous
+  - [ ] save last set namespace to "~/.kube/konfigs/last-ns"
 
 ## v0.6.0 🗓
 
+- [ ] `TBD` put "global" as implicit
 - [ ] implement "--silent" flag
 - [ ] shellwrapper
   - [ ] implement command
@@ -36,7 +51,7 @@
 - [ ] prompting
   - [ ] make it interactive with https://github.com/manifoldco/promptui
 
-## v0.5.0 🏗
+## v0.5.0 ✅
 
 - [x] improve README and overall documentation
 - [x] update codebase
@@ -64,8 +79,9 @@
 - [x] improve "split" command (see TODO in commands/set/action.go)
 - [x] improve "completion" command
   - [x] fix "completion zsh" (replace "PROG" with "konf")
-- [ ] improve "set" command
-  - [ ] add "-" to set "last konf used" in new shell 
+- [x] improve "set" command
+  - [x] save last set ctx to "~/.kube/konfigs/last-ctx/"
+  - [x] add "set -" to switch back ctx to previous
 - [x] review logging
   - [x] refactor logger embracing better and more standard approach with zap library
   - [x] review logs in all commands

@@ -10,18 +10,15 @@ import (
 )
 
 func resetLocal(ctx *cli.Context) error {
-	zap.L().Debug("")
 	zap.L().Debug("🐛 Executing RESET-LOCAL command")
-	zap.L().Debug("")
 
-	zap.L().Info(fmt.Sprintf("unset %s", commons.KubeConfigEnvVar))
+	zap.L().Info(fmt.Sprintf("unset %s", commons.KubeConfigEnvVar)) // TODO to be replaced by following line
+	//zap.L().Info() // TODO enable when shell wrapper is available
 	return nil
 }
 
 func resetGlobal(ctx *cli.Context) error {
-	zap.L().Info("")
 	zap.L().Debug("🐛 Executing RESET-GLOBAL command")
-	zap.L().Debug("")
 
 	zap.L().Debug("🐛 Get Kubernetes configuration file path")
 	kubeConfigFilePath := ctx.String(commons.KubeConfigFlagName)
@@ -35,18 +32,18 @@ func resetGlobal(ctx *cli.Context) error {
 	newValErr := kubeconfig.Validate(kubeConfig)
 	if newValErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s", kubeConfigFilePath, newValErr.Error()),
-			12)
+			fmt.Sprintf("❌  Error validating Kubernetes configuration from '%s': %s",
+				kubeConfigFilePath, newValErr.Error()), 12)
 	}
 
 	newWriteErr := kubeconfig.Write(kubeConfig, kubeConfigFilePath)
 	if newWriteErr != nil {
 		return cli.Exit(
-			fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s", kubeConfigFilePath, newWriteErr.Error()),
-			13)
+			fmt.Sprintf("❌  Error writing Kubernetes configuration '%s' to file: %s",
+				kubeConfigFilePath, newWriteErr.Error()), 13)
 	}
 
-	zap.S().Infof("✅ Completed! Kubernetes configuration reset")
+	zap.S().Infof("✅ Global Kubernetes configuration reset")
 	zap.L().Info("")
 	return nil
 }

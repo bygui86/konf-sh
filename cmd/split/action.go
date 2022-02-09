@@ -11,9 +11,7 @@ import (
 )
 
 func split(ctx *cli.Context) error {
-	zap.L().Info("")
 	zap.L().Debug("🐛 Executing SPLIT command")
-	zap.L().Debug("")
 
 	zap.L().Debug("🐛 Get Kubernetes configuration file path")
 	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
@@ -42,7 +40,7 @@ func split(ctx *cli.Context) error {
 	if checkErr != nil {
 		return cli.Exit(
 			fmt.Sprintf("❌  Error checking existence of Kubernetes konfigurations path '%s': %s",
-				checkErr.Error(), singleKfgsPath), 11)
+				singleKfgsPath, checkErr.Error()), 11)
 	}
 
 	validKfgs := make([]string, 0)

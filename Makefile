@@ -47,13 +47,23 @@ split : build		## Split a sample Kubernetes configuration file
 list : build		## List a set of sample Kubernetes konfigurations
 	$(KONF_PREFIX) konf-sh list --single-konfigs ./examples/konfigs
 
+# TODO refactor after shell wrapper implementation
 set-local : build		## Set local Kubernetes context (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
-	@echo "Please manually execute 'eval $(konf-sh set local context_b --single-konfigs ./examples/konfigs)'"
+	@echo "Please manually execute 'eval $(konf-sh set local --single-konfigs ./examples/konfigs context_b)'"
+	@echo ""
+
+# TODO refactor after shell wrapper implementation
+set-last-local : build		## Set last Kubernetes context as local (current shell)
+	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
+	@echo "Please manually execute 'eval $(konf-sh set local --single-konfigs ./examples/konfigs context_b)'"
 	@echo ""
 
 set-global : build		## Set global Kubernetes context
-	$(KONF_PREFIX) konf-sh set global context_b --kube-config ./examples/config
+	$(KONF_PREFIX) konf-sh set global --kube-config ./examples/config context_b
+
+set-last-global : build		## Set last Kubernetes context as global
+	$(KONF_PREFIX) konf-sh set global --kube-config ./examples/config --single-konfigs ./examples/konfigs -
 
 view : build		## View local and global Kubernetes contexts
 	$(KONF_PREFIX) konf-sh view --kube-config ./examples/config
@@ -70,6 +80,7 @@ delete : build		## Remove context list from Kubernetes configuration
 rename : build		## Rename specified context in Kubernetes configuration
 	$(KONF_PREFIX) konf-sh rename --kube-config ./examples/config --single-konfigs ./examples/konfigs context_a context_x
 
+# TODO refactor after shell wrapper implementation
 reset-local : build		## Reset local Kubernetes configuration (current shell)
 	@echo "It's useless to run an 'eval' command from the Makefile as each line is executed in a new shell instance"
 	@echo "Please manually execute 'eval $(konf-sh reset local)'"

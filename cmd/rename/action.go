@@ -15,9 +15,7 @@ import (
 )
 
 func rename(ctx *cli.Context) error {
-	zap.L().Info("")
 	zap.L().Debug("🐛 Executing RENAME command")
-	zap.L().Debug("")
 
 	zap.L().Debug("🐛 Get Kubernetes configuration file path")
 	kCfgFilePath := ctx.String(commons.KubeConfigFlagName)
