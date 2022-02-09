@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         id: build
-        run: go build -v .
+        run: go build -o konf-sh .
 
       - name: Test
         id: test
